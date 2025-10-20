@@ -6,6 +6,7 @@ import { ShoppingListPage } from '@/pages/ShoppingListPage';
 import { TransactionsPage } from '@/pages/TransactionsPage';
 import App from './App';
 import { Layout } from './components/layout/layout';
+import { AccountManagement } from './pages/AccountManagement';
 
 export const router = createBrowserRouter([
   {
@@ -17,6 +18,7 @@ export const router = createBrowserRouter([
       { path: '/shopping-list', element: <ShoppingListPage /> },
       { path: '/reports', element: <ReportsPage /> },
       { path: '/notifications', element: <NotificationsPage /> },
+      {path: '/account/:id', element: <AccountManagement />}
     ],
   },
 ]);
