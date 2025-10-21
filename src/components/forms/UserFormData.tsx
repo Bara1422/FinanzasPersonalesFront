@@ -1,7 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import type { z } from 'zod';
+import { sleep } from '@/lib/sleep';
 import type { User } from '@/mocks/user.mock';
 import { formSchema } from '@/schemas/form.schema';
 import { CardContent, CardFooter } from '../ui/card';
@@ -14,11 +16,20 @@ export type FormData = z.infer<typeof formSchema>;
 export const UserFormData = ({ mockUser }: { mockUser: User }) => {
   const uniqueId = useId();
   const [isEditting, setIsEditting] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+    setIsLoading(true);
+    await sleep(500);
+    try {
+      /* TODO: pegar a la api */
+      toast.success('Perfil actualizado con éxito');
+      console.log('Form Data:', data);
+    } catch {
+      toast.error('Error al actualizar el perfil');
+    }
+    setIsLoading(false);
     setIsEditting(false);
-    /* TODO: pegar a la api */
-    console.log('Form Data:', data);
   };
 
   const onChangeEditting = () => {
@@ -75,6 +86,7 @@ export const UserFormData = ({ mockUser }: { mockUser: User }) => {
           isEditting={isEditting}
           form={form}
           uniqueId={uniqueId}
+          isLoading={isLoading}
         />
       </CardFooter>
     </>

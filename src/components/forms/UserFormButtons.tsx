@@ -1,4 +1,4 @@
-import { Save } from 'lucide-react';
+import { Loader2, Save } from 'lucide-react';
 import type { UseFormReturn } from 'react-hook-form';
 import { Button } from '../ui/button';
 import { Field } from '../ui/field';
@@ -9,6 +9,7 @@ interface Props {
   onChangeEditting: () => void;
   form: UseFormReturn<FormData>;
   uniqueId: string;
+  isLoading: boolean;
 }
 
 export const UserFormButtons = ({
@@ -16,6 +17,7 @@ export const UserFormButtons = ({
   onChangeEditting,
   form,
   uniqueId,
+  isLoading,
 }: Props) => {
   return (
     <Field orientation="horizontal">
@@ -31,9 +33,14 @@ export const UserFormButtons = ({
           >
             Cancelar
           </Button>
-          <Button type="submit" form={`${uniqueId}-form`}>
+
+          <Button type="submit" form={`${uniqueId}-form`} disabled={isLoading}>
             <Save className="mr-2 h-4 w-4" />
-            Guardar cambios
+            {isLoading ? (
+              <Loader2 className="animate-spin" />
+            ) : (
+              'Guardar cambios'
+            )}
           </Button>
         </>
       ) : (

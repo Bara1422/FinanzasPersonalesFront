@@ -15,7 +15,6 @@ import { SidebarUserFooter } from './sidebar_user_footer';
 
 export function AppSidebar() {
   const pathname = useLocation().pathname;
-  console.log(pathname);
 
   return (
     <Sidebar>
