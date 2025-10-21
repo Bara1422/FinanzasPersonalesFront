@@ -1,4 +1,5 @@
 import { ChevronUp, User2 } from 'lucide-react';
+import { Link } from 'react-router';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +12,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { mockUsers } from '@/mocks/user.mock';
 
 export const SidebarUserFooter = () => {
+  const mockUserId = mockUsers[0].id_usuario;
   return (
     <SidebarFooter>
       <SidebarMenu>
@@ -29,10 +32,10 @@ export const SidebarUserFooter = () => {
               className="w-[--radix-popper-ancho-width]"
             >
               <DropdownMenuItem className="hover:cursor-pointer">
-                <span>Account</span>
+                <Link to={`/account/${mockUserId}`}>Cuenta</Link>
               </DropdownMenuItem>
               <DropdownMenuItem className="hover:cursor-pointer">
-                <span>Sign out</span>
+                <span>Cerrar sesión</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
