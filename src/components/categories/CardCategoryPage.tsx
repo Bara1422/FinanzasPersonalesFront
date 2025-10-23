@@ -1,0 +1,39 @@
+import type { CategorySummary } from '@/lib/getCategorySummaryMock';
+import {
+  Table,
+  TableBody,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '../ui/table';
+import { CategoryTableBody } from './CategoryTableBody';
+
+export const CardCategoryPage = ({
+  categorySummary,
+  tipo,
+}: {
+  categorySummary: CategorySummary[];
+  tipo: 'GASTO' | 'INGRESO';
+}) => {
+  return (
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Categoría</TableHead>
+          <TableHead>Transacciones</TableHead>
+          <TableHead>Total</TableHead>
+          <TableHead className="text-right">Acciones</TableHead>
+        </TableRow>
+      </TableHeader>
+      <TableBody>
+        {categorySummary.map((category) => (
+          <CategoryTableBody
+            key={category.id_category}
+            category={category}
+            tipo={tipo}
+          />
+        ))}
+      </TableBody>
+    </Table>
+  );
+};
