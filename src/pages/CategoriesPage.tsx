@@ -7,7 +7,7 @@ export const CategoriesPage = () => {
   const gastos = categorySummary.filter((item) => item.tipo === 'GASTO');
   const ingresos = categorySummary.filter((item) => item.tipo === 'INGRESO');
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6">
       {/* Title */}
       <PageTitle
         title="Categorías"

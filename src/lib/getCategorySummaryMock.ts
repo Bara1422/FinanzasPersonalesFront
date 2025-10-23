@@ -12,7 +12,7 @@ export interface CategorySummary {
 export const getCategorySummaryMock = () => {
   const summary: CategorySummary[] = mockCategories.map((category) => {
     const categoryTransactions = mockTransactions.filter(
-      (transaction) => transaction.id_categoria === category.id,
+      (transaction) => transaction.id_categoria === category.id_categoria,
     );
 
     const cantidad = categoryTransactions.length;
@@ -24,13 +24,15 @@ export const getCategorySummaryMock = () => {
       0,
     );
     return {
-      id_category: category.id,
+      id_category: category.id_categoria,
       nombre: category.nombre,
       cantidad,
       totalPorCategoria,
-      tipo: categoryTransactions[0]?.tipo,
+      tipo: category.tipo,
     };
   });
 
-  return summary;
+  const summaryFiltered = summary.filter((item) => item.cantidad > 0);
+
+  return summaryFiltered;
 };

@@ -20,9 +20,9 @@ export const CardCategoryPage = ({
       <TableHeader>
         <TableRow>
           <TableHead>Categoría</TableHead>
-          <TableHead>Transacciones</TableHead>
-          <TableHead>Total</TableHead>
-          <TableHead className="text-right">Acciones</TableHead>
+          <TableHead className="text-center">Transacciones</TableHead>
+          <TableHead className="text-right">Total</TableHead>
+          {/*  <TableHead className="text-right">Acciones</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>

@@ -2,7 +2,7 @@ import { PageTitle } from '@/components/common/PageTitle';
 
 export const ShoppingListPage = () => {
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 p-6">
       {/* Title */}
       <PageTitle
         title="Listas de Compras"
