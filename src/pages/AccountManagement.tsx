@@ -50,7 +50,6 @@ export const AccountManagement = () => {
 
         {/* Form */}
         <UserFormData mockUser={user} />
-        {/* </div> */}
       </Card>
     </div>
   );
