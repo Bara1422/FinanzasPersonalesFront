@@ -1,13 +1,13 @@
 import type { Category } from '@/mocks/category.mock';
 import type { Notification } from '@/mocks/notification.mock';
-import { Badge } from '../ui/badge';
+import { Badge } from '../../../components/ui/badge';
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '../ui/card';
+} from '../../../components/ui/card';
 
 interface Props {
   filteredNotifications: Notification[];

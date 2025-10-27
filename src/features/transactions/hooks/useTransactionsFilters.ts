@@ -14,6 +14,15 @@ export const useTransactionsFilters = ({
   const [filterType, setFilterType] = useState<string>('todos');
   const [filterCategory, setFilterCategory] = useState<string>('todas');
 
+  const handleFilterCategoryChange = (value: string) => {
+    setFilterCategory(value);
+  };
+
+  const handleFilterTypeChange = (value: string) => {
+    setFilterType(value);
+    setFilterCategory('todas');
+  };
+
   const visibleTransactions = useMemo(() => {
     let filtered = transactions;
 
@@ -26,7 +35,7 @@ export const useTransactionsFilters = ({
     }
     if (filterCategory !== 'todas') {
       filtered = filtered.filter(
-        (transaction) => transaction.id_categoria === filterCategory,
+        (transaction) => transaction.id_categoria.toString() === filterCategory,
       );
     }
 
@@ -39,5 +48,7 @@ export const useTransactionsFilters = ({
     filterCategory,
     setFilterCategory,
     visibleTransactions,
+    handleFilterCategoryChange,
+    handleFilterTypeChange,
   };
 };

@@ -1,5 +1,5 @@
 import type { User } from '@/mocks/user.mock';
-import { Badge } from '../ui/badge';
+import { Badge } from '../../components/ui/badge';
 
 export const ProfileInfo = ({ mockUser }: { mockUser: User }) => {
   return (

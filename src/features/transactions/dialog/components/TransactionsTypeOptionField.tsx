@@ -1,5 +1,5 @@
-import { FormLabel } from '../../ui/form';
-import { RadioGroupItem } from '../../ui/radio-group';
+import { FormLabel } from '../../../../components/ui/form';
+import { RadioGroupItem } from '../../../../components/ui/radio-group';
 
 interface Props {
   uniqueId: string;
