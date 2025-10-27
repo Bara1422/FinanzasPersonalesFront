@@ -5,7 +5,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from '../ui/table';
+} from '../../components/ui/table';
 import { CategoryTableBody } from './CategoryTableBody';
 
 export const CardCategoryPage = ({

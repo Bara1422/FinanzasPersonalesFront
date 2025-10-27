@@ -2,16 +2,20 @@ import { mockCategories } from '@/mocks/category.mock';
 import { mockTransactions } from '@/mocks/transaccion.mock';
 
 export interface CategorySummary {
-  id_category: string;
+  id_category: number;
   nombre: string;
   cantidad: number;
   totalPorCategoria: number;
   tipo: 'GASTO' | 'INGRESO';
 }
 
-export const getCategorySummaryMock = () => {
+export const getCategorySummaryMock = (id_usuario: number) => {
+  const userTransactions = mockTransactions.filter(
+    (transaction) => transaction.id_usuario === id_usuario,
+  );
+
   const summary: CategorySummary[] = mockCategories.map((category) => {
-    const categoryTransactions = mockTransactions.filter(
+    const categoryTransactions = userTransactions.filter(
       (transaction) => transaction.id_categoria === category.id_categoria,
     );
 
