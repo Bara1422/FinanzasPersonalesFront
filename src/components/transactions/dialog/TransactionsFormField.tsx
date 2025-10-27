@@ -1,4 +1,4 @@
-import type { UseFormReturn } from 'react-hook-form';
+import type { FieldValues, Path, UseFormReturn } from 'react-hook-form';
 import {
   FormControl,
   FormField,
@@ -7,21 +7,21 @@ import {
   FormMessage,
 } from '../../ui/form';
 import { Input } from '../../ui/input';
-import type { TransactionsDialogFormData } from './TransactionsDialog';
 
-interface Props {
-  form: UseFormReturn<TransactionsDialogFormData>;
+
+interface Props<T extends FieldValues> {
+  form: UseFormReturn<T>;
   placeholder: string;
   label: string;
-  name: keyof TransactionsDialogFormData;
+  name: Path<T>;
 }
 
-export const TransactionsFormField = ({
+export const TransactionsFormField = <T extends FieldValues>({
   form,
   placeholder,
   label,
   name,
-}: Props) => {
+}: Props<T>) => {
   return (
     <FormField
       control={form.control}

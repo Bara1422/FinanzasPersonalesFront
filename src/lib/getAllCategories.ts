@@ -7,3 +7,7 @@ export const getAllCategories: () => Category[] = () => {
     tipo: category.tipo,
   }));
 };
+
+export const getCategoriesNames: () => string[] = () => {
+  return mockCategories.map((category) => category.nombre);
+};

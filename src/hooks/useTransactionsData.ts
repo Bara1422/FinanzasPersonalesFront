@@ -3,7 +3,7 @@ import { getAllCategories } from '@/lib/getAllCategories';
 import { getTransactionsByType } from '@/lib/getTransactionsByType';
 import { getTransactionsByUser } from '@/lib/getTransactionsByUser';
 
-export const useTransactionsData = (userId: string) => {
+export const useTransactionsData = (userId: number) => {
   const transactions = getTransactionsByUser(userId);
   const categoriesNames = getAllCategories();
 
