@@ -3,7 +3,7 @@ import { TransactionCards } from '@/features/transactions/components/Transaction
 import { TransactionsFilter } from '@/features/transactions/components/TransactionsFilter';
 import { TransactionsTable } from '@/features/transactions/components/TransactionsTable';
 import { TransactionTitle } from '@/features/transactions/components/TransactionTitle';
-import { TransactionsDialog } from '@/features/transactions/dialog/TransactionsDialog';
+import { TransactionsDialog1 } from '@/features/transactions/dialog/TransactionsDialog1';
 import { useTransactionsData } from '@/features/transactions/hooks/useTransactionsData';
 import { useTransactionsFilters } from '@/features/transactions/hooks/useTransactionsFilters';
 import type { Transaction } from '@/mocks/transaccion.mock';
@@ -99,7 +99,7 @@ export const TransactionsPage = () => {
       />
 
       {/* Transaction Dialog */}
-      <TransactionsDialog
+      <TransactionsDialog1
         open={isOpenDialog}
         transaction={edittingTransaction}
         handleOpenDialog={handleOpenDialog}

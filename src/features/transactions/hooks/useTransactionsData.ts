@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import { getAllCategories } from '@/lib/getAllCategories';
 import { getTransactionsByType } from '@/lib/getTransactionsByType';
 import { getTransactionsByUser } from '@/lib/getTransactionsByUser';
+import type { Transaction } from '@/mocks/transaccion.mock';
 
 export const useTransactionsData = (userId: number) => {
   const transactionsByUser = getTransactionsByUser(userId);
@@ -17,11 +18,11 @@ export const useTransactionsData = (userId: number) => {
   );
 
   const { totalIncome, totalExpense, balance } = useMemo(
-    () => getTransactionsByType(transactionsByUser, categoriesMap),
-    [transactionsByUser, categoriesMap],
+    () => getTransactionsByType(transactions, categoriesMap),
+    [transactions, categoriesMap],
   );
 
-  const handleTransactions = (updatedTransactions: typeof transactions) => {
+  const handleTransactions = (updatedTransactions: Transaction[]) => {
     setTransactions(updatedTransactions);
   };
 
