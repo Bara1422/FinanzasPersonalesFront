@@ -1,4 +1,4 @@
-import { FormLabel } from '../../../../components/ui/form';
+import { FieldLabel } from '@/components/ui/field';
 import { RadioGroupItem } from '../../../../components/ui/radio-group';
 
 interface Props {
@@ -17,12 +17,12 @@ export const TransactionsTypeOptionField = ({
   return (
     <div className="flex items-center space-x-2">
       <RadioGroupItem value={name} id={`${uniqueId}-${name}`} />
-      <FormLabel
+      <FieldLabel
         htmlFor={`${uniqueId}-${name}`}
         className={`text-${color} font-semibold`}
       >
         {label}
-      </FormLabel>
+      </FieldLabel>
     </div>
   );
 };

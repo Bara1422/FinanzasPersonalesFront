@@ -1,9 +1,5 @@
 import { z } from 'zod';
-import { getAllCategories } from '@/lib/getAllCategories';
 
-const CATEGORIAS_VALIDAS = getAllCategories().map(
-  (category) => category.nombre,
-);
 
 export const formNewTransactionSchema = z.object({
   tipo: z.enum(['INGRESO', 'GASTO'], { message: 'Tipo inválido' }),
@@ -11,8 +7,8 @@ export const formNewTransactionSchema = z.object({
     .string()
     .min(3, 'La descripción debe tener al menos 3 caracteres')
     .max(100, 'La descripción no puede exceder los 100 caracteres'),
-  monto: z
-    .number('El monto debe ser un número')
-    .positive('El monto debe ser un número positivo'),
-  categoria: z.enum(CATEGORIAS_VALIDAS),
+  monto: z.number().min(1, { message: 'El monto debe ser mayor a 0' }),
+  id_categoria: z
+    .number()
+    .min(1, { message: 'Selecciona una categoría válida' }),
 });
