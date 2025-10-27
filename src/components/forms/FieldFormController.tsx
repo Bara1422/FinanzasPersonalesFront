@@ -1,37 +1,54 @@
-import { Controller, type UseFormReturn } from 'react-hook-form';
-import type { FormData } from '../../features/account/UserFormData';
+import {
+  Controller,
+  type FieldValues,
+  type Path,
+  type UseFormReturn,
+} from 'react-hook-form';
 import { Field, FieldError, FieldLabel } from '../ui/field';
 import { Input } from '../ui/input';
 
-interface Props {
-  form: UseFormReturn<FormData>;
+interface Props<T extends FieldValues> {
+  form: UseFormReturn<T>;
   uniqueId: string;
-  fieldName: keyof FormData;
-  fieldContentName: string;
-  isEditting: boolean;
+  name: Path<T>;
+  label: string;
+  placeholder?: string;
+  isEditting?: boolean;
+  type?: 'text' | 'number' | 'date';
+  min?: string;
 }
 
-export const FieldFormController = ({
+export const FieldFormController = <T extends FieldValues>({
   form,
   uniqueId,
-  fieldName,
-  fieldContentName,
-  isEditting,
-}: Props) => {
+  name,
+  placeholder,
+  label,
+  isEditting = true,
+  type = 'text',
+  min = '',
+}: Props<T>) => {
   return (
     <Controller
       control={form.control}
-      name={fieldName}
+      name={name}
       render={({ field, fieldState }) => (
         <Field data-invalid={fieldState.invalid}>
-          <FieldLabel htmlFor={`${uniqueId}-${fieldName}`}>
-            {fieldContentName}
-          </FieldLabel>
+          <FieldLabel htmlFor={`${uniqueId}-${name}`}>{label}</FieldLabel>
           <Input
             {...field}
-            id={`${uniqueId}-${fieldName}`}
+            type={type}
+            placeholder={placeholder}
+            id={`${uniqueId}-${name}`}
             aria-invalid={fieldState.invalid}
             disabled={!isEditting}
+            min={min}
+            onChange={(e) => {
+              const value =
+                type === 'number' ? Number(e.target.value) : e.target.value;
+              field.onChange(value);
+            }}
+            value={type === 'number' && field.value === 0 ? '' : field.value}
           />
           {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
         </Field>
