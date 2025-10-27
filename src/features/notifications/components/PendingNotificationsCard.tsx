@@ -12,6 +12,7 @@ interface Props {
   filteredNotifications: Notification[];
   pendingNotifications: Notification[];
   getDaysLeft: (dayDate: string) => number;
+  markAsPaid: (id_notificacion: number) => void;
   categories: Category[];
 }
 
@@ -19,9 +20,9 @@ export const PendingNotificationsCard = ({
   filteredNotifications,
   pendingNotifications,
   getDaysLeft,
+  markAsPaid,
   categories,
 }: Props) => {
-  
   /* Prioridad color */
   const getPriorityColor = (priority: string) => {
     switch (priority) {
@@ -82,7 +83,7 @@ export const PendingNotificationsCard = ({
                     <p className="font-medium text-destructive text-lg">
                       ${notification.monto.toLocaleString()}
                     </p>
-                    <NotificationsButtons />
+                    <NotificationsButtons markAsPaid={markAsPaid} id_notificacion={notification.id_notificacion} />
                   </div>
                 </div>
               );

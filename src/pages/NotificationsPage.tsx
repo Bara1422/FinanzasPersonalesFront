@@ -4,18 +4,14 @@ import { Button } from '@/components/ui/button';
 import { PaidNotificationsCard } from '@/features/notifications/components/PaidNotificationsCard';
 import { PendingNotificationsCard } from '@/features/notifications/components/PendingNotificationsCard';
 import { NotificationsDialog } from '@/features/notifications/dialog/NotificationsDialog';
+import { useNotificationsData } from '@/features/notifications/hooks/useNotificationsData';
 import { getAllCategories } from '@/lib/getAllCategories';
-import { mockNotifications } from '@/mocks/notification.mock';
 
 export const NotificationsPage = () => {
   const categories = getAllCategories();
   const [isOpenDialog, setIsOpenDialog] = useState(false);
-  const filteredNotifications = mockNotifications.filter(
-    (user) => user.id_usuario === 1,
-  );
-  const pendingNotifications = filteredNotifications.filter(
-    (notification) => !notification.pagado,
-  );
+  const { notifications, pendingNotifications, addNotification, markAsPaid } =
+    useNotificationsData(1);
 
   const getDaysLeft = (dayDate: string) => {
     const today = new Date();
@@ -47,7 +43,8 @@ export const NotificationsPage = () => {
 
       {/* Notifications */}
       <PendingNotificationsCard
-        filteredNotifications={filteredNotifications}
+        markAsPaid={markAsPaid}
+        filteredNotifications={notifications}
         pendingNotifications={pendingNotifications}
         getDaysLeft={getDaysLeft}
         categories={categories}
@@ -55,13 +52,14 @@ export const NotificationsPage = () => {
 
       {/* Paid History */}
       <PaidNotificationsCard
-        filteredNotifications={filteredNotifications}
+        filteredNotifications={notifications}
         categories={categories}
       />
 
       <NotificationsDialog
-        filteredNotifications={filteredNotifications}
+        filteredNotifications={notifications}
         open={isOpenDialog}
+        addNotification={addNotification}
         onOpenChange={handleOpenDialog}
         categories={categories}
       />

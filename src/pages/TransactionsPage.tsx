@@ -3,7 +3,7 @@ import { TransactionCards } from '@/features/transactions/components/Transaction
 import { TransactionsFilter } from '@/features/transactions/components/TransactionsFilter';
 import { TransactionsTable } from '@/features/transactions/components/TransactionsTable';
 import { TransactionTitle } from '@/features/transactions/components/TransactionTitle';
-import { TransactionsDialog1 } from '@/features/transactions/dialog/TransactionsDialog1';
+import { TransactionsDialog } from '@/features/transactions/dialog/TransactionsDialog';
 import { useTransactionsData } from '@/features/transactions/hooks/useTransactionsData';
 import { useTransactionsFilters } from '@/features/transactions/hooks/useTransactionsFilters';
 import type { Transaction } from '@/mocks/transaccion.mock';
@@ -16,13 +16,15 @@ export const TransactionsPage = () => {
     transactions,
     categoriesMap,
     categoriesNames,
-    handleTransactions,
+    addTransaction,
+    deleteTransaction,
+    updateTransaction,
   } = useTransactionsData(1);
 
   const {
     filterType,
     filterCategory,
-    visibleTransactions,
+    filteredTransactions,
     handleFilterCategoryChange,
     handleFilterTypeChange,
   } = useTransactionsFilters({ transactions, categoriesMap });
@@ -33,6 +35,9 @@ export const TransactionsPage = () => {
   >(undefined);
 
   const handleOpenDialog = (open: boolean) => {
+    if (!open) {
+      setEdittingTransaction(undefined);
+    }
     setIsOpenDialog(open);
   };
 
@@ -41,35 +46,19 @@ export const TransactionsPage = () => {
     setIsOpenDialog(true);
   };
 
-  const handleCreate = () => {
-    setEdittingTransaction(undefined);
-    setIsOpenDialog(true);
-  };
-
-  const handleDelete = (transactionId: number) => {
-    const updatedTransactions = transactions.filter(
-      (transaction) => transaction.id_transaccion !== transactionId,
-    );
-    handleTransactions(updatedTransactions);
-    console.log('Eliminar transacción con ID:', transactionId);
-  };
-
   const handleSave = (transaction: Transaction) => {
     if (edittingTransaction) {
-      const updatedTransactions = transactions.map((t) =>
-        t.id_transaccion === transaction.id_transaccion ? transaction : t,
-      );
-      handleTransactions(updatedTransactions);
+      updateTransaction(transaction);
     } else {
-      const updatedTransactions = [...transactions, transaction];
-      handleTransactions(updatedTransactions);
+      addTransaction(transaction);
     }
+    setIsOpenDialog(false);
+    setEdittingTransaction(undefined);
   };
-
   return (
     <div className="space-y-6 p-6">
       {/* Title */}
-      <TransactionTitle handleOpenDialog={handleCreate} />
+      <TransactionTitle handleOpenDialog={handleOpenDialog} />
 
       {/* Cards */}
       <TransactionCards
@@ -89,17 +78,17 @@ export const TransactionsPage = () => {
 
       {/* Transaction Table */}
       <TransactionsTable
-        visibleTransactions={visibleTransactions}
+        visibleTransactions={filteredTransactions}
         categoriesMap={categoriesMap}
         transactions={transactions}
         open={isOpenDialog}
         handleOpenDialog={handleOpenDialog}
         onEdit={handleEdit}
-        onDelete={handleDelete}
+        onDelete={deleteTransaction}
       />
 
       {/* Transaction Dialog */}
-      <TransactionsDialog1
+      <TransactionsDialog
         open={isOpenDialog}
         transaction={edittingTransaction}
         handleOpenDialog={handleOpenDialog}

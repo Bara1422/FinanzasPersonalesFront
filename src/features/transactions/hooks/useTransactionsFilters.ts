@@ -23,7 +23,7 @@ export const useTransactionsFilters = ({
     setFilterCategory('todas');
   };
 
-  const visibleTransactions = useMemo(() => {
+  const filteredTransactions = useMemo(() => {
     let filtered = transactions;
 
     if (filterType !== 'todos') {
@@ -39,7 +39,7 @@ export const useTransactionsFilters = ({
       );
     }
 
-    return filtered.sort((a, b) => b.fecha.localeCompare(a.fecha)).slice(0, 5);
+    return filtered.sort((a, b) => b.fecha.localeCompare(a.fecha));
   }, [transactions, filterType, filterCategory, categoriesMap]);
 
   return {
@@ -47,7 +47,7 @@ export const useTransactionsFilters = ({
     setFilterType,
     filterCategory,
     setFilterCategory,
-    visibleTransactions,
+    filteredTransactions,
     handleFilterCategoryChange,
     handleFilterTypeChange,
   };

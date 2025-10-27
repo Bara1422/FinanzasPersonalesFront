@@ -1,11 +1,11 @@
-import type { UseFormReturn } from 'react-hook-form';
+import { Controller, type UseFormReturn } from 'react-hook-form';
 import {
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '../../../../components/ui/form';
+  Field,
+  FieldContent,
+  FieldError,
+  FieldGroup,
+  FieldLabel,
+} from '@/components/ui/field';
 import { RadioGroup } from '../../../../components/ui/radio-group';
 import type { TransactionsDialogFormData } from '../TransactionsDialog';
 import { TransactionsTypeOptionField } from './TransactionsTypeOptionField';
@@ -13,20 +13,32 @@ import { TransactionsTypeOptionField } from './TransactionsTypeOptionField';
 interface Props {
   form: UseFormReturn<TransactionsDialogFormData>;
   uniqueId: string;
+  name: keyof TransactionsDialogFormData;
+  label: string;
 }
 
-export const TransactionsTypeFormField = ({ form, uniqueId }: Props) => {
+export const TransactionsTypeFormField = ({
+  form,
+  uniqueId,
+  name,
+  label,
+}: Props) => {
   return (
-    <FormField
-      control={form.control}
-      name="tipo"
-      render={({ field }) => (
-        <FormItem className="space-y-2">
-          <FormLabel>Tipo de Transacción</FormLabel>
-          <FormControl>
+    <FieldGroup>
+      <Controller
+        control={form.control}
+        name={name}
+        render={({ field, fieldState }) => (
+          <Field data-invalid={fieldState.invalid} className="space-y-2">
+            <FieldContent>
+              <FieldLabel htmlFor={`${uniqueId}-${name}`}>{label}</FieldLabel>
+              {fieldState.invalid && <FieldError errors={[fieldState.error]} />}
+            </FieldContent>
             <RadioGroup
               onValueChange={field.onChange}
-              value={field.value}
+              value={field.value.toString()}
+              name={field.name}
+              aria-invalid={fieldState.invalid}
               className="flex gap-6"
             >
               <TransactionsTypeOptionField
@@ -42,10 +54,9 @@ export const TransactionsTypeFormField = ({ form, uniqueId }: Props) => {
                 color="destructive"
               />
             </RadioGroup>
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      )}
-    />
+          </Field>
+        )}
+      />
+    </FieldGroup>
   );
 };
