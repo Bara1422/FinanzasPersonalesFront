@@ -3,15 +3,10 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
+import { FormDialogHeader } from '@/components/forms/FormHeader';
+import { FormLabelField } from '@/components/forms/FormLabelField';
 import { Button } from '@/components/ui/button';
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog';
+import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog';
 import {
   Form,
   FormControl,
@@ -20,7 +15,6 @@ import {
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
 import {
   Select,
   SelectContent,
@@ -33,7 +27,6 @@ import { sleep } from '@/lib/sleep';
 import type { Category } from '@/mocks/category.mock';
 import type { Notification } from '@/mocks/notification.mock';
 import { notificationSchema } from '@/schemas/formNotification.schema';
-import { NotificationsDialogField } from './NotificationsDialogField';
 
 interface Props {
   open: boolean;
@@ -95,18 +88,16 @@ export const NotificationsDialog = ({
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Nueva Notificación</DialogTitle>
-          <DialogDescription>
-            Registra un nuevo gasto pendiente o vencimiento programado.
-          </DialogDescription>
-        </DialogHeader>
+        <FormDialogHeader
+          title="Nueva Notificación"
+          description=" Registra un nuevo gasto pendiente o vencimiento programado."
+        />
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="grid gap-4 py-4">
               <div className="space-y-4">
                 {/* Message */}
-                <NotificationsDialogField
+                <FormLabelField
                   form={form}
                   name="mensaje"
                   label="Mensaje"
@@ -114,7 +105,7 @@ export const NotificationsDialog = ({
                 />
 
                 {/* Amount */}
-                <NotificationsDialogField
+                <FormLabelField
                   form={form}
                   name="monto"
                   label="Monto"
@@ -191,7 +182,7 @@ export const NotificationsDialog = ({
                 />
 
                 {/* Expiration date */}
-                <NotificationsDialogField
+                <FormLabelField
                   form={form}
                   min={formDateForInput(new Date().toISOString())}
                   name="fecha_vencimiento"

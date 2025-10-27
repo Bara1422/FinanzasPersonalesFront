@@ -1,7 +1,7 @@
 import { Controller, type UseFormReturn } from 'react-hook-form';
+import type { FormData } from '../../features/account/UserFormData';
 import { Field, FieldError, FieldLabel } from '../ui/field';
 import { Input } from '../ui/input';
-import type { FormData } from './UserFormData';
 
 interface Props {
   form: UseFormReturn<FormData>;

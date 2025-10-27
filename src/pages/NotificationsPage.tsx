@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { PageTitle } from '@/components/common/PageTitle';
-import { NotificationsDialog } from '@/components/notifications/dialog/NotificationsDialog';
-import { PaidNotificationsCard } from '@/components/notifications/PaidNotificationsCard';
-import { PendingNotificationsCard } from '@/components/notifications/PendingNotificationsCard';
 import { Button } from '@/components/ui/button';
+import { PaidNotificationsCard } from '@/features/notifications/components/PaidNotificationsCard';
+import { PendingNotificationsCard } from '@/features/notifications/components/PendingNotificationsCard';
+import { NotificationsDialog } from '@/features/notifications/dialog/NotificationsDialog';
 import { getAllCategories } from '@/lib/getAllCategories';
 import { mockNotifications } from '@/mocks/notification.mock';
 

@@ -1,14 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import { PageTitle } from '@/components/common/PageTitle';
-import { ProfileInfo } from '@/components/common/ProfileInfo';
-import { UserFormData } from '@/components/forms/UserFormData';
-import {
-  Card,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
+import { Card } from '@/components/ui/card';
+import { ProfileInfo } from '@/features/account/ProfileInfo';
+import { UserFormData } from '@/features/account/UserFormData';
 import { mockUsers, type User } from '@/mocks/user.mock';
 
 export const AccountManagement = () => {
@@ -43,10 +39,10 @@ export const AccountManagement = () => {
 
       {/* User Card */}
       <Card>
-        <CardHeader>
-          <CardTitle>Información de la Cuenta</CardTitle>
-          <CardDescription>Actualiza tu información de perfil</CardDescription>
-        </CardHeader>
+        <CardHeaderCustom
+          title="Información de la Cuenta"
+          description="Actualiza tu información de perfil"
+        />
 
         {/* Form */}
         <UserFormData mockUser={user} />

@@ -8,11 +8,17 @@ import type { Transaction } from '@/mocks/transaccion.mock';
 interface Props {
   categoriesMap: Record<string, Category>;
   visibleTransactions: Transaction[];
+  open: boolean;
+  handleOpenDialog: (open: boolean) => void;
+  onEdit: (transaction: Transaction) => void;
+  onDelete: (transactionId: number) => void;
 }
 
 export const TransactionsTableBody = ({
   visibleTransactions,
   categoriesMap,
+  onEdit,
+  onDelete,
 }: Props) => {
   const isIncome = (tipo: string) => tipo === 'INGRESO';
 
@@ -42,7 +48,11 @@ export const TransactionsTableBody = ({
               </span>
             </TableCell>
             <TableCell className="text-right">
-              <EditDeleteButtons />
+              <EditDeleteButtons
+                onEdit={() => onEdit(transaction)}
+                transaction={transaction}
+                onDelete={() => onDelete(transaction.id_transaccion)}
+              />
             </TableCell>
           </TableRow>
         );

@@ -5,9 +5,9 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from '../../ui/form';
-import { RadioGroup } from '../../ui/radio-group';
-import type { TransactionsDialogFormData } from './TransactionsDialog';
+} from '../../../../components/ui/form';
+import { RadioGroup } from '../../../../components/ui/radio-group';
+import type { TransactionsDialogFormData } from '../TransactionsDialog';
 import { TransactionsTypeOptionField } from './TransactionsTypeOptionField';
 
 interface Props {
@@ -31,13 +31,13 @@ export const TransactionsTypeFormField = ({ form, uniqueId }: Props) => {
             >
               <TransactionsTypeOptionField
                 uniqueId={uniqueId}
-                name="ingreso"
+                name="INGRESO"
                 label="Ingreso"
                 color="green-500"
               />
               <TransactionsTypeOptionField
                 uniqueId={uniqueId}
-                name="gasto"
+                name="GASTO"
                 label="Gasto"
                 color="destructive"
               />

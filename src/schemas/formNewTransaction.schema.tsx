@@ -6,7 +6,7 @@ const CATEGORIAS_VALIDAS = getAllCategories().map(
 );
 
 export const formNewTransactionSchema = z.object({
-  tipo: z.enum(['ingreso', 'gasto']),
+  tipo: z.enum(['INGRESO', 'GASTO'], { message: 'Tipo inválido' }),
   descripcion: z
     .string()
     .min(3, 'La descripción debe tener al menos 3 caracteres')

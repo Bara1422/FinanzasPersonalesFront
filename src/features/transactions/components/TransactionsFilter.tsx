@@ -1,13 +1,11 @@
 import { Search } from 'lucide-react';
+import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
 import type { Category } from '@/mocks/category.mock';
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from '../../ui/card';
-import { Input } from '../../ui/input';
+} from '../../../components/ui/card';
+import { Input } from '../../../components/ui/input';
 import {
   Select,
   SelectContent,
@@ -16,7 +14,7 @@ import {
   SelectLabel,
   SelectTrigger,
   SelectValue,
-} from '../../ui/select';
+} from '../../../components/ui/select';
 
 interface Props {
   typeFilter: (value: string) => void;
@@ -33,20 +31,19 @@ export const TransactionsFilter = ({
   filterCategory,
   categoriesNames,
 }: Props) => {
-  // si filterTypes es ingresos, filtrar solo ingresos en categorias
   const filteredCategories =
-    filterType === 'ingreso'
+    filterType === 'INGRESO'
       ? categoriesNames.filter((category) => category.tipo === 'INGRESO')
-      : filterType === 'gasto'
+      : filterType === 'GASTO'
         ? categoriesNames.filter((category) => category.tipo === 'GASTO')
         : categoriesNames;
 
   return (
     <Card>
-      <CardHeader>
-        <CardTitle>Filtros</CardTitle>
-        <CardDescription>Busca y filtra tus transacciones</CardDescription>
-      </CardHeader>
+      <CardHeaderCustom
+        title="Filtros"
+        description="Busca y filtra tus transacciones"
+      />
       <CardContent>
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
           <div className="relative flex-1">
@@ -86,7 +83,7 @@ export const TransactionsFilter = ({
                         .map((categoryName) => (
                           <SelectItem
                             key={categoryName.nombre}
-                            value={categoryName.id_categoria}
+                            value={categoryName.id_categoria.toString()}
                           >
                             {categoryName.nombre}
                           </SelectItem>
@@ -96,7 +93,7 @@ export const TransactionsFilter = ({
                 : filteredCategories.map((categoryName) => (
                     <SelectItem
                       key={categoryName.nombre}
-                      value={categoryName.id_categoria}
+                      value={categoryName.id_categoria.toString()}
                     >
                       {categoryName.nombre}
                     </SelectItem>

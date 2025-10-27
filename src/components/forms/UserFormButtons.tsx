@@ -1,8 +1,8 @@
 import { Loader2, Save } from 'lucide-react';
 import type { UseFormReturn } from 'react-hook-form';
+import type { FormData } from '../../features/account/UserFormData';
 import { Button } from '../ui/button';
 import { Field } from '../ui/field';
-import type { FormData } from './UserFormData';
 
 interface Props {
   isEditting: boolean;

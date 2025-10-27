@@ -1,9 +1,10 @@
+import { Clock } from 'lucide-react';
+import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
 import type { Category } from '@/mocks/category.mock';
 import type { Notification } from '@/mocks/notification.mock';
-import { Card, CardContent } from '../ui/card';
+import { Card, CardContent } from '../../../components/ui/card';
 import { NoPendingNotifications } from './NoPendingNotifications';
 import { NotificationsButtons } from './NotificationsButtons';
-import { NotificationsCardHeader } from './NotificationsCardHeader';
 import { NotificationsDaysLeft } from './NotificationsDaysLeft';
 import { NotificationsMessage } from './NotificationsMessage';
 
@@ -20,18 +21,28 @@ export const PendingNotificationsCard = ({
   getDaysLeft,
   categories,
 }: Props) => {
-  /* Color Prioridad */
-  const getPriorityColor = (daysLeft: number) => {
-    return daysLeft < 0
-      ? 'border-destructive bg-destructive/5'
-      : daysLeft <= 3
-        ? 'border-yellow-500/50 bg-yellow-500/5'
-        : '';
+  
+  /* Prioridad color */
+  const getPriorityColor = (priority: string) => {
+    switch (priority) {
+      case 'ALTA':
+        return 'border-red-500/50 bg-red-500/10';
+      case 'MEDIA':
+        return 'border-yellow-500/50 bg-yellow-500/10';
+      case 'BAJA':
+        return 'border-green-500/50 bg-green-500/10';
+      default:
+        return 'border-gray-500/50 bg-gray-500/10';
+    }
   };
 
   return (
     <Card>
-      <NotificationsCardHeader filteredNotifications={filteredNotifications} />
+      <CardHeaderCustom
+        icon={<Clock className="h-5 w-5" />}
+        title="Gastos Pendientes"
+        description={`Gastos programados que aun no fueron pagados ${filteredNotifications.length}`}
+      />
       <CardContent>
         {pendingNotifications.length === 0 ? (
           <NoPendingNotifications />
@@ -46,13 +57,14 @@ export const PendingNotificationsCard = ({
                 <div
                   key={notification.id_notificacion}
                   className={`flex items-start justify-between gap-4 p-4 rounded-lg border 
-                      ${getPriorityColor(daysLeft)}`}
+                      ${getPriorityColor(notification.prioridad)}`}
                 >
                   <div className="flex items-center gap-3">
                     <div className="flex-1 space-y-2">
                       {/* Message */}
                       <NotificationsMessage
                         notification={notification}
+                        getPriorityColor={getPriorityColor}
                         categories={categories}
                       />
 

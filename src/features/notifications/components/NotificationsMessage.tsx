@@ -1,4 +1,4 @@
-import { Badge } from '../ui/badge';
+import { Badge } from '../../../components/ui/badge';
 
 type NotificationPriority = 'ALTA' | 'MEDIA' | 'BAJA';
 
@@ -12,22 +12,14 @@ interface Props {
     id_categoria: number;
     nombre: string;
   }[];
+  getPriorityColor: (priority: string) => string;
 }
 
-export const NotificationsMessage = ({ notification, categories }: Props) => {
-  const getPriorityTextColor = (priority: NotificationPriority) => {
-    switch (priority) {
-      case 'ALTA':
-        return 'border-destructive text-destructive';
-      case 'MEDIA':
-        return 'border-yellow-500 text-yellow-600';
-      case 'BAJA':
-        return 'border-chart-2 text-chart-2';
-      default:
-        return 'border-muted text-muted-foreground';
-    }
-  };
-
+export const NotificationsMessage = ({
+  notification,
+  categories,
+  getPriorityColor,
+}: Props) => {
   return (
     <div className="flex items-start justify-between ">
       <div>
@@ -42,7 +34,7 @@ export const NotificationsMessage = ({ notification, categories }: Props) => {
           </Badge>
           <Badge
             variant="outline"
-            className={`text-xs ${getPriorityTextColor(notification.prioridad)}`}
+            className={`text-xs ${getPriorityColor(notification.prioridad)}`}
           >
             {notification.prioridad.slice(0, 1).toUpperCase() +
               notification.prioridad.slice(1).toLowerCase()}

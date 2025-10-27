@@ -6,10 +6,10 @@ import type { z } from 'zod';
 import { sleep } from '@/lib/sleep';
 import type { User } from '@/mocks/user.mock';
 import { formSchema } from '@/schemas/formUserEdit.schema';
-import { CardContent, CardFooter } from '../ui/card';
-import { FieldGroup } from '../ui/field';
-import { FieldFormController } from './FieldFormController';
-import { UserFormButtons } from './UserFormButtons';
+import { FieldFormController } from '../../components/forms/FieldFormController';
+import { UserFormButtons } from '../../components/forms/UserFormButtons';
+import { CardContent, CardFooter } from '../../components/ui/card';
+import { FieldGroup } from '../../components/ui/field';
 
 export type FormData = z.infer<typeof formSchema>;
 

@@ -17,7 +17,7 @@ interface Props<T extends FieldValues> {
   type?: 'text' | 'number' | 'date';
 }
 
-export const NotificationsDialogField = <T extends FieldValues>({
+export const FormLabelField = <T extends FieldValues>({
   form,
   name,
   label,

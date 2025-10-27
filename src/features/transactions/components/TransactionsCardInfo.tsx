@@ -1,5 +1,5 @@
 import { getAmountInfo } from '@/lib/getAmmountInfo';
-import { Card, CardContent, CardHeader, CardTitle } from '../../ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
 
 export const TransactionsCardInfo = ({
   title,
