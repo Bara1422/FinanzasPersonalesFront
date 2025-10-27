@@ -1,11 +1,24 @@
 import { CheckCircle, Trash2 } from 'lucide-react';
 import { Button } from '../../../components/ui/button';
 
-export const NotificationsButtons = () => {
+interface Props {
+  markAsPaid: (id_notificacion: number) => void;
+  id_notificacion: number;
+}
+
+export const NotificationsButtons = ({
+  markAsPaid,
+  id_notificacion,
+}: Props) => {
   return (
     <div className="flex items-center gap-2 pt-2">
       {/* TODO: cambiar estado en back y generar transaccion */}
-      <Button variant="default" size="sm" className="h-8 px-3 text-xs cursor-pointer">
+      <Button
+        variant="default"
+        size="sm"
+        className="h-8 px-3 text-xs cursor-pointer"
+        onClick={() => markAsPaid(id_notificacion)}
+      >
         <CheckCircle className="mr-1 h-3 w-3" />
         Marcar como pagado
       </Button>

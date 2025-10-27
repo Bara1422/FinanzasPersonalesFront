@@ -17,6 +17,7 @@ interface Props {
 export const TransactionsTableBody = ({
   visibleTransactions,
   categoriesMap,
+  handleOpenDialog,
   onEdit,
   onDelete,
 }: Props) => {
@@ -49,7 +50,10 @@ export const TransactionsTableBody = ({
             </TableCell>
             <TableCell className="text-right">
               <EditDeleteButtons
-                onEdit={() => onEdit(transaction)}
+                onEdit={() => {
+                  handleOpenDialog(true);
+                  onEdit(transaction);
+                }}
                 transaction={transaction}
                 onDelete={() => onDelete(transaction.id_transaccion)}
               />

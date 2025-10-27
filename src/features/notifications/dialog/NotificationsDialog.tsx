@@ -16,6 +16,7 @@ interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   categories: Category[];
+  addNotification: (notification: Notification) => void;
   filteredNotifications: Notification[];
 }
 
@@ -26,6 +27,7 @@ export const NotificationsDialog = ({
   onOpenChange,
   categories,
   filteredNotifications,
+  addNotification,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
   const uniqueId = useId();
@@ -42,7 +44,7 @@ export const NotificationsDialog = ({
       pagado: false,
     };
     console.log('Transaccion', newNotification);
-    filteredNotifications.push(newNotification);
+    addNotification(newNotification);
     setIsLoading(false);
     console.log(filteredNotifications);
     onOpenChange(false);
