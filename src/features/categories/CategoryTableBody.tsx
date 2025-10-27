@@ -1,6 +1,6 @@
 import type { CategorySummary } from '@/lib/getCategorySummaryMock';
-import { Badge } from '../ui/badge';
-import { TableCell, TableRow } from '../ui/table';
+import { Badge } from '../../components/ui/badge';
+import { TableCell, TableRow } from '../../components/ui/table';
 
 interface CategoryTableBodyProps {
   category: CategorySummary;

@@ -1,9 +1,9 @@
-import { GastosIngresosCard } from '@/components/categories/Gastos-IngresosCard';
 import { PageTitle } from '@/components/common/PageTitle';
+import { GastosIngresosCard } from '@/features/categories/Gastos-IngresosCard';
 import { getCategorySummaryMock } from '@/lib/getCategorySummaryMock';
 
 export const CategoriesPage = () => {
-  const categorySummary = getCategorySummaryMock();
+  const categorySummary = getCategorySummaryMock(1);
   const gastos = categorySummary.filter((item) => item.tipo === 'GASTO');
   const ingresos = categorySummary.filter((item) => item.tipo === 'INGRESO');
   return (
