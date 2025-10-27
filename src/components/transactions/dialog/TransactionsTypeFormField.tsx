@@ -33,7 +33,7 @@ export const TransactionsTypeFormField = ({ form, uniqueId }: Props) => {
                 uniqueId={uniqueId}
                 name="ingreso"
                 label="Ingreso"
-                color="chart-2"
+                color="green-500"
               />
               <TransactionsTypeOptionField
                 uniqueId={uniqueId}

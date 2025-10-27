@@ -15,7 +15,7 @@ export const TransactionsPage = () => {
     transactions,
     categoriesMap,
     categoriesNames,
-  } = useTransactionsData('1');
+  } = useTransactionsData(1);
 
   const {
     filterType,
@@ -71,7 +71,7 @@ export const TransactionsPage = () => {
       {/* Transaction Dialog */}
       <TransactionsDialog
         open={isOpenDialog}
-        handleOpenDialog={setIsOpenDialog}
+        handleOpenDialog={handleOpenDialog}
       />
     </div>
   );
