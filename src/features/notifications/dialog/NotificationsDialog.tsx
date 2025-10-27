@@ -1,32 +1,16 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useState } from 'react';
+import { useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 import { FormDialogHeader } from '@/components/forms/FormHeader';
-import { FormLabelField } from '@/components/forms/FormLabelField';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog';
-import {
-  Form,
-  FormControl,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from '@/components/ui/form';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { formDateForInput } from '@/lib/formDateForInput';
 import { sleep } from '@/lib/sleep';
 import type { Category } from '@/mocks/category.mock';
 import type { Notification } from '@/mocks/notification.mock';
 import { notificationSchema } from '@/schemas/formNotification.schema';
+import { NotificationsDialogBody } from './components/NotificationsDialogBody';
 
 interface Props {
   open: boolean;
@@ -44,6 +28,7 @@ export const NotificationsDialog = ({
   filteredNotifications,
 }: Props) => {
   const [isLoading, setIsLoading] = useState(false);
+  const uniqueId = useId();
 
   const onSubmit = async (data: NotificationsDialogFormData) => {
     setIsLoading(true);
@@ -75,16 +60,6 @@ export const NotificationsDialog = ({
     },
   });
 
-  const categoriesFiltered = categories.filter(
-    (category) => category.tipo === 'GASTO',
-  );
-
-  const Priorities = [
-    { label: 'Alta', value: 'ALTA' },
-    { label: 'Media', value: 'MEDIA' },
-    { label: 'Baja', value: 'BAJA' },
-  ];
-
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
@@ -92,129 +67,38 @@ export const NotificationsDialog = ({
           title="Nueva Notificación"
           description=" Registra un nuevo gasto pendiente o vencimiento programado."
         />
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="grid gap-4 py-4">
-              <div className="space-y-4">
-                {/* Message */}
-                <FormLabelField
-                  form={form}
-                  name="mensaje"
-                  label="Mensaje"
-                  placeholder="Ej: Pago de alquiler, Cuota del gimnasio..."
-                />
+        <form
+          id={`${uniqueId}-notifications-form`}
+          onSubmit={form.handleSubmit(onSubmit)}
+        >
+          <NotificationsDialogBody
+            form={form}
+            uniqueId={uniqueId}
+            categories={categories}
+          />
 
-                {/* Amount */}
-                <FormLabelField
-                  form={form}
-                  name="monto"
-                  label="Monto"
-                  type="number"
-                  placeholder="1200"
-                />
-
-                {/* TODO: Hacer reutilizables los select */}
-                {/* Category */}
-                <FormField
-                  control={form.control}
-                  name="id_categoria"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Categoría</FormLabel>
-                      <Select
-                        onValueChange={(value) => field.onChange(Number(value))}
-                        value={field.value?.toString()}
-                        defaultValue={categoriesFiltered[0]?.id_categoria.toString()}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecciona una categoría" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {categoriesFiltered.map((category) => (
-                            <SelectItem
-                              className="cursor-pointer"
-                              key={category.id_categoria}
-                              value={category.id_categoria.toString()}
-                            >
-                              {category.nombre}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Priority */}
-                <FormField
-                  control={form.control}
-                  name="prioridad"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Prioridad</FormLabel>
-                      <Select
-                        onValueChange={field.onChange}
-                        value={field.value}
-                      >
-                        <FormControl>
-                          <SelectTrigger>
-                            <SelectValue placeholder="Selecciona una prioridad" />
-                          </SelectTrigger>
-                        </FormControl>
-                        <SelectContent>
-                          {Priorities.map((priority) => (
-                            <SelectItem
-                              className="cursor-pointer"
-                              key={priority.value}
-                              value={priority.value}
-                            >
-                              {priority.label}
-                            </SelectItem>
-                          ))}
-                        </SelectContent>
-                      </Select>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-
-                {/* Expiration date */}
-                <FormLabelField
-                  form={form}
-                  min={formDateForInput(new Date().toISOString())}
-                  name="fecha_vencimiento"
-                  label="Fecha de Vencimiento"
-                  type="date"
-                />
-              </div>
-            </div>
-
-            <DialogFooter>
-              <Button
-                type="button"
-                className="cursor-pointer"
-                variant="outline"
-                onClick={() => {
-                  onOpenChange(false);
-                  form.reset();
-                }}
-              >
-                Cancelar
-              </Button>
-              {/* TODO: pegar a la api */}
-              <Button
-                type="submit"
-                className="cursor-pointer"
-                disabled={isLoading}
-              >
-                Crear
-              </Button>
-            </DialogFooter>
-          </form>
-        </Form>
+          <DialogFooter>
+            <Button
+              type="button"
+              className="cursor-pointer"
+              variant="outline"
+              onClick={() => {
+                onOpenChange(false);
+                form.reset();
+              }}
+            >
+              Cancelar
+            </Button>
+            {/* TODO: pegar a la api */}
+            <Button
+              type="submit"
+              className="cursor-pointer"
+              disabled={isLoading}
+            >
+              Crear
+            </Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

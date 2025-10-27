@@ -54,8 +54,8 @@ export const UserFormData = ({ mockUser }: { mockUser: User }) => {
             <FieldFormController
               form={form}
               uniqueId={uniqueId}
-              fieldName="nombre"
-              fieldContentName="Nombre Completo"
+              name="nombre"
+              label="Nombre Completo"
               isEditting={isEditting}
             />
 
@@ -63,8 +63,8 @@ export const UserFormData = ({ mockUser }: { mockUser: User }) => {
             <FieldFormController
               form={form}
               uniqueId={uniqueId}
-              fieldName="email"
-              fieldContentName="Email"
+              name="email"
+              label="Email"
               isEditting={isEditting}
             />
 
@@ -72,8 +72,8 @@ export const UserFormData = ({ mockUser }: { mockUser: User }) => {
             <FieldFormController
               form={form}
               uniqueId={uniqueId}
-              fieldName="username"
-              fieldContentName="Nombre de Usuario"
+              name="username"
+              label="Nombre de Usuario"
               isEditting={isEditting}
             />
           </FieldGroup>
