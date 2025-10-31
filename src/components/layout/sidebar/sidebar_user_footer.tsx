@@ -13,9 +13,16 @@ import {
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { mockUsers } from '@/mocks/user.mock';
+import { useAuthStore } from '@/store/authStore';
 
 export const SidebarUserFooter = () => {
   const mockUserId = mockUsers[0].id_usuario;
+  const { logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <SidebarFooter>
       <SidebarMenu>
@@ -34,7 +41,10 @@ export const SidebarUserFooter = () => {
               <DropdownMenuItem className="hover:cursor-pointer">
                 <Link to={`/account/${mockUserId}`}>Cuenta</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="hover:cursor-pointer">
+              <DropdownMenuItem
+                className="hover:cursor-pointer"
+                onClick={handleLogout}
+              >
                 <span>Cerrar sesión</span>
               </DropdownMenuItem>
             </DropdownMenuContent>

@@ -6,7 +6,11 @@ export interface User {
   email: string;
   username: string;
   rol: UserRole;
-  created_at: Date;
+  created_at: string;
+}
+
+export interface UserWithPassword extends User {
+  password: string;
 }
 
 export const mockUsers: User[] = [
@@ -16,7 +20,7 @@ export const mockUsers: User[] = [
     email: 'admin@example.com',
     username: 'admin',
     rol: 'ADMIN',
-    created_at: new Date('2023-01-01T00:00:00Z'),
+    created_at: '2023-01-01T00:00:00Z',
   },
   {
     id_usuario: 2,
@@ -24,7 +28,7 @@ export const mockUsers: User[] = [
     email: 'maria.gomez@example.com',
     username: 'mariagomez',
     rol: 'USER',
-    created_at: new Date('2023-01-01T00:00:00Z'),
+    created_at: '2023-01-01T00:00:00Z',
   },
   {
     id_usuario: 3,
@@ -32,6 +36,13 @@ export const mockUsers: User[] = [
     email: 'carlos.rodriguez@example.com',
     username: 'carlosrodriguez',
     rol: 'USER',
-    created_at: new Date('2023-01-01T00:00:00Z'),
+    created_at: '2023-01-01T00:00:00Z',
   },
 ];
+
+export const mockUsersWithPassword: UserWithPassword[] = mockUsers.map(
+  (user, index) => ({
+    ...user,
+    password: `password${index + 1}`,
+  }),
+);
