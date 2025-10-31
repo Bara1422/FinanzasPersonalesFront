@@ -11,7 +11,7 @@ export const ProfileInfo = ({ mockUser }: { mockUser: User }) => {
           {mockUser.rol === 'ADMIN' ? 'Administrador' : 'Usuario'}
         </Badge>
         <Badge className="mt-2 ml-2" variant={'default'}>
-          Miembro desde {mockUser.created_at.toLocaleDateString('es-ES')}
+          Miembro desde {mockUser.created_at.split('T')[0]}
         </Badge>
       </div>
     </div>
