@@ -1,22 +1,27 @@
-import type { FormEvent, ChangeEvent } from "react";
-import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import AuthLayout from "../components/AuthLayout";
-import Field from "../components/Field";
-import { login } from "../api/auth.api";
-import { validateLogin } from "../utils/validators";
-import { Button } from "@/components/ui/button";
+import type { FormEvent, ChangeEvent } from 'react';
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import AuthLayout from '../components/AuthLayout';
+import Field from '../components/Field';
+import { login } from '../api/auth.api';
+import { validateLogin } from '../utils/validators';
+import { Button } from '@/components/ui/button';
 
 type Input = { email: string; password: string };
 
 export default function Login() {
   const nav = useNavigate();
-  const [input, setInput] = useState<Input>({ email: "", password: "" });
-  const [errors, setErrors] = useState<Partial<Record<keyof Input, string>>>({});
+  const [input, setInput] = useState<Input>({ email: '', password: '' });
+  const [errors, setErrors] = useState<Partial<Record<keyof Input, string>>>(
+    {},
+  );
   const [loading, setLoading] = useState(false);
   const [apiError, setApiError] = useState<string | null>(null);
 
-  function handleChange<K extends keyof Input>(key: K, e: ChangeEvent<HTMLInputElement>) {
+  function handleChange<K extends keyof Input>(
+    key: K,
+    e: ChangeEvent<HTMLInputElement>,
+  ) {
     const value = e.target.value;
     setInput((v) => ({ ...v, [key]: value }));
   }
@@ -30,9 +35,9 @@ export default function Login() {
     try {
       setLoading(true);
       await login(input);
-      nav("/");
+      nav('/');
     } catch (err: any) {
-      setApiError(err.message ?? "Credenciales inválidas");
+      setApiError(err.message ?? 'Credenciales inválidas');
     } finally {
       setLoading(false);
     }
@@ -45,20 +50,20 @@ export default function Login() {
           label="Email"
           type="email"
           value={input.email}
-          onChange={(e) => handleChange("email", e)}
+          onChange={(e) => handleChange('email', e)}
           error={errors.email}
         />
         <Field
           label="Contraseña"
           type="password"
           value={input.password}
-          onChange={(e) => handleChange("password", e)}
+          onChange={(e) => handleChange('password', e)}
           error={errors.password}
         />
         {apiError && <p className="text-sm text-red-600">{apiError}</p>}
 
         <Button type="submit" className="w-full" disabled={loading}>
-          {loading ? "Ingresando…" : "Ingresar"}
+          {loading ? 'Ingresando…' : 'Ingresar'}
         </Button>
 
         <div className="text-sm text-center text-muted-foreground">
@@ -67,7 +72,7 @@ export default function Login() {
           </Link>
         </div>
         <p className="text-sm text-center text-muted-foreground">
-          ¿No tenés cuenta?{" "}
+          ¿No tenés cuenta?{' '}
           <Link to="/register" className="text-primary hover:underline">
             Registrate
           </Link>

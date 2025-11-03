@@ -1,7 +1,10 @@
-import type { PropsWithChildren } from "react";
-import { Card, CardContent } from "@/components/ui/card";
+import type { PropsWithChildren } from 'react';
+import { Card, CardContent } from '@/components/ui/card';
 
-export default function AuthLayout({ children, title }: PropsWithChildren<{ title: string }>) {
+export default function AuthLayout({
+  children,
+  title,
+}: PropsWithChildren<{ title: string }>) {
   return (
     <div className="min-h-screen bg-muted/30 flex items-center justify-center p-4">
       <div className="w-full max-w-md space-y-6">
