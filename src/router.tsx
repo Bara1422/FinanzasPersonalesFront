@@ -8,15 +8,19 @@ import { TransactionsPage } from '@/pages/TransactionsPage';
 import { Layout } from './components/layout/layout';
 import { AccountManagement } from './pages/AccountManagement';
 import { DashboardPage } from './pages/DashboardPage';
-import { LoginPage } from './pages/LoginPage';
+
+import Login from './pages/Login';
 import { PrivateRoute } from './pages/PrivateRoute';
+import Register from './pages/Register';
 import { UserRoute } from './pages/UserRoute';
 
 export const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/login" element={<LoginPage />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        {/*<Route path="/forgot" element={<ForgotPassword />} /> */}
 
         <Route element={<PrivateRoute />}>
           <Route element={<Layout />}>

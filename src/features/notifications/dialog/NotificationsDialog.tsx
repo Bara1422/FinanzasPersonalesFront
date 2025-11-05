@@ -43,10 +43,10 @@ export const NotificationsDialog = ({
       id_usuario: 1,
       pagado: false,
     };
-    console.log('Transaccion', newNotification);
+  
     addNotification(newNotification);
     setIsLoading(false);
-    console.log(filteredNotifications);
+
     onOpenChange(false);
     form.reset();
   };

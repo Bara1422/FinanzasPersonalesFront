@@ -117,7 +117,7 @@ export const TransactionsDialog = ({
       };
       toast.success('Transacción creada con éxito');
     }
-    console.log('Transaccion', savedTransaction);
+
     onSave(savedTransaction);
     setIsLoading(false);
     handleOpenDialog(false);
