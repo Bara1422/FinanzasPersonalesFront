@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 import { sleep } from '@/lib/sleep';
-import type { User } from '@/mocks/user.mock';
 import { formSchema } from '@/schemas/formUserEdit.schema';
+import { useAuthStore } from '@/store/authStore';
 import { FieldFormController } from '../../components/forms/FieldFormController';
 import { UserFormButtons } from '../../components/forms/UserFormButtons';
 import { CardContent, CardFooter } from '../../components/ui/card';
@@ -13,18 +13,20 @@ import { FieldGroup } from '../../components/ui/field';
 
 export type FormData = z.infer<typeof formSchema>;
 
-export const UserFormData = ({ mockUser }: { mockUser: User }) => {
+export const UserFormData = () => {
   const uniqueId = useId();
+  const user = useAuthStore((state) => state.usuario);
+
   const [isEditting, setIsEditting] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const onSubmit = async (data: z.infer<typeof formSchema>) => {
+  const onSubmit = async (data: FormData) => {
     setIsLoading(true);
     await sleep(500);
     try {
       /* TODO: pegar a la api */
       toast.success('Perfil actualizado con éxito');
-      console.log('Form Data:', data);
+
     } catch {
       toast.error('Error al actualizar el perfil');
     }
@@ -39,11 +41,15 @@ export const UserFormData = ({ mockUser }: { mockUser: User }) => {
   const form = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      nombre: mockUser.nombre,
-      email: mockUser.email,
-      username: mockUser.username,
+      nombre: user?.nombre,
+      email: user?.email,
+      username: user?.username,
     },
   });
+
+  if (!user) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>

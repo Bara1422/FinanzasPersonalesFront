@@ -14,7 +14,7 @@ interface Props<T extends FieldValues> {
   label: string;
   placeholder?: string;
   isEditting?: boolean;
-  type?: 'text' | 'number' | 'date';
+  type?: 'text' | 'number' | 'date' | 'password' | 'email';
   min?: string;
 }
 

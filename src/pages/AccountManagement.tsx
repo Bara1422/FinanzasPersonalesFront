@@ -9,10 +9,26 @@ import { useAuthStore } from '@/store/authStore';
 export const AccountManagement = () => {
   const { id } = useParams();
   const user = useAuthStore((state) => state.usuario);
-  console.log(user)
+  const isHydrated = useAuthStore((state) => state.isHydrated);
 
-  if (!user || !id) {
-    return <Navigate to="/login" replace />;
+
+  /* if (!id) {
+    return <Navigate to="/dashboard" replace />;
+  } */
+
+  if (!isHydrated || !user) {
+    return (
+      <div className="flex items-center justify-center min-h-screen">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
+      </div>
+    );
+  }
+
+  const targetUserId = Number(id);
+  const canView = user && user.id_usuario === targetUserId;
+
+  if (!canView) {
+    return <Navigate to={`/account/${user?.id_usuario}`} replace />;
   }
 
   return (
@@ -24,7 +40,7 @@ export const AccountManagement = () => {
       />
 
       {/* User Info */}
-      <ProfileInfo mockUser={user} />
+      <ProfileInfo />
 
       {/* User Card */}
       <Card>
@@ -34,7 +50,7 @@ export const AccountManagement = () => {
         />
 
         {/* Form */}
-        <UserFormData mockUser={user} />
+        <UserFormData />
       </Card>
     </div>
   );
