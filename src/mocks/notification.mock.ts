@@ -11,7 +11,7 @@ export interface Notification {
 
 export const mockNotifications: Notification[] = [
   {
-    id_notificacion:1,
+    id_notificacion: 1,
     id_usuario: 1,
     id_categoria: 3,
     mensaje: 'Factura de luz - EDES',

@@ -7,7 +7,7 @@ export const useNotificationsData = (userId: number) => {
   const [notifications, setNotifications] = useState(notificationsByUser);
 
   const pendingNotifications = useMemo(() => {
-   return notifications.filter((notification) => !notification.pagado);
+    return notifications.filter((notification) => !notification.pagado);
   }, [notifications]);
 
   const paidNotifications = useMemo(() => {

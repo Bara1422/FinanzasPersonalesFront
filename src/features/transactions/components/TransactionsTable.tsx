@@ -1,9 +1,6 @@
 import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableHead, TableHeader, TableRow } from '@/components/ui/table';
 import type { Category } from '@/mocks/category.mock';
 import type { Transaction } from '@/mocks/transaccion.mock';
@@ -39,11 +36,7 @@ export const TransactionsTable = ({
           {/* Header */}
           <TableHeader>
             <TableRow>
-              <TableHead>
-                <Button variant="ghost" className="h-auto p-0 font-medium">
-                  Fecha
-                </Button>
-              </TableHead>
+              <TableHead>Fecha</TableHead>
               <TableHead>Descripción</TableHead>
               <TableHead>Categoría</TableHead>
               <TableHead className="flex justify-end">
