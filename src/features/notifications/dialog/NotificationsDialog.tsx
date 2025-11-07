@@ -1,66 +1,69 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useId, useState } from 'react';
+import { useId } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 import { FormDialogHeader } from '@/components/forms/FormHeader';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog';
-import { sleep } from '@/lib/sleep';
-import type { Category } from '@/mocks/category.mock';
-import type { Notification } from '@/mocks/notification.mock';
+import { Spinner } from '@/components/ui/spinner';
+import { useCategories } from '@/features/categories/hooks/useCategories';
+import { useNotificationCreate } from '@/hooks/useNotifications';
 import { notificationSchema } from '@/schemas/formNotification.schema';
 import { NotificationsDialogBody } from './components/NotificationsDialogBody';
 
 interface Props {
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  categories: Category[];
-  addNotification: (notification: Notification) => void;
-  filteredNotifications: Notification[];
 }
 
 export type NotificationsDialogFormData = z.infer<typeof notificationSchema>;
 
-export const NotificationsDialog = ({
-  open,
-  onOpenChange,
-  categories,
-  filteredNotifications,
-  addNotification,
-}: Props) => {
-  const [isLoading, setIsLoading] = useState(false);
+export const NotificationsDialog = ({ open, onOpenChange }: Props) => {
+  const {
+    data: categories,
+    fetchStatus: fetchStatusCategories,
+    error: errorCategories,
+  } = useCategories();
+
+  const { mutate: notificationMutate, isPending: isNotificationPending } =
+    useNotificationCreate();
+
   const uniqueId = useId();
-
-  const onSubmit = async (data: NotificationsDialogFormData) => {
-    setIsLoading(true);
-    await sleep(500);
-
-    toast.success('Transacción creada con éxito');
-    const newNotification: Notification = {
-      ...data,
-      id_notificacion: Math.floor(Math.random() * 10000),
-      id_usuario: 1,
-      pagado: false,
-    };
-  
-    addNotification(newNotification);
-    setIsLoading(false);
-
-    onOpenChange(false);
-    form.reset();
-  };
 
   const form = useForm<NotificationsDialogFormData>({
     resolver: zodResolver(notificationSchema),
     defaultValues: {
-      mensaje: '',
+      descripcion: '',
       fecha_vencimiento: '',
       monto: 0,
       prioridad: 'MEDIA',
       id_categoria: 1,
     },
   });
+
+  const onSubmit = async (data: NotificationsDialogFormData) => {
+    console.log(data);
+    notificationMutate(data, {
+      onSuccess: () => {
+        toast.success('Notificación creada con éxito');
+        form.reset();
+      },
+      onError: () => {
+        toast.error('Error al crear la notificación');
+      },
+    });
+    console.log(data);
+    onOpenChange(false);
+  };
+
+  if (fetchStatusCategories === 'fetching') {
+    return <Spinner className="size-8" />;
+  }
+
+  if (errorCategories) {
+    return <div>Error al cargar las categorías: {errorCategories.message}</div>;
+  }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -76,7 +79,7 @@ export const NotificationsDialog = ({
           <NotificationsDialogBody
             form={form}
             uniqueId={uniqueId}
-            categories={categories}
+            categories={categories ?? []}
           />
 
           <DialogFooter>
@@ -91,11 +94,10 @@ export const NotificationsDialog = ({
             >
               Cancelar
             </Button>
-            {/* TODO: pegar a la api */}
             <Button
               type="submit"
               className="cursor-pointer"
-              disabled={isLoading}
+              disabled={isNotificationPending}
             >
               Crear
             </Button>

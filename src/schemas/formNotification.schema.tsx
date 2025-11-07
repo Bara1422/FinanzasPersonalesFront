@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { formDateForInput } from '@/lib/formDateForInput';
 
 export const notificationSchema = z.object({
-  mensaje: z.string().min(1, { message: 'El mensaje es requerido' }),
+  descripcion: z.string().min(1, { message: 'El mensaje es requerido' }),
   monto: z.number().min(1, { message: 'El monto debe ser mayor a 0' }),
   prioridad: z.enum(['BAJA', 'MEDIA', 'ALTA'], {
     message: 'Selecciona una prioridad válida',

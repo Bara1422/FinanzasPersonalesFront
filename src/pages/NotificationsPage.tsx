@@ -4,14 +4,9 @@ import { Button } from '@/components/ui/button';
 import { PaidNotificationsCard } from '@/features/notifications/components/PaidNotificationsCard';
 import { PendingNotificationsCard } from '@/features/notifications/components/PendingNotificationsCard';
 import { NotificationsDialog } from '@/features/notifications/dialog/NotificationsDialog';
-import { useNotificationsData } from '@/features/notifications/hooks/useNotificationsData';
-import { getAllCategories } from '@/lib/getAllCategories';
 
 export const NotificationsPage = () => {
-  const categories = getAllCategories();
   const [isOpenDialog, setIsOpenDialog] = useState(false);
-  const { notifications, pendingNotifications, addNotification, markAsPaid } =
-    useNotificationsData(1);
 
   const getDaysLeft = (dayDate: string) => {
     const today = new Date();
@@ -42,26 +37,14 @@ export const NotificationsPage = () => {
       </div>
 
       {/* Notifications */}
-      <PendingNotificationsCard
-        markAsPaid={markAsPaid}
-        filteredNotifications={notifications}
-        pendingNotifications={pendingNotifications}
-        getDaysLeft={getDaysLeft}
-        categories={categories}
-      />
+      <PendingNotificationsCard getDaysLeft={getDaysLeft} />
 
       {/* Paid History */}
-      <PaidNotificationsCard
-        filteredNotifications={notifications}
-        categories={categories}
-      />
+      <PaidNotificationsCard />
 
       <NotificationsDialog
-        filteredNotifications={notifications}
         open={isOpenDialog}
-        addNotification={addNotification}
         onOpenChange={handleOpenDialog}
-        categories={categories}
       />
     </div>
   );

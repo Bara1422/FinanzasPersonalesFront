@@ -1,3 +1,4 @@
+import { EmptyDataCard } from '@/components/common/EmptyDataCard';
 import {
   Card,
   CardContent,
@@ -5,6 +6,7 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { Spinner } from '@/components/ui/spinner';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { useBalance } from '@/hooks/useBalance';
 
@@ -21,14 +23,7 @@ export const DashboardCategoriesTable = () => {
   } = useCategories();
 
   if (statusBalance === 'pending' || statusCategorias === 'pending') {
-    return (
-      <Card className="col-span-3">
-        <CardHeader>
-          <CardTitle>Gastos por Categoría</CardTitle>
-          <CardDescription>Distribución del mes actual</CardDescription>
-        </CardHeader>
-      </Card>
-    );
+    return <Spinner className="size-8" />;
   }
 
   if (
@@ -54,12 +49,11 @@ export const DashboardCategoriesTable = () => {
 
   if (!balance || !categorias || categorias.length === 0) {
     return (
-      <Card className="col-span-1">
-        <CardHeader>
-          <CardTitle>Gastos por Categoría</CardTitle>
-          <CardDescription>Distribución del mes actual</CardDescription>
-        </CardHeader>
-      </Card>
+      <EmptyDataCard
+        title="Gastos por Categoría"
+        description="Distribución de gastos"
+        text="No hay gastos registrados"
+      />
     );
   }
 

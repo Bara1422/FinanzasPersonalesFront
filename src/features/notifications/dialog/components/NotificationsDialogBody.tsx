@@ -41,7 +41,7 @@ export const NotificationsDialogBody = ({
         <FieldFormController
           form={form}
           label="Mensaje"
-          name="mensaje"
+          name="descripcion"
           placeholder="Ej: Pago de alquiler, Cuota del gimnasio..."
           uniqueId={uniqueId}
         />

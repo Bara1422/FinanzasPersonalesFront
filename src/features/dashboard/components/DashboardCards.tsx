@@ -1,3 +1,4 @@
+import { Spinner } from '@/components/ui/spinner';
 import { useBalance } from '@/hooks/useBalance';
 import { DashboardCardInfo } from './DashboardCardInfo';
 
@@ -18,7 +19,7 @@ export const DashboardCards = () => {
   }
 
   if (transactionsStatus === 'pending') {
-    return <div>Loading...</div>;
+    return <Spinner className="size-8" />;
   }
 
   if (transactionsStatus === 'error' || errorSummary || !summary) {
