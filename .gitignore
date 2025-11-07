@@ -22,3 +22,5 @@ dist-ssr
 *.sw?
 .vscode
 !*.vscode/settings.json
+**/*.gen.ts
+.tanstack

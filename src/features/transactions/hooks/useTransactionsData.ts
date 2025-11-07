@@ -7,7 +7,6 @@ import type { Transaction } from '@/mocks/transaccion.mock';
 export const useTransactionsData = (userId: number) => {
   const transactionsByUser = getTransactionsByUser(userId);
   const [transactions, setTransactions] = useState(transactionsByUser);
- 
 
   const categoriesNames = getAllCategories();
 
@@ -49,8 +48,6 @@ export const useTransactionsData = (userId: number) => {
   const handleTransactions = (updatedTransactions: Transaction[]) => {
     setTransactions(updatedTransactions);
   };
-
- 
 
   return {
     totalIncome,

@@ -1,8 +1,12 @@
 import { useEffect } from 'react';
 import './App.css';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { Toaster } from './components/ui/sonner';
 import { AppRoutes } from './router';
 import { useAuthStore } from './store/authStore';
+
+const queryClient = new QueryClient();
 
 function App() {
   const fetchUserData = useAuthStore((state) => state.fetchUserData);
@@ -23,10 +27,11 @@ function App() {
     );
   }
   return (
-    <>
+    <QueryClientProvider client={queryClient}>
       <AppRoutes />
       <Toaster position="top-right" richColors />
-    </>
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
   );
 }
 
