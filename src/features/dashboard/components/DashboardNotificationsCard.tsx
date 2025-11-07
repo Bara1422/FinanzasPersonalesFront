@@ -48,19 +48,35 @@ export const DashboardNotificationsCard = () => {
     );
   }
 
+  const notificacionesActivas = pendingNotificaciones.filter((notif) => {
+    const fechaActual = new Date();
+    const fechaVencimiento = new Date(notif.fecha_vencimiento);
+    return fechaVencimiento > fechaActual;
+  });
+
+  if (notificacionesActivas.length === 0) {
+    return (
+      <Card>
+        <CardHeader>
+          <CardTitle>Próximos Vencimientos</CardTitle>
+          <CardDescription>Pagos y recordatorios pendientes</CardDescription>
+        </CardHeader>
+        <CardContent>
+          <p className="text-center text-muted-foreground py-8">
+            No hay notificaciones pendientes
+          </p>
+        </CardContent>
+      </Card>
+    );
+  }
+
   const getDaysLeft = (daysDiff: number) => {
-    if (daysDiff < 0) {
-      const days = Math.abs(daysDiff);
-      return {
-        text: `Vencido hace ${days} día${days > 1 ? 's' : ''}`,
-        color: 'text-red-600',
-      };
-    } else if (daysDiff === 0) {
+    if (daysDiff === 0) {
       return { text: 'Vence hoy', color: 'text-red-500' };
     } else {
       return {
         text: `En ${daysDiff} día${daysDiff > 1 ? 's' : ''}`,
-        color: 'text-orange-500',
+        color: 'text-orange-600',
       };
     }
   };
@@ -72,7 +88,7 @@ export const DashboardNotificationsCard = () => {
         <CardDescription>Pagos y recordatorios pendientes</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">
-        {pendingNotificaciones.map((notif) => {
+        {notificacionesActivas.map((notif) => {
           const fechaActual = new Date();
           const fechaVencimiento = new Date(notif.fecha_vencimiento);
           const diferenciaDias = Math.ceil(
