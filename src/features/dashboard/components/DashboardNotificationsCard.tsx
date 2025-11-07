@@ -1,4 +1,5 @@
 import { Bell } from 'lucide-react';
+import { EmptyDataCard } from '@/components/common/EmptyDataCard';
 import {
   Card,
   CardContent,
@@ -56,17 +57,11 @@ export const DashboardNotificationsCard = () => {
 
   if (notificacionesActivas.length === 0) {
     return (
-      <Card>
-        <CardHeader>
-          <CardTitle>Próximos Vencimientos</CardTitle>
-          <CardDescription>Pagos y recordatorios pendientes</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <p className="text-center text-muted-foreground py-8">
-            No hay notificaciones pendientes
-          </p>
-        </CardContent>
-      </Card>
+      <EmptyDataCard
+        title="Próximos Vencimientos"
+        description="Pagos y recordatorios pendientes"
+        text="No hay notificaciones pendientes"
+      />
     );
   }
 

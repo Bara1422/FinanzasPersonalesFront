@@ -1,5 +1,6 @@
-import type { Category } from '@/mocks/category.mock';
-import type { Notification } from '@/mocks/notification.mock';
+import { Spinner } from '@/components/ui/spinner';
+import { useCategories } from '@/features/categories/hooks/useCategories';
+import { useNotificationsPaid } from '@/hooks/useNotifications';
 import { Badge } from '../../../components/ui/badge';
 import {
   Card,
@@ -9,18 +10,37 @@ import {
   CardTitle,
 } from '../../../components/ui/card';
 
-interface Props {
-  filteredNotifications: Notification[];
-  categories: Category[];
-}
+export const PaidNotificationsCard = () => {
+  const {
+    data: paidNotifications,
+    fetchStatus: fetchStatusPaid,
+    error: errorPaid,
+  } = useNotificationsPaid();
 
-export const PaidNotificationsCard = ({
-  filteredNotifications,
-  categories,
-}: Props) => {
-  const filteredPaid = filteredNotifications.filter(
-    (notification) => notification.pagado,
-  );
+  const {
+    data: categories,
+    fetchStatus: fetchStatusCategories,
+    error: errorCategories,
+  } = useCategories();
+
+  if (fetchStatusPaid === 'fetching' || fetchStatusCategories === 'fetching') {
+    return <Spinner className="size-8" />;
+  }
+
+  if (errorPaid || errorCategories) {
+    return (
+      <div>
+        {errorPaid && (
+          <div>
+            Error al cargar las notificaciones pagadas: {errorPaid?.message}
+          </div>
+        )}
+        {errorCategories && (
+          <div>Error al cargar las categorías: {errorCategories.message}</div>
+        )}
+      </div>
+    );
+  }
 
   return (
     <Card>
@@ -33,7 +53,7 @@ export const PaidNotificationsCard = ({
 
       <CardContent>
         <div className="space-y-3">
-          {filteredPaid.map((notification) => (
+          {paidNotifications.map((notification) => (
             <div
               key={notification.id_notificacion}
               className="flex items-center justify-between p-4 rounded-lg border bg-muted/30"
@@ -41,7 +61,7 @@ export const PaidNotificationsCard = ({
               <div className="flex items-center gap-4">
                 <div>
                   <h4 className="font-medium text-muted-foreground">
-                    {notification.mensaje}
+                    {notification.descripcion}
                   </h4>
                   <div className="flex items-center gap-2 mt-1">
                     <Badge variant="outline" className="text-xs">

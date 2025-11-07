@@ -89,3 +89,10 @@ export const useAuthStore = create<AuthState>()(
     },
   ),
 );
+
+window.addEventListener('storage', (event) => {
+  if (event.key === 'auth-storage' && event.newValue === null) {
+    const { logout } = useAuthStore.getState();
+    logout();
+  }
+});

@@ -1,3 +1,4 @@
+import { EmptyDataCard } from '@/components/common/EmptyDataCard';
 import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
 import { Badge } from '@/components/ui/badge';
 import { Card, CardContent } from '@/components/ui/card';
@@ -42,17 +43,11 @@ export const DashboardTransactionsTable = () => {
 
   if (!transactions?.transacciones.length) {
     return (
-      <Card>
-        <CardHeaderCustom
-          title="Transacciones Recientes"
-          description="Últimas 5 transacciones"
-        />
-        <CardContent>
-          <p className="text-center text-muted-foreground py-8">
-            No hay transacciones para mostrar
-          </p>
-        </CardContent>
-      </Card>
+      <EmptyDataCard
+        title="Transacciones Recientes"
+        description="Últimas 5 transacciones"
+        text="No hay transacciones para mostrar"
+      />
     );
   }
 

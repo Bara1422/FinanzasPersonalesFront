@@ -4,7 +4,7 @@ type NotificationPriority = 'ALTA' | 'MEDIA' | 'BAJA';
 
 interface Props {
   notification: {
-    mensaje: string;
+    descripcion: string;
     id_categoria: number;
     prioridad: NotificationPriority;
   };
@@ -23,7 +23,7 @@ export const NotificationsMessage = ({
   return (
     <div className="flex items-start justify-between ">
       <div>
-        <h4 className="font-medium">{notification.mensaje}</h4>
+        <h4 className="font-medium">{notification.descripcion}</h4>
         <div className="flex item-center gap-2 mt-1">
           <Badge variant="outline" className="text-xs">
             {notification.id_categoria
