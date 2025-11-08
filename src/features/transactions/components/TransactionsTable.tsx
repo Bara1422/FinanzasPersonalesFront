@@ -9,14 +9,16 @@ interface Props {
   open: boolean;
   handleOpenDialog: (open: boolean) => void;
   onEdit: (transaction: Transaction) => void;
-  onDelete: (transactionId: number) => void;
+  filterType: string;
+  filterCategory: string;
 }
 
 export const TransactionsTable = ({
   open,
   handleOpenDialog,
   onEdit,
-  onDelete,
+  filterType,
+  filterCategory,
 }: Props) => {
   return (
     <Card>
@@ -46,7 +48,8 @@ export const TransactionsTable = ({
             open={open}
             handleOpenDialog={handleOpenDialog}
             onEdit={onEdit}
-            onDelete={onDelete}
+            filterType={filterType}
+            filterCategory={filterCategory}
           />
         </Table>
       </CardContent>

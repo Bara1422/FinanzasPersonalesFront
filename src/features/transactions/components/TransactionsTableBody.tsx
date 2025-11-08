@@ -4,21 +4,24 @@ import { TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { getAmountInfo } from '@/lib/getAmmountInfo';
 import type { Transaction } from '@/mocks/transaccion.mock';
-import {
-  useTransactionDelete,
-  useTransactions,
-} from '../hooks/useTransactions';
+import { useFilteredTransactions } from '../hooks/useFilteredTransactions';
+import { useTransactionDelete } from '../hooks/useTransactions';
 
 interface Props {
   open: boolean;
   handleOpenDialog: (open: boolean) => void;
   onEdit: (transaction: Transaction) => void;
-  onDelete: (transactionId: number) => void;
+  filterType: string;
+  filterCategory: string;
 }
 
-export const TransactionsTableBody = ({ onEdit }: Props) => {
+export const TransactionsTableBody = ({
+  onEdit,
+  filterCategory,
+  filterType,
+}: Props) => {
   const { data: transactionsData, error: transactionsError } =
-    useTransactions();
+    useFilteredTransactions({ filterType, filterCategory });
 
   const { data: categoriesData, error: categoriesError } = useCategories();
   const { mutate: deleteTransaction } = useTransactionDelete();
@@ -31,11 +34,19 @@ export const TransactionsTableBody = ({ onEdit }: Props) => {
     return <div>Error loading categories</div>;
   }
 
+  if (!transactionsData || !categoriesData) {
+    return <div>Loading...</div>;
+  }
+
+  if (transactionsError) {
+    return <div>Error loading transactions</div>;
+  }
+
   const isIncome = (tipo: string) => tipo === 'INGRESO';
   console.log();
   return (
     <TableBody>
-      {transactionsData?.map((transaction) => {
+      {transactionsData.map((transaction) => {
         const category = categoriesData?.find(
           (cat) => cat.id_categoria === transaction.id_categoria,
         );
