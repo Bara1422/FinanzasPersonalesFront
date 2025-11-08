@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiAxios } from '@/config/axios';
-import type { User } from '@/mocks/user.mock';
 import { useAuthStore } from '@/store/authStore';
+import type { User } from '@/types/user.types';
 
 export const useUserUpdate = () => {
   const queryClient = useQueryClient();

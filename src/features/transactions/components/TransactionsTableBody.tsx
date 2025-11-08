@@ -3,7 +3,7 @@ import { Badge } from '@/components/ui/badge';
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { getAmountInfo } from '@/lib/getAmmountInfo';
-import type { Transaction } from '@/mocks/transaccion.mock';
+import type { Transaction } from '@/types/transaction.types';
 import { useFilteredTransactions } from '../hooks/useFilteredTransactions';
 import { useTransactionDelete } from '../hooks/useTransactions';
 
@@ -20,7 +20,7 @@ export const TransactionsTableBody = ({
   onEdit,
   filterCategory,
   filterType,
-  filteredTransactions
+  filteredTransactions,
 }: Props) => {
   const { data: transactionsData, error: transactionsError } =
     useFilteredTransactions({ filterType, filterCategory });

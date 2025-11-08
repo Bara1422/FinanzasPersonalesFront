@@ -1,7 +1,8 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { apiAxios } from '@/config/axios';
-import type { User } from '@/mocks/user.mock';
+import type { User } from '@/types/user.types';
+
 
 interface RegisterData {
   nombre: string;

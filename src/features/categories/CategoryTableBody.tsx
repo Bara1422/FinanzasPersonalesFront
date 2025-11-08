@@ -1,4 +1,4 @@
-import type { CategorySummary } from '@/lib/getCategorySummaryMock';
+import type { CategorySummary } from '@/lib/getCategorySummary';
 import { Badge } from '../../components/ui/badge';
 import { TableCell, TableRow } from '../../components/ui/table';
 

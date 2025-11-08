@@ -12,11 +12,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { mockUsers } from '@/mocks/user.mock';
 import { useAuthStore } from '@/store/authStore';
 
 export const SidebarUserFooter = () => {
-  const mockUserId = mockUsers[0].id_usuario;
+  const usuario = useAuthStore((state) => state.usuario);
   const { logout } = useAuthStore();
 
   const handleLogout = () => {
@@ -30,7 +29,7 @@ export const SidebarUserFooter = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="hover:cursor-pointer">
               <SidebarMenuButton>
-                <User2 /> Juan
+                <User2 /> {usuario?.nombre}
                 <ChevronUp className="ml-auto" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
@@ -39,7 +38,7 @@ export const SidebarUserFooter = () => {
               className="w-[--radix-popper-ancho-width]"
             >
               <DropdownMenuItem className="hover:cursor-pointer">
-                <Link to={`/account/${mockUserId}`}>Cuenta</Link>
+                <Link to={`/account/${usuario?.id_usuario}`}>Cuenta</Link>
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="hover:cursor-pointer"

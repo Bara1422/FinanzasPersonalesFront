@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { useCategories } from '@/features/categories/hooks/useCategories';
-import type { Transaction } from '@/mocks/transaccion.mock';
+import type { Transaction } from '@/types/transaction.types';
+
 
 export const useTransactionsFilters = (transactions: Transaction[]) => {
   const { data: categories = [] } = useCategories();
@@ -11,10 +12,10 @@ export const useTransactionsFilters = (transactions: Transaction[]) => {
   const filteredTransactions = useMemo(() => {
     let filtered = [...transactions];
 
-    if(searchTerm.trim() !== '') {
+    if (searchTerm.trim() !== '') {
       const search = searchTerm.trim().toLowerCase();
       filtered = filtered.filter((transaction) =>
-        transaction.descripcion.toLowerCase().includes(search)
+        transaction.descripcion.toLowerCase().includes(search),
       );
     }
 
@@ -46,7 +47,7 @@ export const useTransactionsFilters = (transactions: Transaction[]) => {
 
   const handleSearchTermChange = (value: string) => {
     setSearchTerm(value);
-  }
+  };
 
   return {
     filterType,

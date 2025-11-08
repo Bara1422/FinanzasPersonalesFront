@@ -6,7 +6,8 @@ import { TransactionTitle } from '@/features/transactions/components/Transaction
 import { TransactionsDialog } from '@/features/transactions/dialog/TransactionsDialog';
 import { useTransactions } from '@/features/transactions/hooks/useTransactions';
 import { useTransactionsFilters } from '@/features/transactions/hooks/useTransactionsFilters';
-import type { Transaction } from '@/mocks/transaccion.mock';
+import type { Transaction } from '@/types/transaction.types';
+
 
 export const TransactionsPage = () => {
   const { data: transactions = [] } = useTransactions();

@@ -8,7 +8,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import { useNotificationsPending } from '@/hooks/useNotifications';
+import { useNotificationsPending } from '@/features/notifications/hooks/useNotifications';
 
 export const DashboardNotificationsCard = () => {
   const {

@@ -1,6 +1,6 @@
 import { Spinner } from '@/components/ui/spinner';
 import { useCategories } from '@/features/categories/hooks/useCategories';
-import { useNotificationsPaid } from '@/hooks/useNotifications';
+import { useNotificationsPaid } from '@/features/notifications/hooks/useNotifications';
 import { Badge } from '../../../components/ui/badge';
 import {
   Card,
