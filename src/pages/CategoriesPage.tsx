@@ -1,13 +1,13 @@
 import { Navigate } from 'react-router';
 import { PageTitle } from '@/components/common/PageTitle';
 import { GastosIngresosCard } from '@/features/categories/Gastos-IngresosCard';
-import { getCategorySummaryMock } from '@/lib/getCategorySummaryMock';
+import { getCategorySummaryMock } from '@/lib/getCategorySummary';
 import { useAuthStore } from '@/store/authStore';
 
 export const CategoriesPage = () => {
   const token = useAuthStore((state) => state.token);
 
-  const categorySummary = getCategorySummaryMock(1);
+  const categorySummary = getCategorySummaryMock();
   const gastos = categorySummary.filter((item) => item.tipo === 'GASTO');
   const ingresos = categorySummary.filter((item) => item.tipo === 'INGRESO');
 

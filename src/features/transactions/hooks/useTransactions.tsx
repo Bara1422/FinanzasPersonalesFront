@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiAxios } from '@/config/axios';
-import type { Transaction } from '@/mocks/transaccion.mock';
+
 import { useAuthStore } from '@/store/authStore';
+import type { Transaction } from '@/types/transaction.types';
 
 export const useTransactions = () => {
   const { data, error, isLoading, status, fetchStatus } = useQuery({

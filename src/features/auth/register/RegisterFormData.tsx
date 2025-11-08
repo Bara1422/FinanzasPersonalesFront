@@ -41,7 +41,6 @@ export const RegisterFormData = () => {
         password: data.password,
       });
 
-
       navigate('/dashboard', { replace: true });
     } catch (error: any) {
       console.error('Error registering:', error);

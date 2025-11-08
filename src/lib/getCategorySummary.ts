@@ -1,5 +1,5 @@
-import { mockCategories } from '@/mocks/category.mock';
-import { mockTransactions } from '@/mocks/transaccion.mock';
+import { useCategories } from '@/features/categories/hooks/useCategories';
+import { useTransactions } from '@/features/transactions/hooks/useTransactions';
 
 export interface CategorySummary {
   id_category: number;
@@ -9,13 +9,21 @@ export interface CategorySummary {
   tipo: 'GASTO' | 'INGRESO';
 }
 
-export const getCategorySummaryMock = (id_usuario: number) => {
-  const userTransactions = mockTransactions.filter(
-    (transaction) => transaction.id_usuario === id_usuario,
-  );
+export const getCategorySummaryMock = () => {
+  const { data: transacciones, fetchStatus: transaccionesStatus } =
+    useTransactions();
+  const { data: categorias, fetchStatus: categoriasStatus } = useCategories();
 
-  const summary: CategorySummary[] = mockCategories.map((category) => {
-    const categoryTransactions = userTransactions.filter(
+  if (transaccionesStatus === 'fetching' || categoriasStatus === 'fetching') {
+    return [];
+  }
+
+  if (!transacciones || !categorias) {
+    return [];
+  }
+
+  const summary: CategorySummary[] = categorias.map((category) => {
+    const categoryTransactions = transacciones?.filter(
       (transaction) => transaction.id_categoria === category.id_categoria,
     );
 

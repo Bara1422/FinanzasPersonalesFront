@@ -8,7 +8,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogFooter } from '@/components/ui/dialog';
 import { Spinner } from '@/components/ui/spinner';
 import { useCategories } from '@/features/categories/hooks/useCategories';
-import { useNotificationCreate } from '@/hooks/useNotifications';
+import { useNotificationCreate } from '@/features/notifications/hooks/useNotifications';
 import { notificationSchema } from '@/schemas/formNotification.schema';
 import { NotificationsDialogBody } from './components/NotificationsDialogBody';
 

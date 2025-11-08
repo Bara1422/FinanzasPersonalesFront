@@ -2,7 +2,7 @@ import { CheckCircle, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
-import { useNotificationMarkAsPaid } from '@/hooks/useNotifications';
+import { useNotificationMarkAsPaid } from '@/features/notifications/hooks/useNotifications';
 import { Button } from '../../../components/ui/button';
 
 interface Props {

@@ -4,7 +4,7 @@ import { Spinner } from '@/components/ui/spinner';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import {
   useNotificationsPending,
-} from '@/hooks/useNotifications';
+} from '@/features/notifications/hooks/useNotifications';
 import { Card, CardContent } from '../../../components/ui/card';
 import { NoPendingNotifications } from './NoPendingNotifications';
 import { NotificationsButtons } from './NotificationsButtons';

@@ -4,7 +4,7 @@ import { FieldFormController } from '@/components/forms/FieldFormController';
 import { FieldFormControllerSelect } from '@/components/forms/FieldFormControllerSelect';
 import { FieldGroup } from '@/components/ui/field';
 import { formDateForInput } from '@/lib/formDateForInput';
-import type { Category } from '@/mocks/category.mock';
+import type { Category } from '@/types/category.types';
 import type { NotificationsDialogFormData } from '../NotificationsDialog';
 
 interface Props {

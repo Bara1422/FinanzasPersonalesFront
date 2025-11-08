@@ -7,8 +7,8 @@ import { FieldFormController } from '@/components/forms/FieldFormController';
 import { FieldFormControllerSelect } from '@/components/forms/FieldFormControllerSelect';
 import { FormDialogHeader } from '@/components/forms/FormHeader';
 import { useCategories } from '@/features/categories/hooks/useCategories';
-import type { Transaction } from '@/mocks/transaccion.mock';
 import { formNewTransactionSchema } from '@/schemas/formNewTransaction.schema';
+import type { Transaction } from '@/types/transaction.types';
 import { Button } from '../../../components/ui/button';
 import {
   Dialog,

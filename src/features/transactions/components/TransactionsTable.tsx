@@ -2,7 +2,7 @@ import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { Transaction } from '@/mocks/transaccion.mock';
+import type { Transaction } from '@/types/transaction.types';
 import { TransactionsTableBody } from './TransactionsTableBody';
 
 interface Props {
@@ -20,7 +20,7 @@ export const TransactionsTable = ({
   onEdit,
   filterType,
   filterCategory,
-  filteredTransactions
+  filteredTransactions,
 }: Props) => {
   return (
     <Card>

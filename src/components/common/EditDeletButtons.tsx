@@ -1,5 +1,5 @@
 import { Edit, Trash2 } from 'lucide-react';
-import type { Transaction } from '@/mocks/transaccion.mock';
+import type { Transaction } from '@/types/transaction.types';
 import { Button } from '../ui/button';
 
 interface Props {
