@@ -1,34 +1,47 @@
 import { EditDeleteButtons } from '@/components/common/EditDeletButtons';
 import { Badge } from '@/components/ui/badge';
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
+import { useCategories } from '@/features/categories/hooks/useCategories';
 import { getAmountInfo } from '@/lib/getAmmountInfo';
-import type { Category } from '@/mocks/category.mock';
 import type { Transaction } from '@/mocks/transaccion.mock';
+import {
+  useTransactionDelete,
+  useTransactions,
+} from '../hooks/useTransactions';
 
 interface Props {
-  categoriesMap: Record<string, Category>;
-  visibleTransactions: Transaction[];
   open: boolean;
   handleOpenDialog: (open: boolean) => void;
   onEdit: (transaction: Transaction) => void;
   onDelete: (transactionId: number) => void;
 }
 
-export const TransactionsTableBody = ({
-  visibleTransactions,
-  categoriesMap,
-  handleOpenDialog,
-  onEdit,
-  onDelete,
-}: Props) => {
-  const isIncome = (tipo: string) => tipo === 'INGRESO';
+export const TransactionsTableBody = ({ onEdit }: Props) => {
+  const { data: transactionsData, error: transactionsError } =
+    useTransactions();
 
+  const { data: categoriesData, error: categoriesError } = useCategories();
+  const { mutate: deleteTransaction } = useTransactionDelete();
+
+  const handleDelete = (transactionId: number) => {
+    deleteTransaction(transactionId);
+  };
+
+  if (categoriesError || transactionsError) {
+    return <div>Error loading categories</div>;
+  }
+
+  const isIncome = (tipo: string) => tipo === 'INGRESO';
+  console.log();
   return (
     <TableBody>
-      {visibleTransactions.map((transaction) => {
+      {transactionsData?.map((transaction) => {
+        const category = categoriesData?.find(
+          (cat) => cat.id_categoria === transaction.id_categoria,
+        );
         const { color, formattedAmount } = getAmountInfo({
           amount: transaction.monto,
-          tipo: categoriesMap[transaction.id_categoria].tipo,
+          tipo: category?.tipo || 'INGRESO',
         });
         return (
           <TableRow key={transaction.id_transaccion}>
@@ -38,9 +51,11 @@ export const TransactionsTableBody = ({
             <TableCell>{transaction.descripcion}</TableCell>
             <TableCell>
               <Badge
-                variant={`${isIncome(categoriesMap[transaction.id_categoria]?.tipo) ? 'default' : 'secondary'}`}
+                variant={
+                  category && isIncome(category.tipo) ? 'default' : 'secondary'
+                }
               >
-                {categoriesMap[transaction.id_categoria]?.nombre}
+                {category?.nombre}
               </Badge>
             </TableCell>
             <TableCell>
@@ -50,12 +65,9 @@ export const TransactionsTableBody = ({
             </TableCell>
             <TableCell className="text-right">
               <EditDeleteButtons
-                onEdit={() => {
-                  handleOpenDialog(true);
-                  onEdit(transaction);
-                }}
                 transaction={transaction}
-                onDelete={() => onDelete(transaction.id_transaccion)}
+                onDelete={handleDelete}
+                onEdit={onEdit}
               />
             </TableCell>
           </TableRow>

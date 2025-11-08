@@ -2,14 +2,10 @@ import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Table, TableHead, TableHeader, TableRow } from '@/components/ui/table';
-import type { Category } from '@/mocks/category.mock';
 import type { Transaction } from '@/mocks/transaccion.mock';
 import { TransactionsTableBody } from './TransactionsTableBody';
 
 interface Props {
-  categoriesMap: { [k: string]: Category };
-  transactions: Transaction[];
-  visibleTransactions: Transaction[];
   open: boolean;
   handleOpenDialog: (open: boolean) => void;
   onEdit: (transaction: Transaction) => void;
@@ -17,9 +13,6 @@ interface Props {
 }
 
 export const TransactionsTable = ({
-  categoriesMap,
-  transactions,
-  visibleTransactions,
   open,
   handleOpenDialog,
   onEdit,
@@ -29,7 +22,7 @@ export const TransactionsTable = ({
     <Card>
       <CardHeaderCustom
         title="Lista de Transacciones"
-        description={`${transactions.length} transacciones encontradas`}
+        description={`${1} transacciones encontradas`}
       />
       <CardContent>
         <Table>
@@ -50,8 +43,6 @@ export const TransactionsTable = ({
 
           {/* Body */}
           <TransactionsTableBody
-            categoriesMap={categoriesMap}
-            visibleTransactions={visibleTransactions}
             open={open}
             handleOpenDialog={handleOpenDialog}
             onEdit={onEdit}

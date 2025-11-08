@@ -10,9 +10,6 @@ import type { Transaction } from '@/mocks/transaccion.mock';
 
 export const TransactionsPage = () => {
   const {
-    totalIncome,
-    totalExpense,
-    balance,
     transactions,
     categoriesMap,
     categoriesNames,
@@ -24,7 +21,6 @@ export const TransactionsPage = () => {
   const {
     filterType,
     filterCategory,
-    filteredTransactions,
     handleFilterCategoryChange,
     handleFilterTypeChange,
   } = useTransactionsFilters({ transactions, categoriesMap });
@@ -61,11 +57,7 @@ export const TransactionsPage = () => {
       <TransactionTitle handleOpenDialog={handleOpenDialog} />
 
       {/* Cards */}
-      <TransactionCards
-        totalIncome={totalIncome}
-        totalExpense={totalExpense}
-        balance={balance}
-      />
+      <TransactionCards />
 
       {/* Filters */}
       <TransactionsFilter
@@ -78,9 +70,6 @@ export const TransactionsPage = () => {
 
       {/* Transaction Table */}
       <TransactionsTable
-        visibleTransactions={filteredTransactions}
-        categoriesMap={categoriesMap}
-        transactions={transactions}
         open={isOpenDialog}
         handleOpenDialog={handleOpenDialog}
         onEdit={handleEdit}

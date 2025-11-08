@@ -1,5 +1,10 @@
 import { getAmountInfo } from '@/lib/getAmmountInfo';
-import { Card, CardContent, CardHeader, CardTitle } from '../../../components/ui/card';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '../../../components/ui/card';
 
 export const TransactionsCardInfo = ({
   title,
@@ -18,7 +23,7 @@ export const TransactionsCardInfo = ({
         <CardTitle className="text-sm font-medium">{title}</CardTitle>
       </CardHeader>
       <CardContent>
-        <div className={`text-2xl font-bold ${color}`}>{formattedAmount}</div>
+        <span className={`text-2xl font-bold ${color}`}>{formattedAmount}</span>
       </CardContent>
     </Card>
   );
