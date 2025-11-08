@@ -1,10 +1,9 @@
 import { Search } from 'lucide-react';
 import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
+import { Spinner } from '@/components/ui/spinner';
+import { useCategories } from '@/features/categories/hooks/useCategories';
 import type { Category } from '@/mocks/category.mock';
-import {
-  Card,
-  CardContent,
-} from '../../../components/ui/card';
+import { Card, CardContent } from '../../../components/ui/card';
 import { Input } from '../../../components/ui/input';
 import {
   Select,
@@ -31,12 +30,24 @@ export const TransactionsFilter = ({
   filterCategory,
   categoriesNames,
 }: Props) => {
+  const { data: categories, fetchStatus } = useCategories();
+
+  if (fetchStatus === 'fetching') {
+    return <Spinner className="size-8" />;
+  }
+
+  if (!categories) {
+    return <div>No se encontraron categorías</div>;
+  }
+
   const filteredCategories =
     filterType === 'INGRESO'
-      ? categoriesNames.filter((category) => category.tipo === 'INGRESO')
+      ? categories.filter((category) => category.tipo === 'INGRESO')
       : filterType === 'GASTO'
-        ? categoriesNames.filter((category) => category.tipo === 'GASTO')
-        : categoriesNames;
+        ? categories.filter((category) => category.tipo === 'GASTO')
+        : categories;
+
+  console.log(filteredCategories);
 
   return (
     <Card>

@@ -26,7 +26,6 @@ interface Props {
   open: boolean;
   handleOpenDialog: (open: boolean) => void;
   transaction?: Transaction;
-  onSave: (transaction: Transaction) => void;
 }
 
 export type TransactionsDialogFormData = z.infer<

@@ -1,16 +1,13 @@
 import { useMemo, useState } from 'react';
-import type { Category } from '@/mocks/category.mock';
+import { useCategories } from '@/features/categories/hooks/useCategories';
 import type { Transaction } from '@/mocks/transaccion.mock';
 
 type Props = {
   transactions: Transaction[];
-  categoriesMap: Record<string, Category>;
 };
 
-export const useTransactionsFilters = ({
-  transactions,
-  categoriesMap,
-}: Props) => {
+export const useTransactionsFilters = ({ transactions }: Props) => {
+  const { data: categories } = useCategories();
   const [filterType, setFilterType] = useState<string>('todos');
   const [filterCategory, setFilterCategory] = useState<string>('todas');
 
@@ -27,11 +24,12 @@ export const useTransactionsFilters = ({
     let filtered = transactions;
 
     if (filterType !== 'todos') {
-      filtered = filtered.filter(
-        (transaction) =>
-          categoriesMap[transaction.id_categoria].tipo ===
-          filterType.toUpperCase(),
-      );
+      filtered = filtered.filter((transaction) => {
+        const category = categories.find(
+          (cat) => cat.id_categoria === transaction.id_categoria,
+        );
+        return category && category.tipo === filterType.toUpperCase();
+      });
     }
     if (filterCategory !== 'todas') {
       filtered = filtered.filter(
@@ -40,7 +38,7 @@ export const useTransactionsFilters = ({
     }
 
     return filtered.sort((a, b) => b.fecha.localeCompare(a.fecha));
-  }, [transactions, filterType, filterCategory, categoriesMap]);
+  }, [transactions, categories, filterType, filterCategory]);
 
   return {
     filterType,
