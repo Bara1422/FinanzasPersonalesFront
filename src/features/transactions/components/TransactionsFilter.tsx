@@ -2,7 +2,6 @@ import { Search } from 'lucide-react';
 import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
 import { Spinner } from '@/components/ui/spinner';
 import { useCategories } from '@/features/categories/hooks/useCategories';
-import type { Category } from '@/mocks/category.mock';
 import { Card, CardContent } from '../../../components/ui/card';
 import { Input } from '../../../components/ui/input';
 import {
@@ -20,7 +19,8 @@ interface Props {
   categoriesFilter: (value: string) => void;
   filterType: string;
   filterCategory: string;
-  categoriesNames: Category[];
+  searchTerm: string;
+  handleSearchTermChange: (value: string) => void;
 }
 
 export const TransactionsFilter = ({
@@ -28,7 +28,8 @@ export const TransactionsFilter = ({
   categoriesFilter,
   filterType,
   filterCategory,
-  categoriesNames,
+  searchTerm,
+  handleSearchTermChange,
 }: Props) => {
   const { data: categories, fetchStatus } = useCategories();
 
@@ -47,7 +48,6 @@ export const TransactionsFilter = ({
         ? categories.filter((category) => category.tipo === 'GASTO')
         : categories;
 
-  console.log(filteredCategories);
 
   return (
     <Card>
@@ -59,7 +59,12 @@ export const TransactionsFilter = ({
         <div className="flex flex-col gap-4 md:flex-row md:items-center">
           <div className="relative flex-1">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 h-4 w-4 text-muted-foreground" />
-            <Input placeholder="Buscar por descripción..." className="pl-10" />
+            <Input
+              value={searchTerm}
+              onChange={(e) => handleSearchTermChange(e.target.value)}
+              placeholder="Buscar por descripción..."
+              className="pl-10"
+            />
           </div>
           <Select
             value={filterType}
@@ -89,7 +94,7 @@ export const TransactionsFilter = ({
                       <SelectLabel>
                         {tipo === 'INGRESO' ? 'Ingresos' : 'Gastos'}
                       </SelectLabel>
-                      {categoriesNames
+                      {categories
                         .filter((category) => category.tipo === tipo)
                         .map((categoryName) => (
                           <SelectItem

@@ -43,7 +43,6 @@ export const NotificationsDialog = ({ open, onOpenChange }: Props) => {
   });
 
   const onSubmit = async (data: NotificationsDialogFormData) => {
-    console.log(data);
     notificationMutate(data, {
       onSuccess: () => {
         toast.success('Notificación creada con éxito');
@@ -53,7 +52,7 @@ export const NotificationsDialog = ({ open, onOpenChange }: Props) => {
         toast.error('Error al crear la notificación');
       },
     });
-    console.log(data);
+
     onOpenChange(false);
   };
 

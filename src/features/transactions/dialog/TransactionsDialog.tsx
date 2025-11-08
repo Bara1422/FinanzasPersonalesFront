@@ -127,8 +127,6 @@ export const TransactionsDialog = ({
     form.reset();
   };
 
-  console.log(transaction);
-
   return (
     <Dialog open={open} onOpenChange={handleOpenDialog}>
       <DialogContent>

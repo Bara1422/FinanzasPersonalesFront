@@ -14,11 +14,12 @@ export const DashboardNotificationsCard = () => {
   const {
     data: pendingNotificaciones,
     status,
+    fetchStatus,
     error,
   } = useNotificationsPending();
-  console.log(pendingNotificaciones);
 
-  if (status === 'pending') {
+
+  if (fetchStatus === 'fetching') {
     return <Spinner className="size-8" />;
   }
 

@@ -11,6 +11,7 @@ interface Props {
   onEdit: (transaction: Transaction) => void;
   filterType: string;
   filterCategory: string;
+  filteredTransactions: Transaction[];
 }
 
 export const TransactionsTable = ({
@@ -19,6 +20,7 @@ export const TransactionsTable = ({
   onEdit,
   filterType,
   filterCategory,
+  filteredTransactions
 }: Props) => {
   return (
     <Card>
@@ -48,6 +50,7 @@ export const TransactionsTable = ({
             open={open}
             handleOpenDialog={handleOpenDialog}
             onEdit={onEdit}
+            filteredTransactions={filteredTransactions}
             filterType={filterType}
             filterCategory={filterCategory}
           />
