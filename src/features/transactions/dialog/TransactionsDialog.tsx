@@ -1,13 +1,12 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useEffect, useId, useMemo, useState } from 'react';
+import { useEffect, useId, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 import { FieldFormController } from '@/components/forms/FieldFormController';
 import { FieldFormControllerSelect } from '@/components/forms/FieldFormControllerSelect';
 import { FormDialogHeader } from '@/components/forms/FormHeader';
-import { getAllCategories } from '@/lib/getAllCategories';
-import { sleep } from '@/lib/sleep';
+import { useCategories } from '@/features/categories/hooks/useCategories';
 import type { Transaction } from '@/mocks/transaccion.mock';
 import { formNewTransactionSchema } from '@/schemas/formNewTransaction.schema';
 import { Button } from '../../../components/ui/button';
@@ -16,6 +15,11 @@ import {
   DialogContent,
   DialogFooter,
 } from '../../../components/ui/dialog';
+import {
+  useTransactionById,
+  useTransactionCreate,
+  useTransactionUpdate,
+} from '../hooks/useTransactions';
 import { TransactionsTypeFormField } from './components/TransactionsTypeFormField';
 
 interface Props {
@@ -33,12 +37,18 @@ export const TransactionsDialog = ({
   open,
   handleOpenDialog,
   transaction,
-  onSave,
 }: Props) => {
   const uniqueId = useId();
-  const categories = getAllCategories();
-  const [isLoading, setIsLoading] = useState(false);
-  const isEditMode = !!transaction;
+
+  const isEditing = !!transaction;
+  const { mutate: transactionCreate, isPending: isTransactionPending } =
+    useTransactionCreate();
+  const { data: transactionData } = useTransactionById(
+    transaction?.id_transaccion,
+  );
+  const { data: categoriesData } = useCategories();
+  const { mutate: transactionUpdate } = useTransactionUpdate();
+  const isEditMode = !!transactionData;
   const form = useForm<TransactionsDialogFormData>({
     resolver: zodResolver(formNewTransactionSchema),
     defaultValues: {
@@ -51,29 +61,25 @@ export const TransactionsDialog = ({
   const watchType = form.watch('tipo');
 
   const categoriesFiltered = useMemo(() => {
-    return categories.filter(
+    if (!categoriesData) return [];
+    return categoriesData.filter(
       (category) => category.tipo === watchType.toUpperCase(),
     );
-  }, [categories, watchType]);
+  }, [categoriesData, watchType]);
 
   useEffect(() => {
     if (!open) return;
 
-    const currentCat = form.getValues('id_categoria');
-    const existsInFiltered = categoriesFiltered.some(
-      (cat) => cat.id_categoria === currentCat,
-    );
-
     /* Si no hay categoría válida, selecciona la primera automáticamente */
-    if (!existsInFiltered && categoriesFiltered.length > 0) {
+    if (categoriesFiltered.length > 0) {
       form.setValue('id_categoria', categoriesFiltered[0].id_categoria);
     }
   }, [open, categoriesFiltered, form]);
 
   /* Manejar modo edición */
   useEffect(() => {
-    if (open && transaction) {
-      const category = getAllCategories().find(
+    if (transaction) {
+      const category = categoriesData.find(
         (cat) => cat.id_categoria === transaction.id_categoria,
       );
 
@@ -88,41 +94,41 @@ export const TransactionsDialog = ({
         tipo: 'INGRESO',
         descripcion: '',
         monto: 0,
+        id_categoria: 11,
       });
     }
-  }, [open, transaction, form]);
+  }, [open, form, transaction, categoriesData]);
 
   const onSubmit = async (data: TransactionsDialogFormData) => {
-    setIsLoading(true);
-    await sleep(500);
-
-    let savedTransaction: Transaction;
-
-    if (isEditMode) {
-      savedTransaction = {
-        ...transaction,
-        descripcion: data.descripcion,
-        id_categoria: data.id_categoria,
-        monto: Number(data.monto),
-      };
-      toast.success('Transacción actualizada con éxito');
+    if (isEditing && transaction) {
+      transactionUpdate(
+        { ...transaction, ...data },
+        {
+          onSuccess: () => {
+            toast.success('Transacción actualizada con éxito');
+          },
+          onError: () => {
+            toast.error('Error al actualizar la transacción');
+          },
+        },
+      );
     } else {
-      savedTransaction = {
-        id_transaccion: Math.floor(Math.random() * 10000),
-        id_usuario: 1,
-        id_categoria: data.id_categoria,
-        descripcion: data.descripcion,
-        monto: Number(data.monto),
-        fecha: new Date().toISOString(),
-      };
-      toast.success('Transacción creada con éxito');
+      transactionCreate(data, {
+        onSuccess: () => {
+          toast.success('Transacción creada con éxito');
+          form.reset();
+        },
+        onError: () => {
+          toast.error('Error al crear la transacción');
+        },
+      });
     }
 
-    onSave(savedTransaction);
-    setIsLoading(false);
     handleOpenDialog(false);
     form.reset();
   };
+
+  console.log(transaction);
 
   return (
     <Dialog open={open} onOpenChange={handleOpenDialog}>
@@ -181,7 +187,6 @@ export const TransactionsDialog = ({
           </div>
 
           <DialogFooter>
-            {/* TODO: ver si se puede reutilizar */}
             <Button
               type="button"
               className="cursor-pointer"
@@ -196,7 +201,7 @@ export const TransactionsDialog = ({
             <Button
               type="submit"
               className="cursor-pointer"
-              disabled={isLoading}
+              disabled={isTransactionPending}
             >
               {isEditMode ? 'Actualizar' : 'Guardar'}
             </Button>
