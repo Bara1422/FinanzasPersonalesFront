@@ -55,8 +55,6 @@ export const DashboardTransactionsTable = () => {
     b.fecha.localeCompare(a.fecha),
   );
 
-  console.log(transactionsSorted);
-
   return (
     <Card>
       <CardHeaderCustom

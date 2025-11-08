@@ -9,8 +9,7 @@ export const useCategories = () => {
       const response = await apiAxios.get<CategoryData[]>('/categorias');
       return response.data;
     },
-    initialData: [],
   });
 
-  return { data, isLoading, error, status, fetchStatus };
+  return { data: data ?? [], isLoading, error, status, fetchStatus };
 };

@@ -13,12 +13,14 @@ interface Props {
   onEdit: (transaction: Transaction) => void;
   filterType: string;
   filterCategory: string;
+  filteredTransactions: Transaction[];
 }
 
 export const TransactionsTableBody = ({
   onEdit,
   filterCategory,
   filterType,
+  filteredTransactions
 }: Props) => {
   const { data: transactionsData, error: transactionsError } =
     useFilteredTransactions({ filterType, filterCategory });
@@ -43,10 +45,10 @@ export const TransactionsTableBody = ({
   }
 
   const isIncome = (tipo: string) => tipo === 'INGRESO';
-  console.log();
+
   return (
     <TableBody>
-      {transactionsData.map((transaction) => {
+      {filteredTransactions.map((transaction) => {
         const category = categoriesData?.find(
           (cat) => cat.id_categoria === transaction.id_categoria,
         );
