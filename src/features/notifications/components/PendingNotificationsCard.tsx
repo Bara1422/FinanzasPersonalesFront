@@ -110,7 +110,7 @@ export const PendingNotificationsCard = ({
                         ${notification.monto.toLocaleString()}
                       </p>
                       <NotificationsButtons
-                        id_notificacion={notification.id_notificacion}
+                        notificacion={notification}
                       />
                     </div>
                   </div>

@@ -2,24 +2,29 @@ import { CheckCircle, Trash2 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
 import { Spinner } from '@/components/ui/spinner';
-import { useNotificationMarkAsPaid } from '@/features/notifications/hooks/useNotifications';
+import {
+  useNotificationDelete,
+  useNotificationMarkAsPaid,
+} from '@/features/notifications/hooks/useNotifications';
+import type { Notification } from '@/types/notification.type';
 import { Button } from '../../../components/ui/button';
 
 interface Props {
-  id_notificacion: number;
+  notificacion: Notification;
 }
 
-export const NotificationsButtons = ({
-  id_notificacion,
-}: Props) => {
+export const NotificationsButtons = ({ notificacion }: Props) => {
   const { mutate: markAsPaidMutate, isPending: markAsPaidIsPending } =
     useNotificationMarkAsPaid();
+  const { mutate: deleteMutate, isPending: deleteIsPending } =
+    useNotificationDelete();
 
   const [processingId, setProcessingId] = useState<number | null>(null);
+  const isPending = markAsPaidIsPending || deleteIsPending;
 
-  const handleMarkAsPaid = (id_notificacion: number) => {
-    setProcessingId(id_notificacion);
-    markAsPaidMutate(id_notificacion, {
+  const handleMarkAsPaid = (notificacion: Notification) => {
+    setProcessingId(notificacion.id_notificacion);
+    markAsPaidMutate(notificacion, {
       onSuccess: () => {
         toast.success('Notificación marcada como pagada');
         setProcessingId(null);
@@ -31,7 +36,21 @@ export const NotificationsButtons = ({
     });
   };
 
-  if (markAsPaidIsPending && processingId === id_notificacion) {
+  const handleDelete = (id_notificacion: number) => {
+    setProcessingId(id_notificacion);
+    deleteMutate(id_notificacion, {
+      onSuccess: () => {
+        toast.success('Notificación eliminada');
+        setProcessingId(null);
+      },
+      onError: () => {
+        toast.error('Error al eliminar la notificación');
+        setProcessingId(null);
+      },
+    });
+  };
+
+  if (markAsPaidIsPending && processingId === notificacion.id_notificacion) {
     return (
       <div className="pt-2">
         <Spinner className="h-6 w-6 text-primary" />
@@ -46,7 +65,8 @@ export const NotificationsButtons = ({
         variant="default"
         size="sm"
         className="h-8 px-3 text-xs cursor-pointer"
-        onClick={() => handleMarkAsPaid(id_notificacion)}
+        onClick={() => handleMarkAsPaid(notificacion)}
+        disabled={isPending}
       >
         <CheckCircle className="mr-1 h-3 w-3" />
         Marcar como pagado
@@ -56,6 +76,8 @@ export const NotificationsButtons = ({
         variant="ghost"
         size="sm"
         className="h-8 px-3 text-xs text-destructive hover:text-white hover:bg-destructive/80 cursor-pointer"
+        onClick={() => handleDelete(notificacion.id_notificacion)}
+        disabled={isPending}
       >
         <Trash2 className="mr-1 h-3 w-3" />
         Eliminar

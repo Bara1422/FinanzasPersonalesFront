@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiAxios } from '@/config/axios';
 import { useAuthStore } from '@/store/authStore';
 import type { Notification } from '@/types/notification.type';
+import type { Transaction } from '@/types/transaction.types';
 
 export const useNotifications = () => {
   const usuario = useAuthStore((state) => state.usuario);
@@ -54,10 +55,24 @@ export const useNotificationMarkAsPaid = () => {
   const usuario = useAuthStore((state) => state.usuario);
 
   return useMutation({
-    mutationFn: async (id_notificacion: number) => {
-      await apiAxios.post(`/notificaciones/${id_notificacion}/pagar`);
+    mutationFn: async (notificacion: Notification) => {
+      await apiAxios.post(
+        `/notificaciones/${notificacion.id_notificacion}/pagar`,
+      );
+      return notificacion;
     },
-    onSuccess: () => {
+    onSuccess: async (notificacion) => {
+      try {
+        await apiAxios.post<Transaction>('/transacciones', {
+          id_usuario: usuario?.id_usuario,
+          monto: notificacion.monto,
+          id_categoria: notificacion.id_categoria,
+          descripcion: notificacion.descripcion,
+          fecha: new Date().toISOString().split('T')[0],
+        });
+      } catch (e) {
+        console.error('Error al crear transaccion:', e);
+      }
       queryClient.invalidateQueries({
         queryKey: ['notificationsPending', usuario?.id_usuario],
       });
@@ -77,7 +92,10 @@ export const useNotificationCreate = () => {
 
   return useMutation({
     mutationFn: async (
-      newNotification: Omit<Notification, 'id_notificacion' | 'pagado' | 'id_usuario'>,
+      newNotification: Omit<
+        Notification,
+        'id_notificacion' | 'pagado' | 'id_usuario'
+      >,
     ) => {
       const response = await apiAxios.post<Notification>(
         '/notificaciones',
@@ -91,6 +109,29 @@ export const useNotificationCreate = () => {
       });
       queryClient.invalidateQueries({
         queryKey: ['notificationsPending', usuario?.id_usuario],
+      });
+    },
+  });
+};
+
+export const useNotificationDelete = () => {
+  const queryClient = useQueryClient();
+  const usuario = useAuthStore((state) => state.usuario);
+
+  return useMutation({
+    mutationFn: async (id_notificacion: number) => {
+      await apiAxios.delete(`/notificaciones/${id_notificacion}`);
+      return id_notificacion;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['notifications', usuario?.id_usuario],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['notificationsPending', usuario?.id_usuario],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ['notificationsPaid', usuario?.id_usuario],
       });
     },
   });
