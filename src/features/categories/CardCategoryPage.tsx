@@ -28,7 +28,7 @@ export const CardCategoryPage = ({
       <TableBody>
         {categorySummary.map((category) => (
           <CategoryTableBody
-            key={category.id_category}
+            key={category.id_categoria}
             category={category}
             tipo={tipo}
           />

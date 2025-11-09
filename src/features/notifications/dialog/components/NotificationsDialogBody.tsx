@@ -3,7 +3,6 @@ import type { UseFormReturn } from 'react-hook-form';
 import { FieldFormController } from '@/components/forms/FieldFormController';
 import { FieldFormControllerSelect } from '@/components/forms/FieldFormControllerSelect';
 import { FieldGroup } from '@/components/ui/field';
-import { formDateForInput } from '@/lib/formDateForInput';
 import type { Category } from '@/types/category.types';
 import type { NotificationsDialogFormData } from '../NotificationsDialog';
 
@@ -33,6 +32,9 @@ export const NotificationsDialogBody = ({
     { label: 'Media', value: 'MEDIA' },
     { label: 'Baja', value: 'BAJA' },
   ];
+
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
 
   return (
     <div className="grid gap-4 py-4">
@@ -83,7 +85,7 @@ export const NotificationsDialogBody = ({
           name="fecha_vencimiento"
           uniqueId={uniqueId}
           type="date"
-          min={formDateForInput(new Date().toISOString())}
+          min={tomorrow.toISOString().split('T')[0]}
         />
       </FieldGroup>
     </div>

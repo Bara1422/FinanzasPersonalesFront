@@ -2,7 +2,7 @@ import { Calendar } from 'lucide-react';
 
 interface Props {
   notification: {
-    fecha_vencimiento: string;
+    fecha_vencimiento: Date;
   };
   isUrgent: boolean;
   isOver: boolean;

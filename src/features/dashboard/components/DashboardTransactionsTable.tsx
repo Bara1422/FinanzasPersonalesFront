@@ -18,7 +18,6 @@ import { getAmountInfo } from '@/lib/getAmmountInfo';
 export const DashboardTransactionsTable = () => {
   const { data: transactions, status: transactionsStatus } = useBalance();
   const isIncome = (tipo: string) => tipo === 'INGRESO';
-  // const { data: transactions, status: transactionsStatus } = useTransactions();
   const { data: categories, status: categoriesStatus } = useCategories();
 
   if (transactionsStatus === 'pending' || categoriesStatus === 'pending') {

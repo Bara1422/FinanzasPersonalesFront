@@ -2,9 +2,7 @@ import { Clock } from 'lucide-react';
 import { CardHeaderCustom } from '@/components/forms/CardHeaderCustom';
 import { Spinner } from '@/components/ui/spinner';
 import { useCategories } from '@/features/categories/hooks/useCategories';
-import {
-  useNotificationsPending,
-} from '@/features/notifications/hooks/useNotifications';
+import { useNotificationsPending } from '@/features/notifications/hooks/useNotifications';
 import { Card, CardContent } from '../../../components/ui/card';
 import { NoPendingNotifications } from './NoPendingNotifications';
 import { NotificationsButtons } from './NotificationsButtons';
@@ -12,12 +10,10 @@ import { NotificationsDaysLeft } from './NotificationsDaysLeft';
 import { NotificationsMessage } from './NotificationsMessage';
 
 interface Props {
-  getDaysLeft: (dayDate: string) => number;
+  getDaysLeft: (dayDate: Date) => number;
 }
 
-export const PendingNotificationsCard = ({
-  getDaysLeft,
-}: Props) => {
+export const PendingNotificationsCard = ({ getDaysLeft }: Props) => {
   const {
     data: notificationsPending,
     status: statusPending,
@@ -31,8 +27,6 @@ export const PendingNotificationsCard = ({
     error: errorCategories,
     fetchStatus: fetchStatusCategories,
   } = useCategories();
-
-
 
   /* Prioridad color */
   const getPriorityColor = (priority: string) => {
@@ -56,6 +50,7 @@ export const PendingNotificationsCard = ({
       </>
     );
   }
+  console.log(notificationsPending)
 
   return (
     <>
@@ -76,7 +71,9 @@ export const PendingNotificationsCard = ({
           ) : (
             <div className="space-y-4">
               {notificationsPending.map((notification) => {
-                const daysLeft = getDaysLeft(notification.fecha_vencimiento);
+                const daysLeft = getDaysLeft(
+                  notification.fecha_vencimiento,
+                );
                 const isUrgent = daysLeft <= 3;
                 const isOver = daysLeft < 0;
 
@@ -109,9 +106,7 @@ export const PendingNotificationsCard = ({
                       <p className="font-medium text-destructive text-lg">
                         ${notification.monto.toLocaleString()}
                       </p>
-                      <NotificationsButtons
-                        notificacion={notification}
-                      />
+                      <NotificationsButtons notificacion={notification} />
                     </div>
                   </div>
                 );
