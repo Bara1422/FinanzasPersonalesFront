@@ -37,7 +37,13 @@ export const useAuthStore = create<AuthState>()(
             password,
           });
           const { usuario, token } = data;
-          set({ token, id_usuario: usuario.id_usuario, usuario });
+
+          const normalizedUser = {
+            ...usuario,
+            created_at: usuario.created_at ? new Date(usuario.created_at) : null,
+          };
+
+          set({ token, id_usuario: usuario.id_usuario, usuario: normalizedUser });
         } catch (error: any) {
           const errorMessage =
             error.response?.data?.message ||
@@ -69,7 +75,11 @@ export const useAuthStore = create<AuthState>()(
 
         try {
           const { data } = await apiAxios.get('/auth/me');
-          set({ usuario: data, isHydrated: true });
+          const normalizedUser = {
+            ...data,
+            created_at: data.created_at ? new Date(data.created_at) : null,
+          };
+          set({ usuario: normalizedUser, isHydrated: true });
         } catch (error) {
           console.log('Error trayendo usuario:', error);
           get().logout();

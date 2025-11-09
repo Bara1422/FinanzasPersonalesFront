@@ -6,7 +6,7 @@ export interface User {
   email: string;
   username: string;
   rol: UserRole;
-  created_at: string;
+  created_at: Date;
 }
 
 export interface UserWithPassword extends User {

@@ -3,7 +3,7 @@ import { Badge } from '../../components/ui/badge';
 
 export const ProfileInfo = () => {
   const user = useAuthStore((state) => state.usuario);
-
+  
   if (!user) {
     return null;
   }
@@ -16,7 +16,7 @@ export const ProfileInfo = () => {
           {user.rol === 'ADMIN' ? 'Administrador' : 'Usuario'}
         </Badge>
         <Badge className="mt-2 ml-2" variant={'default'}>
-          Miembro desde {user.created_at.split('T')[0]}
+          Miembro desde {user.created_at.toLocaleDateString()}
         </Badge>
       </div>
     </div>
