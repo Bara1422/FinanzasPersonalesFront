@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiAxios } from '@/config/axios';
 import { useAuthStore } from '@/store/authStore';
-import type { Notification } from '@/types/notification.type';
+import type { Notification, NotificationCreateDTO } from '@/types/notification.type';
 import type { Transaction } from '@/types/transaction.types';
 
 export const useNotifications = () => {
@@ -10,7 +10,10 @@ export const useNotifications = () => {
     queryKey: ['notifications', usuario?.id_usuario],
     queryFn: async () => {
       const response = await apiAxios.get<Notification[]>('/notificaciones');
-      return response.data;
+      return response.data.map((notification) => ({
+        ...notification,
+        fecha_vencimiento: new Date(notification.fecha_vencimiento),
+      }));
     },
     initialData: [],
   });
@@ -26,7 +29,10 @@ export const useNotificationsPending = () => {
       const response = await apiAxios.get<Notification[]>(
         '/notificaciones/pending',
       );
-      return response.data;
+      return response.data.map((notification) => ({
+        ...notification,
+        fecha_vencimiento: new Date(notification.fecha_vencimiento),
+      }));
     },
     initialData: [],
   });
@@ -42,7 +48,11 @@ export const useNotificationsPaid = () => {
       const response = await apiAxios.get<Notification[]>(
         '/notificaciones/paid',
       );
-      return response.data;
+
+      return response.data.map((notification) => ({
+        ...notification,
+        fecha_vencimiento: new Date(notification.fecha_vencimiento),
+      }));
     },
     initialData: [],
   });
@@ -56,10 +66,14 @@ export const useNotificationMarkAsPaid = () => {
 
   return useMutation({
     mutationFn: async (notificacion: Notification) => {
+      const payload = {
+        ...notificacion,
+        fecha_vencimiento: notificacion.fecha_vencimiento.toISOString(),
+      };
       await apiAxios.post(
         `/notificaciones/${notificacion.id_notificacion}/pagar`,
       );
-      return notificacion;
+      return payload;
     },
     onSuccess: async (notificacion) => {
       try {
@@ -68,7 +82,7 @@ export const useNotificationMarkAsPaid = () => {
           monto: notificacion.monto,
           id_categoria: notificacion.id_categoria,
           descripcion: notificacion.descripcion,
-          fecha: new Date().toISOString().split('T')[0],
+          fecha: new Date().toISOString(),
         });
       } catch (e) {
         console.error('Error al crear transaccion:', e);
@@ -92,14 +106,16 @@ export const useNotificationCreate = () => {
 
   return useMutation({
     mutationFn: async (
-      newNotification: Omit<
-        Notification,
-        'id_notificacion' | 'pagado' | 'id_usuario'
-      >,
+      newNotification: NotificationCreateDTO
     ) => {
+      const payload = {
+        ...newNotification,
+        fecha_vencimiento: new Date(newNotification.fecha_vencimiento).toISOString(),
+      };
+
       const response = await apiAxios.post<Notification>(
         '/notificaciones',
-        newNotification,
+        payload,
       );
       return response.data;
     },

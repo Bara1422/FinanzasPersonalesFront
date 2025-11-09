@@ -74,9 +74,7 @@ export const PaidNotificationsCard = () => {
                     </Badge>
                     <span className="text-xs text-muted-foreground">
                       Vencía:{' '}
-                      {new Date(
-                        notification.fecha_vencimiento,
-                      ).toLocaleDateString('es-ES')}
+                      {notification.fecha_vencimiento.toLocaleDateString()}
                     </span>
                   </div>
                 </div>

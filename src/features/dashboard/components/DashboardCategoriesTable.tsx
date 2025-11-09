@@ -7,8 +7,8 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Spinner } from '@/components/ui/spinner';
-import { useCategories } from '@/features/categories/hooks/useCategories';
 import { useBalance } from '@/hooks/useBalance';
+import { getCategorySummary } from '@/lib/getCategorySummary';
 
 export const DashboardCategoriesTable = () => {
   const {
@@ -16,21 +16,15 @@ export const DashboardCategoriesTable = () => {
     status: statusBalance,
     error: errorBalance,
   } = useBalance();
-  const {
-    data: categorias,
-    status: statusCategorias,
-    error: errorCategorias,
-  } = useCategories();
 
-  if (statusBalance === 'pending' || statusCategorias === 'pending') {
+    const categorySummary = getCategorySummary();
+  if (statusBalance === 'pending') {
     return <Spinner className="size-8" />;
   }
 
   if (
     statusBalance === 'error' ||
-    statusCategorias === 'error' ||
-    errorBalance ||
-    errorCategorias
+    errorBalance
   ) {
     return (
       <Card className="col-span-3">
@@ -47,7 +41,7 @@ export const DashboardCategoriesTable = () => {
     );
   }
 
-  if (!balance || !categorias || categorias.length === 0) {
+  if (!balance || categorySummary.length === 0) {
     return (
       <EmptyDataCard
         title="Gastos por Categoría"
@@ -60,12 +54,12 @@ export const DashboardCategoriesTable = () => {
   return (
     <Card className="col-span-1">
       <CardHeader>
-        <CardTitle>Gastos por Categoría</CardTitle>
+        <CardTitle>Gastos o Ingresos por Categoría</CardTitle>
         <CardDescription>Distribución del mes actual</CardDescription>
       </CardHeader>
       <CardContent className="space-y-4">
-        {balance.transacciones.map((transaccion) => {
-          const categoryInfo = categorias.find(
+        {categorySummary.map((transaccion) => {
+          const categoryInfo = categorySummary.find(
             (cat) => cat.id_categoria === transaccion.id_categoria,
           );
           if (!categoryInfo) return null;
@@ -73,8 +67,8 @@ export const DashboardCategoriesTable = () => {
             <div key={transaccion.id_categoria} className="space-y-2">
               <div className="flex items-center justify-between text-sm">
                 <span className="font-medium">{categoryInfo.nombre}</span>
-                <span className="text-destructive font-semibold">
-                  ${transaccion.monto.toFixed(2)}
+                <span className={`${categoryInfo.tipo === 'GASTO' ? 'text-destructive' : 'text-green-500'} font-semibold`}>
+                  ${transaccion.totalPorCategoria.toFixed(2)}
                 </span>
               </div>
             </div>

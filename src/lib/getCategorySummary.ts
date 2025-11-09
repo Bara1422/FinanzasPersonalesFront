@@ -2,14 +2,14 @@ import { useCategories } from '@/features/categories/hooks/useCategories';
 import { useTransactions } from '@/features/transactions/hooks/useTransactions';
 
 export interface CategorySummary {
-  id_category: number;
+  id_categoria: number;
   nombre: string;
   cantidad: number;
   totalPorCategoria: number;
   tipo: 'GASTO' | 'INGRESO';
 }
 
-export const getCategorySummaryMock = () => {
+export const getCategorySummary = () => {
   const { data: transacciones, fetchStatus: transaccionesStatus } =
     useTransactions();
   const { data: categorias, fetchStatus: categoriasStatus } = useCategories();
@@ -36,7 +36,7 @@ export const getCategorySummaryMock = () => {
       0,
     );
     return {
-      id_category: category.id_categoria,
+      id_categoria: category.id_categoria,
       nombre: category.nombre,
       cantidad,
       totalPorCategoria,

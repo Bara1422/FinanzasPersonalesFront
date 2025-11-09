@@ -52,8 +52,7 @@ export const DashboardNotificationsCard = () => {
 
   const notificacionesActivas = pendingNotificaciones.filter((notif) => {
     const fechaActual = new Date();
-    const fechaVencimiento = new Date(notif.fecha_vencimiento);
-    return fechaVencimiento > fechaActual;
+    return notif.fecha_vencimiento > fechaActual;
   });
 
   if (notificacionesActivas.length === 0) {

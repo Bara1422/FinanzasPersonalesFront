@@ -1,6 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useId } from 'react';
-import { useForm } from 'react-hook-form';
+import {  useForm } from 'react-hook-form';
 import { toast } from 'sonner';
 import type { z } from 'zod';
 import { FormDialogHeader } from '@/components/forms/FormHeader';
@@ -52,7 +52,6 @@ export const NotificationsDialog = ({ open, onOpenChange }: Props) => {
         toast.error('Error al crear la notificación');
       },
     });
-
     onOpenChange(false);
   };
 

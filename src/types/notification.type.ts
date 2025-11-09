@@ -6,8 +6,15 @@ export interface Notification {
   id_categoria: number;
   descripcion: string;
   monto: number;
-  fecha_vencimiento: string;
+  fecha_vencimiento: Date;
   prioridad: Prioridad;
   pagado: boolean;
 }
 
+export interface NotificationCreateDTO {
+  id_categoria: number;
+  descripcion: string;
+  monto: number;
+  fecha_vencimiento: string;
+  prioridad: Prioridad;
+}

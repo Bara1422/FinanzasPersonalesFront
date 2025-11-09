@@ -8,12 +8,13 @@ import { NotificationsDialog } from '@/features/notifications/dialog/Notificatio
 export const NotificationsPage = () => {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
 
-  const getDaysLeft = (dayDate: string) => {
+  const getDaysLeft = (dayDate: Date) => {
     const today = new Date();
-    const due = new Date(dayDate);
-    const diffTime = due.getTime() - today.getTime();
+    
+    const diffTime = dayDate.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
+    
   };
 
   const handleOpenDialog = (open: boolean) => {
