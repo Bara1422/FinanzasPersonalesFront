@@ -50,7 +50,6 @@ export const PendingNotificationsCard = ({ getDaysLeft }: Props) => {
       </>
     );
   }
-  console.log(notificationsPending)
 
   return (
     <>
@@ -71,9 +70,7 @@ export const PendingNotificationsCard = ({ getDaysLeft }: Props) => {
           ) : (
             <div className="space-y-4">
               {notificationsPending.map((notification) => {
-                const daysLeft = getDaysLeft(
-                  notification.fecha_vencimiento,
-                );
+                const daysLeft = getDaysLeft(notification.fecha_vencimiento);
                 const isUrgent = daysLeft <= 3;
                 const isOver = daysLeft < 0;
 

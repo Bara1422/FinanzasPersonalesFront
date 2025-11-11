@@ -1,5 +1,6 @@
 import { Download, FileText } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { toast } from 'sonner';
 import { PageTitle } from '@/components/common/PageTitle';
 import { Button } from '@/components/ui/button';
 import {
@@ -16,52 +17,89 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useGenerateReport } from '@/hooks/useReports';
+import { useAuthStore } from '@/store/authStore';
 
 export const ReportsPage = () => {
   const [selectedFormats, setSelectedFormats] = useState<
-    Record<string, 'pdf' | 'xls'>
+    Record<string, 'pdf' | 'excel'>
   >({});
 
-  const handleFormatChange = (reportId: string, format: 'pdf' | 'xls') => {
+  const { mutate: generateReporte } = useGenerateReport();
+  const usuario = useAuthStore((state) => state.usuario);
+  const isAdmin = usuario?.rol === 'ADMIN';
+
+  const handleFormatChange = (reportId: string, format: 'pdf' | 'excel') => {
     setSelectedFormats((prev) => ({
       ...prev,
       [reportId]: format,
     }));
   };
 
-  const handleGenerateReport = (reportId: string, reportTitle: string) => {
+  const handleGenerateReport = (reportId: string) => {
     const format = selectedFormats[reportId] || 'pdf';
-    console.log(`Generando ${reportTitle} en formato ${format}`);
-    // aca tengo que hacer la logica con backend para que funcione la descarga
+
+    generateReporte(
+      { type: reportId, format },
+      {
+        onSuccess: () => {
+          toast.success('Reporte descargado con éxito');
+        },
+        onError: (error: any) => {
+          toast.error(
+            error.response?.data?.message || 'Error al generar el reporte',
+          );
+        },
+      },
+    );
   };
 
-  const reports = [
+  const allReports = [
     {
-      id: 'user',
+      id: 'usuario',
       title: 'Reporte por Usuario',
       description: 'Información detallada de tu perfil y actividad',
+      isAdminOnly: false,
     },
     {
-      id: 'categories',
+      id: 'categorias',
       title: 'Reporte de Gastos por Categorías',
       description: 'Análisis de gastos organizados por categoría',
+      isAdminOnly: false,
     },
-    {
+    /* {
       id: 'shopping-lists',
       title: 'Reporte de Listas de Compras',
       description: 'Historial y estadísticas de tus listas de compras',
-    },
+    }, */
     {
-      id: 'transactions',
+      id: 'transacciones',
       title: 'Reporte de Transacciones',
       description: 'Registro completo de ingresos y gastos',
+      isAdminOnly: false,
     },
     {
-      id: 'notifications',
+      id: 'notificaciones',
       title: 'Reporte de Notificaciones',
       description: 'Gastos programados y vencimientos',
+      isAdminOnly: false,
+    },
+    {
+      id: 'todos_usuarios',
+      title: 'Reporte de Todos los Usuarios',
+      description: 'Resumen financiero de todos los usuarios (ADMIN)',
+      isAdminOnly: true,
     },
   ];
+
+  const reports = useMemo(() => {
+    return allReports.filter((report) => {
+      if (report.isAdminOnly) {
+        return isAdmin;
+      }
+      return true;
+    });
+  }, [isAdmin]);
 
   return (
     <div className="space-y-6 p-6">
@@ -86,7 +124,7 @@ export const ReportsPage = () => {
               <div className="flex gap-2">
                 <Select
                   defaultValue="pdf"
-                  onValueChange={(value: 'pdf' | 'xls') =>
+                  onValueChange={(value: 'pdf' | 'excel') =>
                     handleFormatChange(report.id, value)
                   }
                 >
@@ -95,11 +133,11 @@ export const ReportsPage = () => {
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="pdf">PDF</SelectItem>
-                    <SelectItem value="xls">Excel</SelectItem>
+                    <SelectItem value="excel">Excel</SelectItem>
                   </SelectContent>
                 </Select>
                 <Button
-                  onClick={() => handleGenerateReport(report.id, report.title)}
+                  onClick={() => handleGenerateReport(report.id)}
                   className="flex-1"
                 >
                   <Download className="mr-2 h-4 w-4" />
