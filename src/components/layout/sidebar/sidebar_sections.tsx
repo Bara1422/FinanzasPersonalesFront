@@ -13,6 +13,7 @@ export const SidebarSections = ({
     <SidebarMenuItem key={page.name}>
       <SidebarMenuButton asChild>
         <a
+          aria-disabled={page.name === 'Lista de compras'}
           href={page.href}
           className={cn(
             pathname === page.href
@@ -21,7 +22,9 @@ export const SidebarSections = ({
           )}
         >
           <page.icon />
-          <span className="text-md font-medium">{page.name}</span>
+          <span className="text-md font-medium">
+            {page.name === 'Lista de compras' ? 'Lista de compras (Working)' : page.name}
+          </span>
         </a>
       </SidebarMenuButton>
     </SidebarMenuItem>
