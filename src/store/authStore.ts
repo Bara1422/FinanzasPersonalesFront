@@ -3,7 +3,6 @@ import { persist } from 'zustand/middleware';
 import { apiAxios } from '@/config/axios';
 import type { User } from '@/types/user.types';
 
-
 interface RegisterData {
   nombre: string;
   email: string;
@@ -40,10 +39,16 @@ export const useAuthStore = create<AuthState>()(
 
           const normalizedUser = {
             ...usuario,
-            created_at: usuario.created_at ? new Date(usuario.created_at) : null,
+            created_at: usuario.created_at
+              ? new Date(usuario.created_at)
+              : null,
           };
 
-          set({ token, id_usuario: usuario.id_usuario, usuario: normalizedUser });
+          set({
+            token,
+            id_usuario: usuario.id_usuario,
+            usuario: normalizedUser,
+          });
         } catch (error: any) {
           const errorMessage =
             error.response?.data?.message ||
