@@ -8,7 +8,6 @@ import { useTransactions } from '@/features/transactions/hooks/useTransactions';
 import { useTransactionsFilters } from '@/features/transactions/hooks/useTransactionsFilters';
 import type { Transaction } from '@/types/transaction.types';
 
-
 export const TransactionsPage = () => {
   const { data: transactions = [] } = useTransactions();
 
@@ -50,8 +49,8 @@ export const TransactionsPage = () => {
 
       {/* Filters */}
       <TransactionsFilter
-      searchTerm={searchTerm}
-      handleSearchTermChange={handleSearchTermChange}
+        searchTerm={searchTerm}
+        handleSearchTermChange={handleSearchTermChange}
         filterType={filterType}
         filterCategory={filterCategory}
         categoriesFilter={handleFilterCategoryChange}
@@ -60,7 +59,7 @@ export const TransactionsPage = () => {
 
       {/* Transaction Table */}
       <TransactionsTable
-      filteredTransactions={filteredTransactions}
+        filteredTransactions={filteredTransactions}
         open={isOpenDialog}
         handleOpenDialog={handleOpenDialog}
         onEdit={handleEdit}

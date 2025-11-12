@@ -10,11 +10,10 @@ export const NotificationsPage = () => {
 
   const getDaysLeft = (dayDate: Date) => {
     const today = new Date();
-    
+
     const diffTime = dayDate.getTime() - today.getTime();
     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
     return diffDays;
-    
   };
 
   const handleOpenDialog = (open: boolean) => {

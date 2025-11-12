@@ -23,7 +23,9 @@ export const SidebarSections = ({
         >
           <page.icon />
           <span className="text-md font-medium">
-            {page.name === 'Lista de compras' ? 'Lista de compras (Working)' : page.name}
+            {page.name === 'Lista de compras'
+              ? 'Lista de compras (Working)'
+              : page.name}
           </span>
         </a>
       </SidebarMenuButton>

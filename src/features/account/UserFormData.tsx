@@ -24,13 +24,13 @@ export const UserFormData = () => {
     updateUser(data, {
       onSuccess: () => {
         toast.success('Perfil actualizado con éxito');
+        setIsEditting(false);
       },
       onError: () => {
         toast.error('Error al actualizar el perfil');
+        setIsEditting(false);
       },
     });
-
-    setIsEditting(false);
   };
 
   const onChangeEditting = () => {

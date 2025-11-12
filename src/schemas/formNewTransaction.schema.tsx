@@ -1,6 +1,5 @@
 import { z } from 'zod';
 
-
 export const formNewTransactionSchema = z.object({
   tipo: z.enum(['INGRESO', 'GASTO'], { message: 'Tipo inválido' }),
   descripcion: z

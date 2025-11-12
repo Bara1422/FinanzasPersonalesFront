@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import type { Transaction } from '@/types/transaction.types';
 
-
 export const useTransactionsFilters = (transactions: Transaction[]) => {
   const { data: categories = [] } = useCategories();
   const [filterType, setFilterType] = useState<string>('todos');
