@@ -17,15 +17,12 @@ export const DashboardCategoriesTable = () => {
     error: errorBalance,
   } = useBalance();
 
-    const categorySummary = getCategorySummary();
+  const categorySummary = getCategorySummary();
   if (statusBalance === 'pending') {
     return <Spinner className="size-8" />;
   }
 
-  if (
-    statusBalance === 'error' ||
-    errorBalance
-  ) {
+  if (statusBalance === 'error' || errorBalance) {
     return (
       <Card className="col-span-3">
         <CardHeader>
@@ -67,8 +64,10 @@ export const DashboardCategoriesTable = () => {
             <div key={transaccion.id_categoria} className="space-y-2">
               <div className="flex items-center justify-between text-sm">
                 <span className="font-medium">{categoryInfo.nombre}</span>
-                <span className={`${categoryInfo.tipo === 'GASTO' ? 'text-destructive' : 'text-green-500'} font-semibold`}>
-                  ${transaccion.totalPorCategoria.toFixed(2)}
+                <span
+                  className={`${categoryInfo.tipo === 'GASTO' ? 'text-destructive' : 'text-green-500'} font-semibold`}
+                >
+                  ${transaccion.totalPorCategoria.toLocaleString()}
                 </span>
               </div>
             </div>

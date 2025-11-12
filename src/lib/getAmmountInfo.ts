@@ -11,26 +11,23 @@ export const getAmountInfo = ({
   switch (tipo) {
     case 'INGRESO':
       color = 'text-green-500';
-      formattedAmount = `+ $${amount.toFixed(2)}`;
+      formattedAmount = `$${amount.toLocaleString()}`;
       break;
     case 'GASTO':
       color = 'text-red-500';
-      formattedAmount = `- $${amount.toFixed(2)}`;
+      formattedAmount = `$${amount.toLocaleString()}`;
       break;
     case 'BALANCE':
       color = amount >= 0 ? 'text-green-500' : 'text-red-500';
-      formattedAmount =
-        amount > 0
-          ? `+ $${amount.toFixed(2)}`
-          : `- $${Math.abs(amount).toFixed(2)}`;
+      formattedAmount = `$${Math.abs(amount).toLocaleString()}`;
       break;
     case 'TRANSACCION':
       color = 'text-black-500';
-      formattedAmount = `${amount.toFixed(0)}`;
+      formattedAmount = `${amount.toLocaleString()}`;
       break;
     default:
       color = 'text-black';
-      formattedAmount = `$${amount.toFixed(2)}`;
+      formattedAmount = `$${amount.toLocaleString()}`;
   }
 
   return { color, formattedAmount };

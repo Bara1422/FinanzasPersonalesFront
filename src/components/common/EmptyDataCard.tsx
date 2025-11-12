@@ -20,9 +20,7 @@ export const EmptyDataCard = ({ title, description, text }: Props) => {
         <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p className="text-center text-muted-foreground py-8">
-          {text}
-        </p>
+        <p className="text-center text-muted-foreground py-8">{text}</p>
       </CardContent>
     </Card>
   );

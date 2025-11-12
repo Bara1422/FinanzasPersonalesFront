@@ -7,7 +7,7 @@ import AuthLayout from '../features/auth/components/AuthLayout';
 export default function Login() {
   const nav = useNavigate();
 
-  const {  usuario, token } = useAuthStore();
+  const { usuario, token } = useAuthStore();
 
   useEffect(() => {
     if (usuario || token) {

@@ -5,4 +5,3 @@ export type Category = {
   nombre: string;
   tipo: CategoryType;
 };
-

@@ -24,15 +24,12 @@ export const CategoryTableBody = ({
       <TableCell>
         <div className="flex items-center justify-end gap-3">
           <span
-            className={`font-medium ${tipo === 'GASTO' ? 'text-red-500' : 'text-green-500'}`}
+            className={`font-semibold ${tipo === 'GASTO' ? 'text-red-500' : 'text-green-500'}`}
           >
-            ${category.totalPorCategoria.toFixed(2)}
+            ${category.totalPorCategoria.toLocaleString()}
           </span>
         </div>
       </TableCell>
-      {/*  <TableCell>
-        <EditDeleteButtons />
-      </TableCell> */}
     </TableRow>
   );
 };

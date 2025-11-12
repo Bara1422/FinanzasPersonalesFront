@@ -18,7 +18,6 @@ export const DashboardNotificationsCard = () => {
     error,
   } = useNotificationsPending();
 
-
   if (fetchStatus === 'fetching') {
     return <Spinner className="size-8" />;
   }
@@ -110,7 +109,7 @@ export const DashboardNotificationsCard = () => {
                   Prioridad {notif.prioridad}
                 </span>
                 <p className="font-bold text-red-500">
-                  ${notif.monto.toFixed(2)}
+                  ${notif.monto.toLocaleString()}
                 </p>
               </div>
             </div>

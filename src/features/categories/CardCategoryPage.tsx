@@ -22,7 +22,6 @@ export const CardCategoryPage = ({
           <TableHead>Categoría</TableHead>
           <TableHead className="text-center">Transacciones</TableHead>
           <TableHead className="text-right">Total</TableHead>
-          {/*  <TableHead className="text-right">Acciones</TableHead> */}
         </TableRow>
       </TableHeader>
       <TableBody>

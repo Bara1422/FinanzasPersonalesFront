@@ -3,7 +3,7 @@ import { Badge } from '../../components/ui/badge';
 
 export const ProfileInfo = () => {
   const user = useAuthStore((state) => state.usuario);
-  
+
   if (!user) {
     return null;
   }

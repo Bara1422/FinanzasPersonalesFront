@@ -1,7 +1,10 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { apiAxios } from '@/config/axios';
 import { useAuthStore } from '@/store/authStore';
-import type { Notification, NotificationCreateDTO } from '@/types/notification.type';
+import type {
+  Notification,
+  NotificationCreateDTO,
+} from '@/types/notification.type';
 import type { Transaction } from '@/types/transaction.types';
 
 export const useNotifications = () => {
@@ -105,12 +108,12 @@ export const useNotificationCreate = () => {
   const usuario = useAuthStore((state) => state.usuario);
 
   return useMutation({
-    mutationFn: async (
-      newNotification: NotificationCreateDTO
-    ) => {
+    mutationFn: async (newNotification: NotificationCreateDTO) => {
       const payload = {
         ...newNotification,
-        fecha_vencimiento: new Date(newNotification.fecha_vencimiento).toISOString(),
+        fecha_vencimiento: new Date(
+          newNotification.fecha_vencimiento,
+        ).toISOString(),
       };
 
       const response = await apiAxios.post<Notification>(

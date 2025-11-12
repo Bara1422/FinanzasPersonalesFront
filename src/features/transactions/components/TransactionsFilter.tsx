@@ -48,7 +48,6 @@ export const TransactionsFilter = ({
         ? categories.filter((category) => category.tipo === 'GASTO')
         : categories;
 
-
   return (
     <Card>
       <CardHeaderCustom

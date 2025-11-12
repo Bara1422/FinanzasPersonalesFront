@@ -5,7 +5,7 @@ interface Props {
   description: string;
 }
 
-export const FormDialogHeader = ({title, description}: Props) => {
+export const FormDialogHeader = ({ title, description }: Props) => {
   return (
     <DialogHeader>
       <DialogTitle>{title}</DialogTitle>
