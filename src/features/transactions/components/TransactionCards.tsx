@@ -1,3 +1,4 @@
+import { Calculator, TrendingDown, TrendingUp } from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import { useBalance } from '@/hooks/useBalance';
 import { TransactionsCardInfo } from './TransactionsCardInfo';
@@ -28,19 +29,22 @@ export const TransactionCards = () => {
   return (
     <div className="grid gap-4 md:grid-cols-3">
       <TransactionsCardInfo
+        icon={<Calculator className="h-5 w-5" />}
+        title="Balance Total"
+        amount={totalBalance}
+        tipo="BALANCE"
+      />
+      <TransactionsCardInfo
+        icon={<TrendingUp className="h-5 w-5 text-green-500" />}
         title="Total Ingresos"
         amount={totalIncome}
         tipo="INGRESO"
       />
       <TransactionsCardInfo
+        icon={<TrendingDown className="h-5 w-5 text-red-500" />}
         title="Total Gastos"
         amount={totalExpense}
         tipo="GASTO"
-      />
-      <TransactionsCardInfo
-        title="Balance Total"
-        amount={totalBalance}
-        tipo="BALANCE"
       />
     </div>
   );

@@ -26,7 +26,7 @@ export const TransactionsTable = ({
     <Card>
       <CardHeaderCustom
         title="Lista de Transacciones"
-        description={`${1} transacciones encontradas`}
+        description={`${filteredTransactions.length} transacciones encontradas`}
       />
       <CardContent>
         <Table>

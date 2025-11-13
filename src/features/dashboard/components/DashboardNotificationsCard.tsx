@@ -1,4 +1,4 @@
-import { Bell } from 'lucide-react';
+import { CalendarClock } from 'lucide-react';
 import { EmptyDataCard } from '@/components/common/EmptyDataCard';
 import {
   Card,
@@ -35,7 +35,6 @@ export const DashboardNotificationsCard = () => {
       <Card>
         <CardHeader>
           <div className="flex items-center gap-2">
-            <Bell className="h-5 w-5 text-orange-500" />
             <CardTitle>Próximos Vencimientos</CardTitle>
           </div>
           <CardDescription>Pagos y recordatorios pendientes</CardDescription>
@@ -78,7 +77,9 @@ export const DashboardNotificationsCard = () => {
   return (
     <Card className="col-span-1">
       <CardHeader>
-        <CardTitle>Próximos Vencimientos</CardTitle>
+        <CardTitle className='flex justify-between'>
+          Próximos Vencimientos {<CalendarClock className="h-5 w-5" />}
+        </CardTitle>
         <CardDescription>Pagos y recordatorios pendientes</CardDescription>
       </CardHeader>
       <CardContent className="space-y-2">

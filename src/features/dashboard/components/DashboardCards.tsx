@@ -1,3 +1,9 @@
+import {
+  ArrowRightLeft,
+  Calculator,
+  TrendingDown,
+  TrendingUp,
+} from 'lucide-react';
 import { Spinner } from '@/components/ui/spinner';
 import { useBalance } from '@/hooks/useBalance';
 import { DashboardCardInfo } from './DashboardCardInfo';
@@ -33,21 +39,25 @@ export const DashboardCards = () => {
   return (
     <div className="grid gap-4 md:grid-cols-4">
       <DashboardCardInfo
+        icon={<Calculator className="h-5 w-5" />}
         title="Balance Total"
         amount={summary?.resumenTotal.balance}
         tipo="BALANCE"
       />
       <DashboardCardInfo
+        icon={<TrendingUp className="h-5 w-5 text-green-500" />}
         title="Total Ingresos"
         amount={summary?.resumenTotal.ingresos}
         tipo="INGRESO"
       />
       <DashboardCardInfo
+        icon={<TrendingDown className="h-5 w-5 text-red-500" />}
         title="Total Gastos"
         amount={summary?.resumenTotal.gastos}
         tipo="GASTO"
       />
       <DashboardCardInfo
+        icon={<ArrowRightLeft className="h-5 w-5" />}
         title="Transacciones"
         amount={summary?.cantidadTransacciones}
         tipo="TRANSACCION"
