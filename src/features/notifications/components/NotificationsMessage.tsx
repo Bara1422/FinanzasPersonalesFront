@@ -36,8 +36,7 @@ export const NotificationsMessage = ({
             variant="outline"
             className={`text-xs ${getPriorityColor(notification.prioridad)}`}
           >
-            {notification.prioridad.slice(0, 1).toUpperCase() +
-              notification.prioridad.slice(1).toLowerCase()}
+            {notification.prioridad}
           </Badge>
         </div>
       </div>
