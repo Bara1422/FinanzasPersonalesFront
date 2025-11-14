@@ -32,10 +32,9 @@ export const RegisterFormData = () => {
   const onSubmit = async (data: RegisterFormData) => {
     setIsLoading(true);
     setError('');
-
     try {
       await register({
-        nombre: data.nombre,
+        name: data.nombre,
         username: data.username,
         email: data.email,
         password: data.password,
