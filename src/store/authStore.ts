@@ -4,7 +4,7 @@ import { apiAxios } from '@/config/axios';
 import type { User } from '@/types/user.types';
 
 interface RegisterData {
-  nombre: string;
+  name: string;
   email: string;
   username: string;
   password: string;
@@ -63,6 +63,10 @@ export const useAuthStore = create<AuthState>()(
 
       register: async (registerData) => {
         const { data } = await apiAxios.post('/auth/register', registerData);
+
+        if (!data) {
+          throw new Error('Error al registrar el usuario');
+        }
 
         const { usuario, token } = data;
         set({ token, id_usuario: usuario.id_usuario, usuario });
