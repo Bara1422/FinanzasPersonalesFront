@@ -100,8 +100,14 @@ export const TransactionsDialog = ({
 
   const onSubmit = async (data: TransactionsDialogFormData) => {
     if (isEditing && transaction) {
+      console.log(data);
       transactionUpdate(
-        { ...transaction, ...data },
+        {
+          id_transaccion: transaction.id_transaccion,
+          descripcion: data.descripcion,
+          monto: data.monto,
+          id_categoria: data.id_categoria,
+        },
         {
           onSuccess: () => {
             toast.success('Transacción actualizada con éxito');
