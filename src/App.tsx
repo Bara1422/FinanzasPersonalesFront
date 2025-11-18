@@ -2,10 +2,20 @@ import { useEffect } from 'react';
 import './App.css';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { BrowserRouter } from 'react-router';
+import { Spinner } from './components/ui/spinner';
 import { AppRoutes } from './router';
 import { useAuthStore } from './store/authStore';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      retry: 1,
+      staleTime: 5 * 60 * 1000, // 5 minutes
+    },
+  },
+});
 
 function App() {
   const fetchUserData = useAuthStore((state) => state.fetchUserData);
@@ -18,18 +28,16 @@ function App() {
     }
   }, [token, fetchUserData]);
 
-  if (token && isHydrated === false && !useAuthStore.getState().usuario) {
-    return (
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-gray-900"></div>
-      </div>
-    );
+  if (!isHydrated) {
+    return <Spinner />;
   }
   return (
-    <QueryClientProvider client={queryClient}>
-      <AppRoutes />
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <BrowserRouter>
+      <QueryClientProvider client={queryClient}>
+        <AppRoutes />
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </BrowserRouter>
   );
 }
 
