@@ -1,3 +1,4 @@
+import { Link } from 'react-router';
 import type { SidebarSectionsProps } from '@/config/sidebar.config';
 import { cn } from '@/lib/utils';
 import { SidebarMenuButton, SidebarMenuItem } from '../../ui/sidebar';
@@ -12,9 +13,9 @@ export const SidebarSections = ({
   return (
     <SidebarMenuItem key={page.name}>
       <SidebarMenuButton asChild>
-        <a
+        <Link
           aria-disabled={page.name === 'Lista de compras'}
-          href={page.href}
+          to={page.href}
           className={cn(
             pathname === page.href
               ? 'bg-gray-200 text-gray-900'
@@ -27,7 +28,7 @@ export const SidebarSections = ({
               ? 'Lista de compras (Working)'
               : page.name}
           </span>
-        </a>
+        </Link>
       </SidebarMenuButton>
     </SidebarMenuItem>
   );

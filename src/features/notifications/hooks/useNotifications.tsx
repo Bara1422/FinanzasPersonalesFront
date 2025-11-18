@@ -18,6 +18,7 @@ export const useNotifications = () => {
         fecha_vencimiento: new Date(notification.fecha_vencimiento),
       }));
     },
+    enabled: !!usuario?.id_usuario,
     initialData: [],
   });
 

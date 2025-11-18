@@ -73,12 +73,18 @@ export const useAuthStore = create<AuthState>()(
       },
 
       fetchUserData: async () => {
-        const { token } = get();
+        const { token, usuario } = get();
 
         if (!token) {
           set({ isHydrated: true });
           return;
         }
+
+        if (usuario) {
+          set({ isHydrated: true });
+          return;
+        }
+
         //marcar si esta cargando
         set({ isHydrated: false });
 
@@ -102,7 +108,7 @@ export const useAuthStore = create<AuthState>()(
         id_usuario: state.id_usuario,
       }),
       onRehydrateStorage: () => (state) => {
-        if (state?.token) {
+        if (state) {
           state.isHydrated = false;
         }
       },

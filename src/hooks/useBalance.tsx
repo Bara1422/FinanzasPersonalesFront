@@ -13,6 +13,7 @@ export const useBalance = () => {
       );
       return response.data;
     },
+    enabled: !!usuario?.id_usuario,
   });
 
   return { data, isLoading, error, status };
