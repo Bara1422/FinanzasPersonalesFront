@@ -1,73 +1,113 @@
-# React + TypeScript + Vite
+# Finanzas Personales - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+---
+#### Descripción general
 
-Currently, two official plugins are available:
+Este repositorio contiene el código del frontend para el Sistema de Finanzas Personales. Es una aplicación web desarrollada con React y TypeScript diseñada para permitir a los usuarios gestionar sus ingresos, gastos, categorías y notificaciones de vencimientos de manera eficiente.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Este proyecto funciona como la interfaz de usuario para la siguiente API REST: https://github.com/Bara1422/FinanzasPersonalesBack
 
-## React Compiler
+Para que funcione se deberan seguir las instrucciones de ambos repositorios y tenerlos corriendo en simultaneo
+---
 
-The React Compiler is currently not compatible with SWC. See [this issue](https://github.com/vitejs/vite-plugin-react/issues/428) for tracking the progress.
+#### Características Principales
 
-## Expanding the ESLint configuration
+La aplicación cuenta con las siguientes funcionalidades:
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- **Autenticación de Usuarios:** Registro e inicio de sesión seguro mediante
+  tokens JWT.
+- **Dashboard General:** Visualización resumen del balance total, ingresos,
+  gastos, notificaciones pendientes y últimas transacciones.
+- **Gestión de Transacciones:** Creación, edición, eliminación y listado de
+  transacciones (ingresos y gastos) con filtros por tipo y categoría.
+- **Categorización:** Visualización de gastos e ingresos agrupados por
+  categorías.
+- **Notificaciones y Vencimientos:** Sistema de alertas para gastos pendientes y
+  fechas de vencimiento, con historial de pagos realizados.
+- **Reportes:** Generación y descarga de reportes financieros en formatos PDF y
+  Excel.
+- **Gestión de Perfil:** Actualización de datos de usuario.
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+#### Tecnologías Utilizadas
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+El proyecto está construido utilizando:
+
+- **Lenguaje:** TypeScript.
+- **Biblioteca UI:** React.
+- **Herramienta de compilación**: Vite.
+- **Estado y Datos:** Zustand (gestión de estado global), TanStack Query
+  (gestión de estado asíncrono y caché).
+- **Estilos y UI:** Tailwind CSS, Shadcn/ui (componentes base), Lucide React
+  (iconos).
+- **Formularios y Validación:** React Hook Form, Zod.
+- **Comunicación HTTP:** Axios.
+- **Linting:** Biome.js (linter y formatter).
+
+---
+
+#### Requisitos Previos
+
+[Node.js 18+](https://nodejs.org/es/download)
+[Finanzas Personalez Backend](https://github.com/Bara1422/FinanzasPersonalesBack)
+corriendo
+
+---
+
+#### Instalación
+
+1. Clonar el repositorio
+
+```bash
+git clone https://github.com/Bara1422/FinanzasPersonalesFront.git
+cd FinanzasPersonalesFront
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+2. Instalar dependencias
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm install
 ```
+
+3. Configurar variables de entorno (**.env**). Crear un archivo **.env** en la
+   raiz del proyecto basandose en el .env.template y copiar los valores
+   proporcioandos (la url del backend)
+
+```bash
+VITE_BASE_API_URL=
+```
+
+4. Ejecutar la aplicacion en modo desarrollo
+
+```bash
+npm run dev
+```
+
+---
+
+#### Estructura del proyecto
+
+```bash
+/src
+ ├── components/          # Componentes de shadcn y otros reutilizables
+ ├── config/              # Configuración de axios
+ ├── features/            # Componentes separados por funcionabilidades
+ ├── hooks/               # Hooks generales
+ ├── lib/                 # Funciones de utilidades
+ ├── pages/               # Paginas principales de las funcionabilidades
+ ├── schemas/             # Validaciones Zod
+ ├── store/               # Gestion de estado de Zustand
+ ├── types/               # Tipado TypeScript
+ ├── App.tsx              # Wrapper de rutas y QueryClientProvider
+ └── main.tsx             # Entrypoint de la aplicacion
+ ├── router.tsx/          # Rutas de la aplicación
+```
+
+---
+
+#### Usuarios de prueba
+
+- Admin: email: admin@example.com | password: 123456
+
+- User: email: user@example.com | password: 123456
