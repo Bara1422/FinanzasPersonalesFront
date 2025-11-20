@@ -1,4 +1,5 @@
 import { ChevronUp, User2 } from 'lucide-react';
+import { Link } from 'react-router';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -11,8 +12,16 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import { useAuthStore } from '@/store/authStore';
 
 export const SidebarUserFooter = () => {
+  const usuario = useAuthStore((state) => state.usuario);
+  const { logout } = useAuthStore();
+
+  const handleLogout = () => {
+    logout();
+  };
+
   return (
     <SidebarFooter>
       <SidebarMenu>
@@ -20,7 +29,7 @@ export const SidebarUserFooter = () => {
           <DropdownMenu>
             <DropdownMenuTrigger asChild className="hover:cursor-pointer">
               <SidebarMenuButton>
-                <User2 /> Juan
+                <User2 /> {usuario?.nombre}
                 <ChevronUp className="ml-auto" />
               </SidebarMenuButton>
             </DropdownMenuTrigger>
@@ -29,10 +38,13 @@ export const SidebarUserFooter = () => {
               className="w-[--radix-popper-ancho-width]"
             >
               <DropdownMenuItem className="hover:cursor-pointer">
-                <span>Account</span>
+                <Link to={`/account/${usuario?.id_usuario}`}>Cuenta</Link>
               </DropdownMenuItem>
-              <DropdownMenuItem className="hover:cursor-pointer">
-                <span>Sign out</span>
+              <DropdownMenuItem
+                className="hover:cursor-pointer"
+                onClick={handleLogout}
+              >
+                <span>Cerrar sesión</span>
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

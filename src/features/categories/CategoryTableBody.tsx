@@ -1,0 +1,35 @@
+import type { CategorySummary } from '@/lib/getCategorySummary';
+import { Badge } from '../../components/ui/badge';
+import { TableCell, TableRow } from '../../components/ui/table';
+
+interface CategoryTableBodyProps {
+  category: CategorySummary;
+  tipo: 'GASTO' | 'INGRESO';
+}
+
+export const CategoryTableBody = ({
+  category,
+  tipo,
+}: CategoryTableBodyProps) => {
+  return (
+    <TableRow>
+      <TableCell>
+        <div className="flex items-center gap-3">
+          <span className="font-medium">{category.nombre}</span>
+        </div>
+      </TableCell>
+      <TableCell className="text-center">
+        <Badge variant="outline">{category.cantidad}</Badge>
+      </TableCell>
+      <TableCell>
+        <div className="flex items-center justify-end gap-3">
+          <span
+            className={`font-semibold ${tipo === 'GASTO' ? 'text-red-500' : 'text-green-500'}`}
+          >
+            ${category.totalPorCategoria.toLocaleString()}
+          </span>
+        </div>
+      </TableCell>
+    </TableRow>
+  );
+};
