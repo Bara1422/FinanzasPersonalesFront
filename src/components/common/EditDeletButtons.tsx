@@ -6,9 +6,15 @@ interface Props {
   onEdit: (transaction: Transaction) => void;
   onDelete: (transactionId: number) => void;
   transaction: Transaction;
+  isDeleting: boolean;
 }
 
-export const EditDeleteButtons = ({ onEdit, transaction, onDelete }: Props) => {
+export const EditDeleteButtons = ({
+  onEdit,
+  transaction,
+  onDelete,
+  isDeleting,
+}: Props) => {
   return (
     <div className="flex justify-end gap-2">
       <Button
@@ -16,6 +22,7 @@ export const EditDeleteButtons = ({ onEdit, transaction, onDelete }: Props) => {
         size="icon"
         className="cursor-pointer hover:bg-accent-foreground/10"
         onClick={() => onEdit(transaction)}
+        disabled={isDeleting}
       >
         <Edit className="h-4 w-4" />
       </Button>
@@ -24,6 +31,7 @@ export const EditDeleteButtons = ({ onEdit, transaction, onDelete }: Props) => {
         size="icon"
         className="cursor-pointer hover:bg-accent-foreground/10"
         onClick={() => onDelete(transaction.id_transaccion)}
+        disabled={isDeleting}
       >
         <Trash2 className="h-4 w-4" />
       </Button>
