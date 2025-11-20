@@ -96,7 +96,7 @@ export const useTransactionById = (id: number | undefined) => {
       const response = await apiAxios.get<Transaction>(`/transacciones/${id}`);
       return response.data;
     },
-    // ✅ Si ya está en cache en ['transactions'], usalo como initialData
+    
     initialData: () => {
       const transactions = queryClient.getQueryData<Transaction[]>([
         'transactions',

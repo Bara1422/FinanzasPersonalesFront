@@ -6,6 +6,7 @@ import type { z } from 'zod';
 import { FieldFormController } from '@/components/forms/FieldFormController';
 import { FieldFormControllerSelect } from '@/components/forms/FieldFormControllerSelect';
 import { FormDialogHeader } from '@/components/forms/FormHeader';
+import { Spinner } from '@/components/ui/spinner';
 import { useCategories } from '@/features/categories/hooks/useCategories';
 import { formNewTransactionSchema } from '@/schemas/formNewTransaction.schema';
 import type { Transaction } from '@/types/transaction.types';
@@ -40,14 +41,18 @@ export const TransactionsDialog = ({
   const uniqueId = useId();
 
   const isEditing = !!transaction;
-  const { mutate: transactionCreate, isPending: isTransactionPending } =
+  const { mutate: transactionCreate, isPending: isCreating } =
     useTransactionCreate();
   const { data: transactionData } = useTransactionById(
     transaction?.id_transaccion,
   );
   const { data: categoriesData } = useCategories();
-  const { mutate: transactionUpdate } = useTransactionUpdate();
+  const { mutate: transactionUpdate, isPending: isUpdating } =
+    useTransactionUpdate();
+
   const isEditMode = !!transactionData;
+  const isPending = isCreating || isUpdating;
+
   const form = useForm<TransactionsDialogFormData>({
     resolver: zodResolver(formNewTransactionSchema),
     defaultValues: {
@@ -115,22 +120,26 @@ export const TransactionsDialog = ({
           onError: () => {
             toast.error('Error al actualizar la transacción');
           },
+          onSettled: () => {
+            handleOpenDialog(false);
+            form.reset();
+          },
         },
       );
     } else {
       transactionCreate(data, {
         onSuccess: () => {
           toast.success('Transacción creada con éxito');
-          form.reset();
         },
         onError: () => {
           toast.error('Error al crear la transacción');
         },
+        onSettled: () => {
+          handleOpenDialog(false);
+          form.reset();
+        },
       });
     }
-
-    handleOpenDialog(false);
-    form.reset();
   };
 
   return (
@@ -194,6 +203,7 @@ export const TransactionsDialog = ({
               type="button"
               className="cursor-pointer"
               variant="outline"
+              disabled={isPending}
               onClick={() => {
                 handleOpenDialog(false);
                 form.reset();
@@ -204,9 +214,18 @@ export const TransactionsDialog = ({
             <Button
               type="submit"
               className="cursor-pointer"
-              disabled={isTransactionPending}
+              disabled={isPending}
             >
-              {isEditMode ? 'Actualizar' : 'Guardar'}
+              {isPending ? (
+                <>
+                  <Spinner className="mr-2 h-4 w-4" />
+                  {isEditMode ? 'Actualizando...' : 'Guardando...'}
+                </>
+              ) : isEditMode ? (
+                'Actualizar'
+              ) : (
+                'Guardar'
+              )}
             </Button>
           </DialogFooter>
         </form>
