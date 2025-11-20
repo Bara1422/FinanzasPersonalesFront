@@ -53,7 +53,7 @@ export const PaidNotificationsCard = () => {
 
       <CardContent>
         <div className="space-y-3">
-          {paidNotifications.map((notification) => (
+          {paidNotifications?.map((notification) => (
             <div
               key={notification.id_notificacion}
               className="flex items-center justify-between p-4 rounded-lg border bg-muted/30"
