@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import { EditDeleteButtons } from '@/components/common/EditDeletButtons';
 import { Badge } from '@/components/ui/badge';
 import { TableBody, TableCell, TableRow } from '@/components/ui/table';
@@ -26,10 +27,19 @@ export const TransactionsTableBody = ({
     useFilteredTransactions({ filterType, filterCategory });
 
   const { data: categoriesData, error: categoriesError } = useCategories();
-  const { mutate: deleteTransaction } = useTransactionDelete();
+  const { mutate: deleteTransaction, isPending: isDeleting } =
+    useTransactionDelete();
 
   const handleDelete = (transactionId: number) => {
-    deleteTransaction(transactionId);
+    const toastId = toast.loading('Eliminando transacción...');
+    deleteTransaction(transactionId, {
+      onSuccess: () => {
+        toast.success('Transacción eliminada con éxito', { id: toastId });
+      },
+      onError: () => {
+        toast.error('Error al eliminar la transacción', { id: toastId });
+      },
+    });
   };
 
   if (categoriesError || transactionsError) {
@@ -81,6 +91,7 @@ export const TransactionsTableBody = ({
                 transaction={transaction}
                 onDelete={handleDelete}
                 onEdit={onEdit}
+                isDeleting={isDeleting}
               />
             </TableCell>
           </TableRow>
