@@ -19,7 +19,6 @@ const queryClient = new QueryClient({
 
 function App() {
   const fetchUserData = useAuthStore((state) => state.fetchUserData);
-  const token = useAuthStore((state) => state.token);
   const isHydrated = useAuthStore((state) => state.isHydrated);
 
   useEffect(() => {
