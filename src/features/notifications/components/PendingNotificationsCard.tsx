@@ -65,11 +65,11 @@ export const PendingNotificationsCard = ({ getDaysLeft }: Props) => {
           description={`Gastos programados que aun no fueron pagados ${notificationsPending?.length}`}
         />
         <CardContent>
-          {notificationsPending.length === 0 ? (
+          {notificationsPending?.length === 0 ? (
             <NoPendingNotifications />
           ) : (
             <div className="space-y-4">
-              {notificationsPending.map((notification) => {
+              {notificationsPending?.map((notification) => {
                 const daysLeft = getDaysLeft(notification.fecha_vencimiento);
                 const isUrgent = daysLeft <= 3;
                 const isOver = daysLeft < 0;

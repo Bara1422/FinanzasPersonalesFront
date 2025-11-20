@@ -19,7 +19,7 @@ export const useNotifications = () => {
       }));
     },
     enabled: !!usuario?.id_usuario,
-    initialData: [],
+    placeholderData: [],
   });
 
   return { data, isLoading, error, status, fetchStatus };
@@ -38,7 +38,8 @@ export const useNotificationsPending = () => {
         fecha_vencimiento: new Date(notification.fecha_vencimiento),
       }));
     },
-    initialData: [],
+    placeholderData: [],
+    enabled: !!usuario?.id_usuario,
   });
 
   return { data, isLoading, error, status, fetchStatus };
@@ -58,7 +59,8 @@ export const useNotificationsPaid = () => {
         fecha_vencimiento: new Date(notification.fecha_vencimiento),
       }));
     },
-    initialData: [],
+    placeholderData: [],
+    enabled: !!usuario?.id_usuario,
   });
 
   return { data, isLoading, error, status, fetchStatus };
