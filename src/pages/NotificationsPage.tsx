@@ -4,9 +4,20 @@ import { Button } from '@/components/ui/button';
 import { PaidNotificationsCard } from '@/features/notifications/components/PaidNotificationsCard';
 import { PendingNotificationsCard } from '@/features/notifications/components/PendingNotificationsCard';
 import { NotificationsDialog } from '@/features/notifications/dialog/NotificationsDialog';
+import { useAuthStore } from '@/store/authStore';
 
 export const NotificationsPage = () => {
   const [isOpenDialog, setIsOpenDialog] = useState(false);
+  const usuario = useAuthStore((state) => state.usuario);
+  const isHydrated = useAuthStore((state) => state.isHydrated);
+
+  if (!isHydrated) {
+    return null;
+  }
+
+  if (!usuario) {
+    return null;
+  } 
 
   const getDaysLeft = (dayDate: Date) => {
     const today = new Date();

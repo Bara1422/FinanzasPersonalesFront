@@ -23,10 +23,8 @@ function App() {
   const isHydrated = useAuthStore((state) => state.isHydrated);
 
   useEffect(() => {
-    if (token) {
-      fetchUserData();
-    }
-  }, [token, fetchUserData]);
+    fetchUserData();
+  }, [fetchUserData]);
 
   if (!isHydrated) {
     return <Spinner />;
