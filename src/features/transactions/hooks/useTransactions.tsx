@@ -11,6 +11,8 @@ export const useTransactions = () => {
       const response = await apiAxios.get<Transaction[]>('/transacciones');
       return response.data;
     },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
   return { data, error, isLoading, status, fetchStatus };
