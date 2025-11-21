@@ -1,13 +1,16 @@
 # Finanzas Personales - Frontend
 
+![Dashboard frontend](src/assets/dashbaordscreen.png)
+
 ---
 #### Descripción general
 
 Este repositorio contiene el código del frontend para el Sistema de Finanzas Personales. Es una aplicación web desarrollada con React y TypeScript diseñada para permitir a los usuarios gestionar sus ingresos, gastos, categorías y notificaciones de vencimientos de manera eficiente.
 
-Este proyecto funciona como la interfaz de usuario para la siguiente API REST: https://github.com/Bara1422/FinanzasPersonalesBack
+Este proyecto funciona como la interfaz de usuario para la siguiente [API REST](https://github.com/Bara1422/FinanzasPersonalesBack).
 
 Para que funcione se deberan seguir las instrucciones de ambos repositorios y tenerlos corriendo en simultaneo
+
 ---
 
 #### Características Principales
@@ -111,3 +114,27 @@ npm run dev
 - Admin: email: admin@example.com | password: 123456
 
 - User: email: user@example.com | password: 123456
+
+---
+
+#### Links repositorios deployados
+
+- Backend: https://finanzaspersonalesback.onrender.com/
+- Frontend: https://finanzas-personales-front.vercel.app/
+
+Si se prueba por este medio, abrir link de backend y esperar a que render inicie
+el proyecto que se encuentra en suspension.
+
+---
+
+##### Integrantes
+
+- Ismael Cordoba
+- Mariana Baradad
+- Juan Baranovsky
+- Francisco Rios
+- Hernan Folik
+
+##### TeamLeader :
+
+- Juan Baranovsky
