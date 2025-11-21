@@ -20,7 +20,6 @@ export const NotificationsButtons = ({ notificacion }: Props) => {
     useNotificationDelete();
 
   const [processingId, setProcessingId] = useState<number | null>(null);
-  const isPending = markAsPaidIsPending || deleteIsPending;
 
   const handleMarkAsPaid = (notificacion: Notification) => {
     setProcessingId(notificacion.id_notificacion);
@@ -50,13 +49,7 @@ export const NotificationsButtons = ({ notificacion }: Props) => {
     });
   };
 
-  if (markAsPaidIsPending && processingId === notificacion.id_notificacion) {
-    return (
-      <div className="pt-2">
-        <Spinner className="h-6 w-6 text-primary" />
-      </div>
-    );
-  }
+  const isActivated = processingId === notificacion.id_notificacion;
 
   return (
     <div className="flex items-center gap-2 pt-2">
@@ -65,9 +58,13 @@ export const NotificationsButtons = ({ notificacion }: Props) => {
         size="sm"
         className="h-8 px-3 text-xs cursor-pointer"
         onClick={() => handleMarkAsPaid(notificacion)}
-        disabled={isPending}
+        disabled={isActivated}
       >
-        <CheckCircle className="mr-1 h-3 w-3" />
+        {isActivated && markAsPaidIsPending ? (
+          <Spinner className="h-4 w-4" />
+        ) : (
+          <CheckCircle className="h-4 w-4" />
+        )}
         Marcar como pagado
       </Button>
       <Button
@@ -75,9 +72,13 @@ export const NotificationsButtons = ({ notificacion }: Props) => {
         size="sm"
         className="h-8 px-3 text-xs text-destructive hover:text-white hover:bg-destructive/80 cursor-pointer"
         onClick={() => handleDelete(notificacion.id_notificacion)}
-        disabled={isPending}
+        disabled={isActivated}
       >
-        <Trash2 className="mr-1 h-3 w-3" />
+        {isActivated && deleteIsPending ? (
+          <Spinner className="h-4 w-4" />
+        ) : (
+          <Trash2 className="h-4 w-4" />
+        )}
         Eliminar
       </Button>
     </div>
