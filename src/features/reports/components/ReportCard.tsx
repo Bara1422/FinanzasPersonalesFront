@@ -20,12 +20,14 @@ interface Props {
   handleFormatChange: (reportId: string, format: 'pdf' | 'excel') => void;
   handleGenerateReport: (reportId: string) => void;
   report: Report;
+  isLoading: boolean;
 }
 
 export const ReportCard = ({
   report,
   handleFormatChange,
   handleGenerateReport,
+  isLoading,
 }: Props) => {
   return (
     <Card>
@@ -44,17 +46,22 @@ export const ReportCard = ({
               handleFormatChange(report.id, value)
             }
           >
-            <SelectTrigger className="w-[110px]">
+            <SelectTrigger className="w-[110px] cursor-pointer">
               <SelectValue placeholder="Formato" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="pdf">PDF</SelectItem>
-              <SelectItem value="excel">Excel</SelectItem>
+              <SelectItem className="cursor-pointer" value="pdf">
+                PDF
+              </SelectItem>
+              <SelectItem className="cursor-pointer" value="excel">
+                Excel
+              </SelectItem>
             </SelectContent>
           </Select>
           <Button
+            disabled={isLoading}
             onClick={() => handleGenerateReport(report.id)}
-            className="flex-1"
+            className="flex-1 cursor-pointer"
           >
             <Download className="mr-2 h-4 w-4" />
             Generar
