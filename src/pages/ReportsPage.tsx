@@ -11,7 +11,7 @@ export const ReportsPage = () => {
     Record<string, 'pdf' | 'excel'>
   >({});
 
-  const { mutate: generateReporte } = useGenerateReport();
+  const { mutate: generateReporte, isPending } = useGenerateReport();
   const usuario = useAuthStore((state) => state.usuario);
   const isAdmin = usuario?.rol === 'ADMIN';
 
@@ -24,16 +24,17 @@ export const ReportsPage = () => {
 
   const handleGenerateReport = (reportId: string) => {
     const format = selectedFormats[reportId] || 'pdf';
-
+    const toastId = toast.loading('Generando reporte...');
     generateReporte(
       { type: reportId, format },
       {
         onSuccess: () => {
-          toast.success('Reporte descargado con éxito');
+          toast.success('Reporte descargado con éxito', { id: toastId });
         },
         onError: (error: any) => {
           toast.error(
             error.response?.data?.message || 'Error al generar el reporte',
+            { id: toastId },
           );
         },
       },
@@ -65,6 +66,7 @@ export const ReportsPage = () => {
             report={report}
             handleFormatChange={handleFormatChange}
             handleGenerateReport={handleGenerateReport}
+            isLoading={isPending}
           />
         ))}
       </div>
