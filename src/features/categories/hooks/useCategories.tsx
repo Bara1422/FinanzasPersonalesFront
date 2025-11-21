@@ -9,6 +9,8 @@ export const useCategories = () => {
       const response = await apiAxios.get<Category[]>('/categorias');
       return response.data;
     },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
   });
 
   return { data: data ?? [], isLoading, error, status, fetchStatus };

@@ -1,3 +1,4 @@
+import { Plus } from 'lucide-react';
 import { useState } from 'react';
 import { PageTitle } from '@/components/common/PageTitle';
 import { Button } from '@/components/ui/button';
@@ -17,7 +18,7 @@ export const NotificationsPage = () => {
 
   if (!usuario) {
     return null;
-  } 
+  }
 
   const getDaysLeft = (dayDate: Date) => {
     const today = new Date();
@@ -43,6 +44,7 @@ export const NotificationsPage = () => {
           onClick={() => setIsOpenDialog(true)}
           className="hover:cursor-pointer"
         >
+          <Plus className="h-4 w-4" />
           Nueva Notificación
         </Button>
       </div>
