@@ -18,6 +18,8 @@ export const useNotifications = () => {
         fecha_vencimiento: new Date(notification.fecha_vencimiento),
       }));
     },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
     enabled: !!usuario?.id_usuario,
     placeholderData: [],
   });
@@ -38,6 +40,8 @@ export const useNotificationsPending = () => {
         fecha_vencimiento: new Date(notification.fecha_vencimiento),
       }));
     },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
     placeholderData: [],
     enabled: !!usuario?.id_usuario,
   });
@@ -59,6 +63,8 @@ export const useNotificationsPaid = () => {
         fecha_vencimiento: new Date(notification.fecha_vencimiento),
       }));
     },
+    staleTime: 5 * 60 * 1000,
+    refetchOnWindowFocus: false,
     placeholderData: [],
     enabled: !!usuario?.id_usuario,
   });
