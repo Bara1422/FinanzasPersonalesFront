@@ -46,13 +46,15 @@ export const NotificationsDialog = ({ open, onOpenChange }: Props) => {
     notificationMutate(data, {
       onSuccess: () => {
         toast.success('Notificación creada con éxito');
-        form.reset();
       },
       onError: () => {
         toast.error('Error al crear la notificación');
       },
+      onSettled: () => {
+        onOpenChange(false);
+        form.reset();
+      },
     });
-    onOpenChange(false);
   };
 
   if (fetchStatusCategories === 'fetching') {
@@ -85,6 +87,7 @@ export const NotificationsDialog = ({ open, onOpenChange }: Props) => {
               type="button"
               className="cursor-pointer"
               variant="outline"
+              disabled={isNotificationPending}
               onClick={() => {
                 onOpenChange(false);
                 form.reset();
@@ -97,7 +100,13 @@ export const NotificationsDialog = ({ open, onOpenChange }: Props) => {
               className="cursor-pointer"
               disabled={isNotificationPending}
             >
-              Crear
+              {isNotificationPending ? (
+                <>
+                  <Spinner className="size-5" /> Creando...
+                </>
+              ) : (
+                'Crear'
+              )}
             </Button>
           </DialogFooter>
         </form>
