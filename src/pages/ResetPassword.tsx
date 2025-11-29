@@ -1,8 +1,9 @@
 import { zodResolver } from '@hookform/resolvers/zod';
-import { AlertCircle, Mail } from 'lucide-react';
+import { AlertCircle, ShieldCheck } from 'lucide-react';
 import { useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router';
+import { Link, useNavigate, useSearchParams } from 'react-router';
+import { toast } from 'sonner';
 import type z from 'zod';
 import { apiAxios } from '@/config/axios';
 import { FieldFormController } from '@/components/forms/FieldFormController';
@@ -11,38 +12,43 @@ import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { FieldGroup } from '@/components/ui/field';
 import AuthLayout from '@/features/auth/components/AuthLayout';
-import { formForgotPasswordSchema } from '@/schemas/formForgotPassword.schema';
+import { formResetPasswordSchema } from '@/schemas/formResetPassword.schema';
 
-type ForgotFormData = z.infer<typeof formForgotPasswordSchema>;
+type ResetFormData = z.infer<typeof formResetPasswordSchema>;
 
-export const ForgotPassword = () => {
+export const ResetPassword = () => {
+  const [searchParams] = useSearchParams();
   const uniqueId = useId();
-  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [success, setSuccess] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-  const form = useForm<ForgotFormData>({
-    resolver: zodResolver(formForgotPasswordSchema),
-    defaultValues: { email: '' },
+  const defaultToken = searchParams.get('token') || '';
+
+  const form = useForm<ResetFormData>({
+    resolver: zodResolver(formResetPasswordSchema),
+    defaultValues: {
+      token: defaultToken,
+      password: '',
+    },
   });
 
-  const onSubmit = async (data: ForgotFormData) => {
-    setIsLoading(true);
+  const onSubmit = async (data: ResetFormData) => {
     setError('');
-    setSuccessMessage(null);
+    setSuccess('');
+    setIsLoading(true);
 
     try {
-      const response = await apiAxios.post('/auth/forgot-password', data);
-      const { message } = response.data;
-      setSuccessMessage(
-        message ||
-          'Si el correo está registrado, enviamos un enlace para restablecer la contraseña',
-      );
+      await apiAxios.post('/auth/reset-password', data);
+      setSuccess('Contraseña actualizada correctamente. Ya puedes iniciar sesión.');
+      toast.success('Contraseña restablecida');
+      setTimeout(() => navigate('/login'), 1200);
     } catch (err: any) {
       const msg =
         err.response?.data?.message ||
         err.response?.data?.error ||
-        'No se pudo generar el enlace';
+        'No se pudo actualizar la contraseña';
       setError(msg);
     } finally {
       setIsLoading(false);
@@ -50,10 +56,10 @@ export const ForgotPassword = () => {
   };
 
   return (
-    <AuthLayout title="Recuperar contraseña">
+    <AuthLayout title="Restablecer contraseña">
       <CardContent className="space-y-6">
         <form
-          id={`${uniqueId}-forgot`}
+          id={`${uniqueId}-reset`}
           onSubmit={form.handleSubmit(onSubmit)}
           className="space-y-4"
         >
@@ -61,19 +67,27 @@ export const ForgotPassword = () => {
             <FieldFormController
               form={form}
               uniqueId={uniqueId}
-              name="email"
-              label="Email"
-              type="email"
-              placeholder="tuemail@example.com"
+              name="token"
+              label="Token"
+              placeholder="Pega el token recibido por email"
+            />
+
+            <FieldFormController
+              form={form}
+              uniqueId={uniqueId}
+              name="password"
+              label="Nueva contraseña"
+              type="password"
+              placeholder="••••••••"
             />
           </FieldGroup>
         </form>
 
-        {successMessage && (
+        {success && (
           <Alert>
-            <Mail />
-            <AlertTitle>Solicitud recibida</AlertTitle>
-            <AlertDescription>{successMessage}</AlertDescription>
+            <ShieldCheck />
+            <AlertTitle>Listo</AlertTitle>
+            <AlertDescription>{success}</AlertDescription>
           </Alert>
         )}
 
@@ -89,10 +103,10 @@ export const ForgotPassword = () => {
         <Button
           className="w-full"
           type="submit"
-          form={`${uniqueId}-forgot`}
+          form={`${uniqueId}-reset`}
           disabled={isLoading}
         >
-          Enviar enlace
+          Guardar nueva contraseña
         </Button>
       </CardFooter>
 
