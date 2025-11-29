@@ -4,12 +4,12 @@ import { useId, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router';
 import type z from 'zod';
-import { apiAxios } from '@/config/axios';
 import { FieldFormController } from '@/components/forms/FieldFormController';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { FieldGroup } from '@/components/ui/field';
+import { apiAxios } from '@/config/axios';
 import AuthLayout from '@/features/auth/components/AuthLayout';
 import { formForgotPasswordSchema } from '@/schemas/formForgotPassword.schema';
 
@@ -87,7 +87,7 @@ export const ForgotPassword = () => {
 
       <CardFooter className="p-6">
         <Button
-          className="w-full"
+          className="w-full cursor-pointer"
           type="submit"
           form={`${uniqueId}-forgot`}
           disabled={isLoading}
