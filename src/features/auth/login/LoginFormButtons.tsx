@@ -2,6 +2,7 @@ import { AlertCircle } from 'lucide-react';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { Field } from '@/components/ui/field';
+import { Spinner } from '@/components/ui/spinner';
 
 interface Props {
   isLoading: boolean;
@@ -20,12 +21,13 @@ export const LoginFormButtons = ({
     <div className="space-y-3  w-full">
       <Field orientation="horizontal">
         <Button
-          className="w-full"
+          className="w-full cursor-pointer"
           type="submit"
           form={`${uniqueId}-login`}
           variant="default"
           disabled={isLoading}
         >
+          {isLoading ? <Spinner className="h-4 w-4 mr-2" /> : null}
           {label}
         </Button>
       </Field>

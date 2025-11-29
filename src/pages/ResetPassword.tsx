@@ -5,12 +5,12 @@ import { useForm } from 'react-hook-form';
 import { Link, useNavigate, useSearchParams } from 'react-router';
 import { toast } from 'sonner';
 import type z from 'zod';
-import { apiAxios } from '@/config/axios';
 import { FieldFormController } from '@/components/forms/FieldFormController';
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import { Button } from '@/components/ui/button';
 import { CardContent, CardFooter } from '@/components/ui/card';
 import { FieldGroup } from '@/components/ui/field';
+import { apiAxios } from '@/config/axios';
 import AuthLayout from '@/features/auth/components/AuthLayout';
 import { formResetPasswordSchema } from '@/schemas/formResetPassword.schema';
 
@@ -41,7 +41,9 @@ export const ResetPassword = () => {
 
     try {
       await apiAxios.post('/auth/reset-password', data);
-      setSuccess('Contraseña actualizada correctamente. Ya puedes iniciar sesión.');
+      setSuccess(
+        'Contraseña actualizada correctamente. Ya puedes iniciar sesión.',
+      );
       toast.success('Contraseña restablecida');
       setTimeout(() => navigate('/login'), 1200);
     } catch (err: any) {
@@ -101,7 +103,7 @@ export const ResetPassword = () => {
 
       <CardFooter className="p-6">
         <Button
-          className="w-full"
+          className="w-full cursor-pointer"
           type="submit"
           form={`${uniqueId}-reset`}
           disabled={isLoading}
