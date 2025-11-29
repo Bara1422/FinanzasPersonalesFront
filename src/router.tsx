@@ -8,10 +8,12 @@ import { TransactionsPage } from '@/pages/TransactionsPage';
 import { Layout } from './components/layout/layout';
 import { AccountManagement } from './pages/AccountManagement';
 import { DashboardPage } from './pages/DashboardPage';
+import { ForgotPassword } from './pages/ForgotPassword';
 
 import Login from './pages/Login';
 import { PrivateRoute } from './pages/PrivateRoute';
 import Register from './pages/Register';
+import { ResetPassword } from './pages/ResetPassword';
 import { UserRoute } from './pages/UserRoute';
 
 export const AppRoutes = () => {
@@ -19,7 +21,8 @@ export const AppRoutes = () => {
     <Routes>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
-      {/*<Route path="/forgot" element={<ForgotPassword />} /> */}
+      <Route path="/forgot" element={<ForgotPassword />} />
+      <Route path="/reset-password" element={<ResetPassword />} />
 
       <Route element={<PrivateRoute />}>
         <Route element={<Layout />}>
