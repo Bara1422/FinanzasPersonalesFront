@@ -1,7 +1,7 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
-import { UserFormButtons } from '@/components/forms/UserFormButtons';
+import { fireEvent, render, screen } from '@testing-library/react';
 import type { UseFormReturn } from 'react-hook-form';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { UserFormButtons } from '@/components/forms/UserFormButtons';
 import type { FormData } from '@/features/account/UserFormData';
 
 describe('UserFormButtons', () => {
@@ -27,48 +27,34 @@ describe('UserFormButtons', () => {
     render(<UserFormButtons {...defaultProps} />);
 
     expect(
-      screen.getByRole('button', { name: /editar perfil/i })
+      screen.getByRole('button', { name: /editar perfil/i }),
     ).toBeInTheDocument();
   });
 
   it('llama a onChangeEditting al hacer click en "Editar Perfil"', () => {
     render(<UserFormButtons {...defaultProps} />);
 
-    fireEvent.click(
-      screen.getByRole('button', { name: /editar perfil/i })
-    );
+    fireEvent.click(screen.getByRole('button', { name: /editar perfil/i }));
 
     expect(onChangeEdittingMock).toHaveBeenCalledTimes(1);
   });
 
   it('muestra los botones "Cancelar" y "Guardar cambios" cuando isEditting es true', () => {
-    render(
-      <UserFormButtons
-        {...defaultProps}
-        isEditting={true}
-      />
-    );
+    render(<UserFormButtons {...defaultProps} isEditting={true} />);
 
     expect(
-      screen.getByRole('button', { name: /cancelar/i })
+      screen.getByRole('button', { name: /cancelar/i }),
     ).toBeInTheDocument();
 
     expect(
-      screen.getByRole('button', { name: /guardar cambios/i })
+      screen.getByRole('button', { name: /guardar cambios/i }),
     ).toBeInTheDocument();
   });
 
   it('al hacer click en "Cancelar" resetea el formulario y cambia el estado de edición', () => {
-    render(
-      <UserFormButtons
-        {...defaultProps}
-        isEditting={true}
-      />
-    );
+    render(<UserFormButtons {...defaultProps} isEditting={true} />);
 
-    fireEvent.click(
-      screen.getByRole('button', { name: /cancelar/i })
-    );
+    fireEvent.click(screen.getByRole('button', { name: /cancelar/i }));
 
     expect(formMock.reset).toHaveBeenCalledTimes(1);
     expect(onChangeEdittingMock).toHaveBeenCalledTimes(1);
@@ -76,11 +62,7 @@ describe('UserFormButtons', () => {
 
   it('deshabilita el botón submit cuando isLoading es true', () => {
     render(
-      <UserFormButtons
-        {...defaultProps}
-        isEditting={true}
-        isLoading={true}
-      />
+      <UserFormButtons {...defaultProps} isEditting={true} isLoading={true} />,
     );
 
     const submitButton = screen

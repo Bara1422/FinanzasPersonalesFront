@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
-import { Dialog, DialogContent } from '@/components/ui/dialog';
+import { describe, expect, it } from 'vitest';
 import { FormDialogHeader } from '@/components/forms/FormHeader';
+import { Dialog, DialogContent } from '@/components/ui/dialog';
 
 describe('FormDialogHeader', () => {
   const props = {
@@ -15,7 +15,7 @@ describe('FormDialogHeader', () => {
         <DialogContent>
           <FormDialogHeader {...props} />
         </DialogContent>
-      </Dialog>
+      </Dialog>,
     );
 
     expect(screen.getByText(props.title)).toBeInTheDocument();

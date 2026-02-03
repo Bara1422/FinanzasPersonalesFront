@@ -1,8 +1,8 @@
-import { render, screen, fireEvent } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
+import { fireEvent, render, screen } from '@testing-library/react';
 import { useForm } from 'react-hook-form';
-import { Form } from '@/components/ui/form';
+import { describe, expect, it } from 'vitest';
 import { FormLabelField } from '@/components/forms/FormLabelField';
+import { Form } from '@/components/ui/form';
 
 type TestForm = {
   name: string;
@@ -36,7 +36,7 @@ describe('FormLabelField', () => {
     expect(screen.getByText('Nombre')).toBeInTheDocument();
 
     expect(
-      screen.getByPlaceholderText('Ingrese su nombre')
+      screen.getByPlaceholderText('Ingrese su nombre'),
     ).toBeInTheDocument();
   });
 
@@ -44,7 +44,7 @@ describe('FormLabelField', () => {
     render(<TestComponent />);
 
     const input = screen.getByPlaceholderText(
-      'Ingrese su nombre'
+      'Ingrese su nombre',
     ) as HTMLInputElement;
 
     fireEvent.change(input, { target: { value: 'Juan' } });
