@@ -1,8 +1,8 @@
 import { render, screen } from '@testing-library/react';
-import { describe, it, expect } from 'vitest';
 import { useForm } from 'react-hook-form';
-import { Form } from '@/components/ui/form';
+import { describe, expect, it } from 'vitest';
 import { FieldFormControllerSelect } from '@/components/forms/FieldFormControllerSelect';
+import { Form } from '@/components/ui/form';
 
 type TestForm = {
   category: string;
@@ -41,19 +41,15 @@ describe('FieldFormControllerSelect', () => {
     render(<TestComponent />);
 
     expect(screen.getByText('Categoría')).toBeInTheDocument();
-    expect(
-      screen.getByText('Seleccione una categoría')
-    ).toBeInTheDocument();
+    expect(screen.getByText('Seleccione una categoría')).toBeInTheDocument();
   });
 
   it('renderiza las opciones del select', async () => {
     render(<TestComponent />);
 
-
-  const trigger = screen.getByRole('combobox', {
-    name: /categoría/i,
-}) as HTMLButtonElement;
-    
+    const trigger = screen.getByRole('combobox', {
+      name: /categoría/i,
+    }) as HTMLButtonElement;
 
     expect(await screen.findByText('Comida')).toBeInTheDocument();
     expect(await screen.findByText('Servicios')).toBeInTheDocument();

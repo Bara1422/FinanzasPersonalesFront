@@ -1,6 +1,5 @@
-import { describe, it, expect, vi, beforeEach } from 'vitest';
-
-import { render, screen, fireEvent } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { EditDeleteButtons } from '@/components/common/EditDeletButtons';
 import type { Transaction } from '@/types/transaction.types';
 
@@ -24,7 +23,7 @@ describe('EditDeleteButtons', () => {
         onEdit={onEditMock}
         onDelete={onDeleteMock}
         isDeleting={isDeleting}
-      />
+      />,
     );
   };
 
