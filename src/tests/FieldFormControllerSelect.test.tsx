@@ -47,9 +47,6 @@ describe('FieldFormControllerSelect', () => {
   it('renderiza las opciones del select', async () => {
     render(<TestComponent />);
 
-    const trigger = screen.getByRole('combobox', {
-      name: /categoría/i,
-    }) as HTMLButtonElement;
 
     expect(await screen.findByText('Comida')).toBeInTheDocument();
     expect(await screen.findByText('Servicios')).toBeInTheDocument();
