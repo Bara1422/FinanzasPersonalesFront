@@ -97,7 +97,12 @@ export const useAuthStore = create<AuthState>()(
           set({ usuario: normalizedUser, isHydrated: true });
         } catch (error) {
           console.log('Error trayendo usuario:', error);
-          get().logout();
+          set({
+            usuario: null,
+            token: null,
+            id_usuario: null,
+            isHydrated: true,
+          });
         }
       },
     }),

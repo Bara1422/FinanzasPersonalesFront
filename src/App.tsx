@@ -26,7 +26,7 @@ function App() {
   }, [fetchUserData]);
 
   if (!isHydrated) {
-    return <Spinner  className='size-8 grid place-items-center m-auto h-dvh'/>;
+    return <Spinner className="size-8 grid place-items-center m-auto h-dvh" />;
   }
   return (
     <BrowserRouter>
